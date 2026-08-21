@@ -29,6 +29,7 @@ import {
   MessageCircle,
   Send,
   ArrowLeft,
+  ArrowRight,
   ChevronRight,
   User,
   Phone,
@@ -468,8 +469,44 @@ export default function VehicleDetailPage() {
         </section>
       </div>
 
+      {/* Mobile-Exclusive Vehicle Booking Dock */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0E1013]/95 backdrop-blur-2xl border-t border-white/15 px-4 py-2.5 shadow-[0_-10px_30px_rgba(0,0,0,0.8)] pb-[calc(0.65rem+env(safe-area-inset-bottom,0px))]">
+        <div className="max-w-md mx-auto flex items-center justify-between gap-3">
+          <div className="text-left">
+            <div className="flex items-baseline gap-1">
+              <span className="text-xl font-black font-display text-white">
+                {formatINR(vehicle.rentalPricePerDay)}
+              </span>
+              <span className="text-[10px] text-white/60 font-normal">/ day</span>
+            </div>
+            <div className="flex items-center gap-1 text-[10px] text-emerald-400 font-bold font-display uppercase tracking-wider">
+              <span>{statusInfo.label} • {vehicle.transmission}</span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <a
+              href={whatsAppUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp Trip Desk"
+              className="w-11 h-11 bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white rounded-xl flex items-center justify-center transition-all shadow-md shrink-0"
+            >
+              <MessageCircle className="w-5 h-5" />
+            </a>
+
+            <button
+              onClick={() => setModalOpen(true)}
+              className="h-11 px-4 bg-brand-red hover:bg-brand-red-hover active:scale-95 text-white text-xs font-bold font-display uppercase tracking-wider rounded-xl flex items-center gap-1.5 shadow-lg shadow-brand-red/40 shrink-0"
+            >
+              <span>Book Vehicle</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      </div>
+
       <Footer />
-      <StickyMobileBar onOpenEnquire={() => setModalOpen(true)} />
       <WhatsAppFloating />
 
       <EnquiryModal

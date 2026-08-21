@@ -107,15 +107,18 @@ export function EnquiryModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/85 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-6 animate-in fade-in duration-200">
       <div
-        className="relative bg-[#131518] text-white border border-white/15 rounded-2xl max-w-xl w-full p-6 sm:p-8 shadow-2xl overflow-hidden"
+        className="relative bg-[#131518] text-white border-t sm:border border-white/15 rounded-t-3xl sm:rounded-2xl max-w-xl w-full p-5 sm:p-8 shadow-2xl max-h-[92vh] sm:max-h-[90vh] overflow-y-auto animate-in slide-in-from-bottom sm:zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Mobile Drag Handle */}
+        <div className="sm:hidden w-12 h-1.5 bg-white/20 rounded-full mx-auto mb-4" />
+
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 w-8 h-8 rounded-full bg-white/10 text-white/70 hover:text-white hover:bg-brand-red flex items-center justify-center transition-colors"
+          className="absolute top-4 right-4 sm:top-5 sm:right-5 w-8 h-8 rounded-full bg-white/10 text-white/70 hover:text-white hover:bg-brand-red flex items-center justify-center transition-colors"
           aria-label="Close modal"
         >
           <X className="w-4 h-4" />

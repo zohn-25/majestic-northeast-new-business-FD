@@ -24,6 +24,7 @@ import {
   MessageCircle,
   Send,
   ArrowLeft,
+  ArrowRight,
   ChevronRight,
   ChevronDown,
   Info,
@@ -102,6 +103,7 @@ export default function SharedTourDetailPage() {
   const [submittedInline, setSubmittedInline] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [dateDropdownOpen, setDateDropdownOpen] = useState(false);
+  const [mobileBookingDrawerOpen, setMobileBookingDrawerOpen] = useState(false);
 
   // Booking Form State
   const [formData, setFormData] = useState({
@@ -821,7 +823,243 @@ export default function SharedTourDetailPage() {
       )}
 
       <WhatsAppFloating />
-      <StickyMobileBar />
+
+      {/* Mobile-Exclusive Sticky Expedition Booking Dock (Pinned at Bottom) */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0E1013]/95 backdrop-blur-2xl border-t border-white/15 px-4 py-2.5 shadow-[0_-10px_30px_rgba(0,0,0,0.8)] pb-[calc(0.65rem+env(safe-area-inset-bottom,0px))]">
+        <div className="max-w-md mx-auto flex items-center justify-between gap-3">
+          {/* Live Price & Date Summary */}
+          <div className="text-left">
+            <div className="flex items-baseline gap-1">
+              <span className="text-xl font-black font-display text-gray-900 dark:text-white">
+                {formatINR(totalPrice)}
+              </span>
+              <span className="text-[10px] text-gray-500 dark:text-white/60 font-normal">
+                {formData.numberOfTravellers > 1 ? `(${formData.numberOfTravellers} pers)` : "/ seat"}
+              </span>
+            </div>
+            <div className="flex items-center gap-1 text-[10px] text-brand-red font-bold font-display uppercase tracking-wider">
+              <Calendar className="w-3 h-3" />
+              <span>{selectedDateInfo.day} {selectedDateInfo.monthShort} • {seatsRemaining} Left</span>
+            </div>
+          </div>
+
+          {/* Quick Actions */}
+          <div className="flex items-center gap-2">
+            <a
+              href={whatsAppUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp Trip Desk"
+              className="w-11 h-11 bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white rounded-xl flex items-center justify-center transition-all shadow-md shrink-0"
+            >
+              <MessageCircle className="w-5 h-5" />
+            </a>
+
+            <button
+              onClick={() => setMobileBookingDrawerOpen(true)}
+              className="h-11 px-4 bg-brand-red hover:bg-brand-red-hover active:scale-95 text-white text-xs font-bold font-display uppercase tracking-wider rounded-xl flex items-center gap-1.5 shadow-lg shadow-brand-red/40 shrink-0"
+            >
+              <span>Book Spot</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile App Bottom Sheet Booking Drawer */}
+      {mobileBookingDrawerOpen && (
+        <div className="lg:hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex flex-col justify-end animate-in fade-in duration-200">
+          <div
+            onClick={() => setMobileBookingDrawerOpen(false)}
+            className="flex-1"
+          />
+          <div className="bg-white dark:bg-[#131518] rounded-t-3xl border-t border-gray-200 dark:border-white/15 p-5 max-h-[88vh] overflow-y-auto space-y-4 shadow-2xl animate-in slide-in-from-bottom duration-300">
+            {/* Sheet Handle Bar */}
+            <div className="w-12 h-1.5 bg-gray-300 dark:bg-white/20 rounded-full mx-auto" />
+
+            {/* Header */}
+            <div className="flex items-start justify-between border-b border-gray-200 dark:border-white/10 pb-3">
+              <div>
+                <span className="text-[10px] font-bold text-brand-red uppercase tracking-wider font-display block">
+                  {isBike ? "Motorcycle Expedition Booking" : "4x4 SUV Convoy Booking"}
+                </span>
+                <h3 className="text-base font-black font-display uppercase text-gray-900 dark:text-white line-clamp-1">
+                  {tour.title}
+                </h3>
+              </div>
+              <button
+                onClick={() => setMobileBookingDrawerOpen(false)}
+                className="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 text-gray-700 dark:text-white flex items-center justify-center text-sm font-bold"
+              >
+                ✕
+              </button>
+            </div>
+
+            {submittedInline ? (
+              <div className="py-6 text-center space-y-3">
+                <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-500 flex items-center justify-center mx-auto border border-emerald-500/30">
+                  <CheckCircle2 className="w-6 h-6" />
+                </div>
+                <h4 className="text-lg font-bold font-display uppercase text-gray-900 dark:text-white">
+                  Booking Confirmed!
+                </h4>
+                <p className="text-xs text-gray-600 dark:text-white/70">
+                  Thank you, <strong>{formData.fullName}</strong>. Our Guwahati trip marshal will connect on WhatsApp within 15 minutes.
+                </p>
+                <a
+                  href={whatsAppUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-3 bg-emerald-600 text-white rounded-xl text-xs font-bold font-display uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-md"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  Chat on WhatsApp Now
+                </a>
+              </div>
+            ) : (
+              <form onSubmit={handleBookingSubmit} className="space-y-3.5 text-left text-xs">
+                {/* Date Picker Tiles */}
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-900 dark:text-white mb-1.5 font-display flex items-center justify-between">
+                    <span className="flex items-center gap-1">
+                      <Calendar className="w-3.5 h-3.5 text-brand-red" />
+                      Select Departure Date *
+                    </span>
+                    <span className="text-[10px] text-brand-red font-semibold">
+                      {tour.startDates.length} Batches Active
+                    </span>
+                  </label>
+
+                  <div className="grid grid-cols-2 gap-2 max-h-36 overflow-y-auto pr-1">
+                    {tour.startDates.map((dStr) => {
+                      const isSel = formData.preferredDate === dStr;
+                      const dInfo = parseExpeditionDate(dStr);
+                      return (
+                        <div
+                          key={dStr}
+                          onClick={() => setFormData({ ...formData, preferredDate: dStr })}
+                          className={`p-2 rounded-xl border cursor-pointer transition-all flex items-center gap-2 ${
+                            isSel
+                              ? "bg-brand-red text-white border-brand-red shadow-md"
+                              : "bg-gray-50 dark:bg-black/50 border-gray-200 dark:border-white/10 text-gray-800 dark:text-white/80"
+                          }`}
+                        >
+                          <div className={`w-8 h-8 rounded-lg flex flex-col items-center justify-center text-center shrink-0 ${
+                            isSel ? "bg-black text-white" : "bg-brand-red text-white"
+                          }`}>
+                            <span className="text-[7px] font-bold uppercase">{dInfo.monthShort}</span>
+                            <span className="text-xs font-black">{dInfo.day}</span>
+                          </div>
+                          <div className="leading-tight truncate">
+                            <span className="text-[11px] font-bold block truncate">{dInfo.monthFull} {dInfo.day}</span>
+                            <span className={`text-[9px] block ${isSel ? "text-white/80" : "text-gray-500 dark:text-white/50"}`}>{dInfo.weekday}</span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Travellers Selector Chips */}
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-900 dark:text-white mb-1.5 font-display flex items-center justify-between">
+                    <span className="flex items-center gap-1">
+                      <Users className="w-3.5 h-3.5 text-brand-red" />
+                      {isBike ? "Riders Count *" : "Travellers Count *"}
+                    </span>
+                    <span className="text-[10px] text-gray-500 dark:text-white/60">
+                      {formatINR(tour.pricePerPerson)} each
+                    </span>
+                  </label>
+
+                  <div className="grid grid-cols-4 gap-1.5">
+                    {[1, 2, 3, 4].map((num) => (
+                      <button
+                        key={num}
+                        type="button"
+                        onClick={() => setFormData({ ...formData, numberOfTravellers: num })}
+                        className={`py-2 rounded-xl text-xs font-bold font-display uppercase transition-all border ${
+                          formData.numberOfTravellers === num
+                            ? "bg-brand-red text-white border-brand-red shadow-sm"
+                            : "bg-gray-50 dark:bg-black/50 border-gray-200 dark:border-white/10 text-gray-700 dark:text-white/80"
+                        }`}
+                      >
+                        {num} {num === 1 ? "Person" : "Persons"}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Contact Inputs */}
+                <div className="space-y-2 pt-1">
+                  <input
+                    type="text"
+                    required
+                    placeholder="Your Full Name *"
+                    value={formData.fullName}
+                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                    className="w-full bg-gray-50 dark:bg-black/60 border border-gray-300 dark:border-white/20 focus:border-brand-red rounded-xl px-3.5 py-2.5 text-xs text-gray-900 dark:text-white focus:outline-none"
+                  />
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <input
+                      type="tel"
+                      required
+                      placeholder="WhatsApp Number *"
+                      value={formData.phoneNumber}
+                      onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
+                      className="w-full bg-gray-50 dark:bg-black/60 border border-gray-300 dark:border-white/20 focus:border-brand-red rounded-xl px-3.5 py-2.5 text-xs text-gray-900 dark:text-white focus:outline-none"
+                    />
+                    <input
+                      type="email"
+                      required
+                      placeholder="Email Address *"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="w-full bg-gray-50 dark:bg-black/60 border border-gray-300 dark:border-white/20 focus:border-brand-red rounded-xl px-3.5 py-2.5 text-xs text-gray-900 dark:text-white focus:outline-none"
+                    />
+                  </div>
+                </div>
+
+                {/* Live Total Box */}
+                <div className="p-3 bg-gray-100 dark:bg-black/60 rounded-xl border border-brand-red/30 flex items-center justify-between">
+                  <div>
+                    <span className="text-[10px] text-gray-500 dark:text-white/60 block">
+                      Total ({formData.numberOfTravellers} {formData.numberOfTravellers === 1 ? "Person" : "Persons"}):
+                    </span>
+                    <span className="text-base font-bold font-display text-brand-red">
+                      {formatINR(totalPrice)}
+                    </span>
+                  </div>
+                  <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase font-display">
+                    ✓ ILP Included (₹0)
+                  </span>
+                </div>
+
+                {/* Action CTA */}
+                <button
+                  type="submit"
+                  className="w-full py-3.5 bg-brand-red hover:bg-brand-red-hover text-white text-xs font-bold font-display uppercase tracking-widest rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-brand-red/40"
+                >
+                  <Send className="w-4 h-4" />
+                  Confirm Spot (Zero Advance)
+                </button>
+
+                <a
+                  href={whatsAppUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold font-display uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 shadow-sm text-center"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  Instant WhatsApp Booking
+                </a>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
+
       <Footer />
     </main>
   );
