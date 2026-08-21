@@ -15,7 +15,7 @@ export function PopularDestinations() {
           subtitle="From the cascading waterfalls and living root bridges of Meghalaya to snow peaks in Arunachal Pradesh and tea estates in Assam."
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {DESTINATIONS_DATA.map((destination) => (
             <DestinationCard key={destination.id} destination={destination} />
           ))}

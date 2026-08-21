@@ -135,7 +135,16 @@ export function Header({ onOpenEnquire }: HeaderProps) {
           </nav>
 
           {/* Right Action Controls: Theme Switcher & Book CTA */}
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            {/* Quick Call Icon (Mobile Only) */}
+            <a
+              href="tel:+919876543210"
+              aria-label="Call Trip Desk"
+              className="sm:hidden w-9 h-9 rounded-lg bg-white/10 border border-white/15 text-brand-red flex items-center justify-center"
+            >
+              <Phone className="w-4 h-4" />
+            </a>
+
             {/* Dark/Light Theme Toggle Button */}
             <button
               onClick={toggleTheme}
@@ -153,7 +162,7 @@ export function Header({ onOpenEnquire }: HeaderProps) {
             {onOpenEnquire && (
               <button
                 onClick={() => onOpenEnquire("tour")}
-                className="px-5 py-2.5 bg-brand-red hover:bg-brand-red-hover text-white text-xs font-bold font-display uppercase tracking-widest rounded-lg transition-all shadow-glow-red hover:scale-[1.02] flex items-center gap-1.5"
+                className="hidden sm:flex px-5 py-2.5 bg-brand-red hover:bg-brand-red-hover text-white text-xs font-bold font-display uppercase tracking-widest rounded-lg transition-all shadow-glow-red hover:scale-[1.02] items-center gap-1.5"
               >
                 <Calendar className="w-3.5 h-3.5" />
                 <span>Book Group Trip</span>
@@ -163,7 +172,7 @@ export function Header({ onOpenEnquire }: HeaderProps) {
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden w-10 h-10 rounded-lg bg-white/10 border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition-colors"
+              className="lg:hidden w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-white/10 border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition-colors"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}

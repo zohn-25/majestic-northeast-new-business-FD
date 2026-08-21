@@ -31,7 +31,7 @@ export function TourCard({ tour, onEnquire, featuredLayout = false }: TourCardPr
       }`}
     >
       {/* 1. Image Container with Link */}
-      <Link href={tourDetailUrl} className={`relative h-64 sm:h-72 w-full overflow-hidden bg-black block ${featuredLayout ? "md:w-1/2 md:h-auto" : ""}`}>
+      <Link href={tourDetailUrl} className={`relative h-52 sm:h-72 w-full overflow-hidden bg-black block ${featuredLayout ? "md:w-1/2 md:h-auto" : ""}`}>
         <Image
           src={tour.heroImage}
           alt={tour.title}
@@ -69,27 +69,27 @@ export function TourCard({ tour, onEnquire, featuredLayout = false }: TourCardPr
       </Link>
 
       {/* 2. Content Body */}
-      <div className={`p-6 sm:p-7 flex flex-col justify-between space-y-6 text-left ${featuredLayout ? "md:w-1/2" : ""}`}>
-        <div className="space-y-4">
+      <div className={`p-4 sm:p-7 flex flex-col justify-between space-y-4 sm:space-y-6 text-left ${featuredLayout ? "md:w-1/2" : ""}`}>
+        <div className="space-y-3 sm:space-y-4">
           {/* Sub Header / Fleet Details */}
           <div>
             <div className="flex items-center justify-between gap-2 mb-1.5 flex-wrap">
-              <span className="text-[11px] uppercase tracking-wider font-black text-brand-red font-display flex items-center gap-1">
+              <span className="text-[10px] sm:text-[11px] uppercase tracking-wider font-black text-brand-red font-display flex items-center gap-1">
                 {tour.vehicleProvided || (isBike ? "RE Himalayan 450" : "Mahindra Thar 4x4")}
               </span>
-              <span className="text-[10px] uppercase tracking-wider font-bold text-emerald-500 bg-emerald-500/10 dark:bg-emerald-500/20 px-2 py-0.5 rounded border border-emerald-500/30">
+              <span className="text-[9px] sm:text-[10px] uppercase tracking-wider font-bold text-emerald-500 bg-emerald-500/10 dark:bg-emerald-500/20 px-2 py-0.5 rounded border border-emerald-500/30">
                 ✓ ILP Permits Included
               </span>
             </div>
 
             <Link href={tourDetailUrl}>
-              <h3 className="text-2xl sm:text-3xl font-black font-display tracking-tight text-gray-900 dark:text-white hover:text-brand-red dark:hover:text-brand-red transition-colors uppercase line-clamp-2 leading-[0.95]">
+              <h3 className="text-xl sm:text-3xl font-black font-display tracking-tight text-gray-900 dark:text-white hover:text-brand-red dark:hover:text-brand-red transition-colors uppercase line-clamp-2 leading-[0.98] sm:leading-[0.95]">
                 {tour.title}
               </h3>
             </Link>
 
             {/* Route Circuit Pill */}
-            <div className="mt-2.5 py-1.5 px-3 bg-gray-100 dark:bg-black/50 border border-gray-200 dark:border-white/10 rounded text-[11px] text-gray-600 dark:text-white/70 truncate font-normal">
+            <div className="mt-2 py-1 px-2.5 sm:py-1.5 sm:px-3 bg-gray-100 dark:bg-black/50 border border-gray-200 dark:border-white/10 rounded text-[10px] sm:text-[11px] text-gray-600 dark:text-white/70 truncate font-normal">
               {tour.route}
             </div>
           </div>
