@@ -1,0 +1,265 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html.dark {
+    background-color: #0B0C0E;
+    color: #F3F4F6;
+  }
+
+  html.light {
+    background-color: #F4F5F8;
+    color: #111827;
+  }
+
+  body {
+    overflow-x: hidden;
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    letter-spacing: 0.01em;
+  }
+
+  /* Expedition Mountain Topographic & Offroad Matrix Pattern (Dark Mode) */
+  .dark body {
+    background-color: #0B0C0E;
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(230, 26, 36, 0.08) 0%, transparent 60%),
+      radial-gradient(circle at 90% 80%, rgba(230, 26, 36, 0.04) 0%, transparent 50%),
+      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140' opacity='0.04'%3E%3Cpath d='M0 70 Q 35 35, 70 70 T 140 70 M0 95 Q 45 60, 70 95 T 140 95 M0 45 Q 50 20, 90 45 T 140 45 M20 125 Q 70 90, 120 125 M20 20 Q 70 45, 120 20' fill='none' stroke='%23ffffff' stroke-width='1.2'/%3E%3Ccircle cx='70' cy='70' r='1.5' fill='%23E61A24'/%3E%3C/svg%3E");
+    background-size: 100% 100%, 100% 100%, 70px 70px, 70px 70px, 140px 140px;
+    background-attachment: fixed;
+    color: #F3F4F6;
+  }
+
+  /* Expedition Mountain Topographic & Offroad Matrix Pattern (Light Mode) */
+  .light body {
+    background-color: #F4F5F8;
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(230, 26, 36, 0.05) 0%, transparent 50%),
+      linear-gradient(to right, rgba(0, 0, 0, 0.025) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.025) 1px, transparent 1px),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140' opacity='0.035'%3E%3Cpath d='M0 70 Q 35 35, 70 70 T 140 70 M0 95 Q 45 60, 70 95 T 140 95 M0 45 Q 50 20, 90 45 T 140 45 M20 125 Q 70 90, 120 125' fill='none' stroke='%23000000' stroke-width='1.2'/%3E%3C/svg%3E");
+    background-size: 100% 100%, 70px 70px, 70px 70px, 140px 140px;
+    background-attachment: fixed;
+    color: #111827;
+  }
+
+  /* Spacious, modern typography where letters never touch */
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display), sans-serif;
+    letter-spacing: 0.035em;
+    font-weight: 700;
+  }
+}
+
+/* Dynamic Card Surfaces */
+.card-dark {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark .card-dark {
+  background: #131518;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+  color: #FFFFFF;
+}
+
+.dark .card-dark:hover {
+  border-color: rgba(230, 26, 36, 0.6);
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.9), 0 0 20px rgba(230, 26, 36, 0.15);
+}
+
+.light .card-dark {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06), 0 4px 10px -2px rgba(0, 0, 0, 0.04);
+  color: #111827;
+}
+
+.light .card-dark:hover {
+  border-color: #E61A24;
+  transform: translateY(-3px);
+  box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.12), 0 0 15px rgba(230, 26, 36, 0.15);
+}
+
+/* Crimson Badge Pill */
+.brush-badge {
+  background-color: #E61A24;
+  color: #FFFFFF;
+  padding: 0.35rem 0.85rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  box-shadow: 0 4px 15px rgba(230, 26, 36, 0.3);
+}
+
+/* Sleek, Ultra-Modern Custom Scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(230, 26, 36, 0.6) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 9999px;
+  transition: background-color 0.2s ease;
+}
+
+.light ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #E61A24;
+  box-shadow: 0 0 8px rgba(230, 26, 36, 0.6);
+}
+
+/* Custom Scrollable Dropdown Styling */
+.custom-scrollbar {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #E61A24 rgba(255, 255, 255, 0.05);
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 9999px;
+  margin: 4px 0;
+}
+.light .custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #E61A24;
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #FF3842;
+}
+
+/* Cinematic Zoom Out Animation for Page Hero Banners */
+@keyframes cinematicZoomOut {
+  0% {
+    transform: scale(1.18);
+  }
+  100% {
+    transform: scale(1.02);
+  }
+}
+
+.animate-zoom-out {
+  animation: cinematicZoomOut 16s cubic-bezier(0.25, 1, 0.5, 1) infinite alternate;
+  will-change: transform;
+}
+
+/* Animated 4x4 Offroad Car Cruising Across Navbar Border from Right to Left (Slow 42s Motion) */
+@keyframes vehicleRideRightToLeft {
+  0% {
+    left: calc(100% + 60px);
+  }
+  100% {
+    left: -100px;
+  }
+}
+
+/* Gentle, Realistic 4x4 Offroad Suspension & Engine Rumble (No intense jumping) */
+@keyframes offroadSubtleRumble {
+  0%, 100% {
+    transform: scaleX(-1) translateY(0) rotate(0deg);
+  }
+  20% {
+    transform: scaleX(-1) translateY(-0.8px) rotate(0.6deg);
+  }
+  40% {
+    transform: scaleX(-1) translateY(0.4px) rotate(-0.5deg);
+  }
+  60% {
+    transform: scaleX(-1) translateY(-1px) rotate(0.4deg);
+  }
+  80% {
+    transform: scaleX(-1) translateY(0.2px) rotate(-0.3deg);
+  }
+}
+
+/* Flying Mud & Rock Particles Spray Burst Behind Wheels (Dynamic Animation) */
+@keyframes mudParticleBurst1 {
+  0% {
+    transform: translate(0, 0) scale(0.85);
+    opacity: 0.3;
+  }
+  40% {
+    transform: translate(-3.5px, -1.2px) scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-7.5px, -0.6px) scale(0.5);
+    opacity: 0.1;
+  }
+}
+
+@keyframes mudParticleBurst2 {
+  0% {
+    transform: translate(0, 0) scale(0.9);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translate(-4.5px, -1.8px) scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-9px, -1.2px) scale(0.4);
+    opacity: 0;
+  }
+}
+
+.animate-car-cruise {
+  animation: vehicleRideRightToLeft 42s linear infinite;
+  will-change: left;
+}
+
+.animate-car-cruise:hover {
+  animation-play-state: paused;
+}
+
+.animate-offroad-wobble {
+  animation: offroadSubtleRumble 1.4s ease-in-out infinite;
+  transform-origin: 50% 85%;
+  will-change: transform;
+}
+
+.animate-mud-burst-1 {
+  animation: mudParticleBurst1 0.4s ease-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-mud-burst-2 {
+  animation: mudParticleBurst2 0.35s ease-out infinite 0.12s;
+  will-change: transform, opacity;
+}
