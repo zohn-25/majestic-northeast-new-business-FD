@@ -11,7 +11,6 @@ import {
   Car,
   Bike,
   AlertCircle,
-  Sparkles,
   MapPin,
   Compass,
   Calendar,
@@ -172,21 +171,21 @@ export function PassengerModal({
       onClick={onClose}
     >
       <div
-        className="w-full max-w-2xl bg-[#121418] border border-white/15 rounded-3xl p-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.9)] space-y-6 my-8 max-h-[90vh] overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 text-left"
+        className="w-full max-w-2xl bg-[#111318] border border-white/[0.12] rounded-2xl p-5 sm:p-6 shadow-2xl space-y-5 my-8 max-h-[90vh] overflow-y-auto scrollbar-thin scrollbar-thumb-white/5 text-left"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-white/10">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-brand-red/15 border border-brand-red/30 text-brand-red flex items-center justify-center">
-              <User className="w-5 h-5" />
+        <div className="flex items-center justify-between pb-3.5 border-b border-white/[0.08]">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-white/[0.06] border border-white/[0.08] text-zinc-300 flex items-center justify-center">
+              <User className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-lg font-black font-display uppercase tracking-tight text-white">
+              <h3 className="text-sm sm:text-base font-semibold text-white">
                 {isEditing ? `Edit Passenger: ${passenger?.name}` : "Add Traveller to Batch Manifest"}
               </h3>
-              <p className="text-[11px] text-white/50">
-                Assign destination tour circuit, departure date, and convoy seat.
+              <p className="text-[11px] text-zinc-400">
+                Configure destination tour circuit, departure dates, and convoy seat.
               </p>
             </div>
           </div>
@@ -194,25 +193,23 @@ export function PassengerModal({
           <button
             type="button"
             onClick={onClose}
-            className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 text-white/50 hover:text-white flex items-center justify-center transition-colors"
+            className="w-7 h-7 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-zinc-400 hover:text-white flex items-center justify-center transition-colors"
           >
-            <X className="w-4 h-4" />
+            <X className="w-3.5 h-3.5" />
           </button>
         </div>
 
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="space-y-4">
           
-          {/* ========================================================================= */}
-          {/* 🎯 DESTINATION TOUR CIRCUIT & BATCH DEPARTURE DATE SELECTOR              */}
-          {/* ========================================================================= */}
-          <div className="p-4 bg-black/60 rounded-2xl border-2 border-brand-red/40 space-y-2.5">
+          {/* Destination Tour Circuit & Departure Date Selector */}
+          <div className="p-3.5 bg-[#0B0D10] rounded-xl border border-white/[0.08] space-y-2">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-black font-display uppercase tracking-wider text-brand-red flex items-center gap-1.5">
-                <Compass className="w-4 h-4" />
-                <span>Select Tour Destination & Departure Batch *</span>
+              <label className="text-xs font-medium text-zinc-300 flex items-center gap-1.5">
+                <Compass className="w-3.5 h-3.5 text-zinc-400" />
+                <span>Tour Destination & Departure Batch *</span>
               </label>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-white/10 text-white/70 font-mono">
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/[0.04] text-zinc-400">
                 {activeBatch.bookedSeats}/{activeBatch.totalSeats} Booked
               </span>
             </div>
@@ -221,27 +218,27 @@ export function PassengerModal({
             <select
               value={targetBatchId}
               onChange={(e) => handleBatchChange(e.target.value)}
-              className="w-full bg-[#16191F] border border-white/20 rounded-xl px-3.5 py-3 text-xs text-white font-bold focus:outline-none focus:border-brand-red shadow-inner cursor-pointer"
+              className="w-full bg-[#16181E] border border-white/[0.1] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-white/25 cursor-pointer font-medium"
             >
               {batches.map((b) => (
                 <option key={b.id} value={b.id}>
-                  {b.tourTitle} ── [Dep: {b.startDate} to {b.endDate}] ({b.status} • {b.tripFormat === "car" ? "4x4 Convoy" : "Motorcycle"})
+                  {b.tourTitle} ── [Dep: {b.startDate} to {b.endDate}] ({b.status})
                 </option>
               ))}
             </select>
 
             {/* Selected Batch Details Strip */}
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/70 pt-1">
-              <span>📍 Route: <strong className="text-white">{activeBatch.startLocation}</strong></span>
-              <span>📅 Window: <strong className="text-brand-red">{activeBatch.startDate} → {activeBatch.endDate}</strong></span>
-              <span>👨‍✈️ Captain: <strong className="text-white">{activeBatch.leadCaptainName}</strong></span>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-zinc-400 pt-0.5">
+              <span>Pickup: <strong className="text-zinc-200">{activeBatch.startLocation}</strong></span>
+              <span>Window: <strong className="text-zinc-200 font-mono">{activeBatch.startDate} → {activeBatch.endDate}</strong></span>
+              <span>Captain: <strong className="text-zinc-200">{activeBatch.leadCaptainName}</strong></span>
             </div>
           </div>
 
           {/* Name & Age / Gender */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="sm:col-span-2 space-y-1">
-              <label className="block text-xs font-bold font-display uppercase tracking-wider text-white/80">
+              <label className="block text-xs font-medium text-zinc-300">
                 Full Name *
               </label>
               <input
@@ -249,32 +246,32 @@ export function PassengerModal({
                 value={formData.name || ""}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 placeholder="e.g. Vikramaditya Roy"
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-brand-red font-medium"
+                className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-white/20"
               />
-              {errors.name && <p className="text-[10px] text-red-400 font-bold">{errors.name}</p>}
+              {errors.name && <p className="text-[10px] text-red-400">{errors.name}</p>}
             </div>
 
             <div className="grid grid-cols-2 gap-2">
               <div className="space-y-1">
-                <label className="block text-[10px] font-black font-display uppercase tracking-wider text-white/70">
+                <label className="block text-xs font-medium text-zinc-400">
                   Age
                 </label>
                 <input
                   type="number"
                   value={formData.age || ""}
                   onChange={(e) => setFormData({ ...formData, age: Number(e.target.value) })}
-                  className="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2 text-xs text-white font-bold focus:outline-none focus:border-brand-red"
+                  className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-white/20"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="block text-[10px] font-black font-display uppercase tracking-wider text-white/70">
+                <label className="block text-xs font-medium text-zinc-400">
                   Gender
                 </label>
                 <select
                   value={formData.gender || "Male"}
                   onChange={(e) => setFormData({ ...formData, gender: e.target.value as "Male" | "Female" | "Other" })}
-                  className="w-full bg-black/60 border border-white/15 rounded-xl px-2.5 py-2 text-xs text-white font-bold focus:outline-none focus:border-brand-red"
+                  className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none focus:border-white/20"
                 >
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
@@ -287,7 +284,7 @@ export function PassengerModal({
           {/* Contact Details */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="space-y-1">
-              <label className="block text-xs font-bold font-display uppercase tracking-wider text-white/80">
+              <label className="block text-xs font-medium text-zinc-300">
                 Phone Number *
               </label>
               <input
@@ -295,13 +292,13 @@ export function PassengerModal({
                 value={formData.phone || ""}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 placeholder="+91 98765 43210"
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-brand-red font-mono"
+                className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-white/20 font-mono"
               />
-              {errors.phone && <p className="text-[10px] text-red-400 font-bold">{errors.phone}</p>}
+              {errors.phone && <p className="text-[10px] text-red-400">{errors.phone}</p>}
             </div>
 
             <div className="space-y-1">
-              <label className="block text-xs font-bold font-display uppercase tracking-wider text-white/80">
+              <label className="block text-xs font-medium text-zinc-300">
                 Email Address *
               </label>
               <input
@@ -309,13 +306,13 @@ export function PassengerModal({
                 value={formData.email || ""}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 placeholder="traveller@email.com"
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-brand-red font-mono"
+                className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-white/20 font-mono"
               />
-              {errors.email && <p className="text-[10px] text-red-400 font-bold">{errors.email}</p>}
+              {errors.email && <p className="text-[10px] text-red-400">{errors.email}</p>}
             </div>
 
             <div className="space-y-1">
-              <label className="block text-xs font-bold font-display uppercase tracking-wider text-white/80">
+              <label className="block text-xs font-medium text-zinc-300">
                 Home City
               </label>
               <input
@@ -323,14 +320,14 @@ export function PassengerModal({
                 value={formData.city || ""}
                 onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                 placeholder="e.g. Bangalore"
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-brand-red font-medium"
+                className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-white/20"
               />
             </div>
           </div>
 
           {/* Emergency Contact */}
           <div className="space-y-1">
-            <label className="block text-xs font-bold font-display uppercase tracking-wider text-white/80">
+            <label className="block text-xs font-medium text-zinc-300">
               Emergency Contact (Name & Phone)
             </label>
             <input
@@ -338,20 +335,20 @@ export function PassengerModal({
               value={formData.emergencyContact || ""}
               onChange={(e) => setFormData({ ...formData, emergencyContact: e.target.value })}
               placeholder="e.g. Ramesh Roy (Father) - +91 98765 11002"
-              className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-brand-red font-medium"
+              className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-white/20"
             />
           </div>
 
           {/* Vehicle Assignment & Seat */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3.5 bg-black/40 rounded-2xl border border-white/10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 bg-[#0B0D10] rounded-xl border border-white/[0.08]">
             <div className="space-y-1">
-              <label className="block text-[10px] font-black font-display uppercase tracking-wider text-brand-red">
+              <label className="block text-[10px] font-mono uppercase text-zinc-400">
                 Assigned 4x4 / Bike in Convoy
               </label>
               <select
                 value={formData.assignedVehicle || activeBatch.assignedVehicles[0]}
                 onChange={(e) => setFormData({ ...formData, assignedVehicle: e.target.value })}
-                className="w-full bg-[#121418] border border-white/15 rounded-xl px-3 py-2 text-xs text-white font-bold focus:outline-none focus:border-brand-red"
+                className="w-full bg-[#16181E] border border-white/[0.1] rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-white/25 font-medium"
               >
                 {activeBatch.assignedVehicles.map((veh) => (
                   <option key={veh} value={veh}>
@@ -362,15 +359,15 @@ export function PassengerModal({
             </div>
 
             <div className="space-y-1">
-              <label className="block text-[10px] font-black font-display uppercase tracking-wider text-brand-red">
+              <label className="block text-[10px] font-mono uppercase text-zinc-400">
                 Seat Position / Role
               </label>
               <input
                 type="text"
                 value={formData.seatNumber || ""}
                 onChange={(e) => setFormData({ ...formData, seatNumber: e.target.value })}
-                placeholder="e.g. Co-Driver (Front Right) / Rider 02"
-                className="w-full bg-[#121418] border border-white/15 rounded-xl px-3 py-2 text-xs text-white font-bold focus:outline-none focus:border-brand-red"
+                placeholder="e.g. Co-Driver (Front Right)"
+                className="w-full bg-[#16181E] border border-white/[0.1] rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-white/25 font-medium"
               />
             </div>
           </div>
@@ -378,18 +375,18 @@ export function PassengerModal({
           {/* Status Selectors: Trip Status, Payment Status, Permit Status */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="space-y-1">
-              <label className="block text-[10px] font-black font-display uppercase tracking-wider text-white/70">
-                Trip Attendance / Status
+              <label className="block text-xs font-medium text-zinc-400">
+                Trip Attendance
               </label>
               <select
                 value={formData.tripStatus || "Advance Paid (30%)"}
                 onChange={(e) => setFormData({ ...formData, tripStatus: e.target.value as PassengerTripStatus })}
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2 text-xs text-white font-bold focus:outline-none focus:border-brand-red"
+                className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-white/20"
               >
                 <option value="Applied / Pending">Applied / Pending</option>
                 <option value="Advance Paid (30%)">Advance Paid (30%)</option>
                 <option value="Fully Paid">Fully Paid</option>
-                <option value="Boarded / Departed">Boarded / Departed (Chala gaya)</option>
+                <option value="Boarded / Departed">Boarded / Departed</option>
                 <option value="On Tour">On Tour (In-Transit)</option>
                 <option value="Completed">Completed</option>
                 <option value="No Show">No Show</option>
@@ -398,13 +395,13 @@ export function PassengerModal({
             </div>
 
             <div className="space-y-1">
-              <label className="block text-[10px] font-black font-display uppercase tracking-wider text-white/70">
+              <label className="block text-xs font-medium text-zinc-400">
                 Payment Status
               </label>
               <select
                 value={formData.paymentStatus || "Advance Paid"}
                 onChange={(e) => setFormData({ ...formData, paymentStatus: e.target.value as PaymentStatus })}
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2 text-xs text-white font-bold focus:outline-none focus:border-brand-red"
+                className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-white/20"
               >
                 <option value="Pending Advance">Pending Advance</option>
                 <option value="Advance Paid">Advance Paid (30%)</option>
@@ -414,13 +411,13 @@ export function PassengerModal({
             </div>
 
             <div className="space-y-1">
-              <label className="block text-[10px] font-black font-display uppercase tracking-wider text-white/70">
-                ILP / Border Permit
+              <label className="block text-xs font-medium text-zinc-400">
+                ILP Permit
               </label>
               <select
                 value={formData.permitStatus || "Verified & Issued"}
                 onChange={(e) => setFormData({ ...formData, permitStatus: e.target.value as PermitStatus })}
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2 text-xs text-white font-bold focus:outline-none focus:border-brand-red"
+                className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-white/20"
               >
                 <option value="Verified & Issued">Verified & Issued</option>
                 <option value="Documents Under Review">Under Review</option>
@@ -431,65 +428,62 @@ export function PassengerModal({
           </div>
 
           {/* Solo Traveller Toggle & Food */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-            <div className="flex items-center gap-3 p-3 bg-black/40 rounded-xl border border-white/10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-0.5">
+            <div className="flex items-center gap-2.5 p-2.5 bg-[#0B0D10] rounded-lg border border-white/[0.08]">
               <input
                 type="checkbox"
                 id="isSoloPax"
                 checked={Boolean(formData.isSoloTraveller)}
                 onChange={(e) => setFormData({ ...formData, isSoloTraveller: e.target.checked })}
-                className="w-4 h-4 rounded accent-brand-red cursor-pointer"
+                className="w-3.5 h-3.5 rounded accent-zinc-400 cursor-pointer"
               />
-              <label htmlFor="isSoloPax" className="text-xs font-bold font-display text-white cursor-pointer">
-                Solo Stranger Traveller (Pair with roommate/tent)
+              <label htmlFor="isSoloPax" className="text-xs text-zinc-300 cursor-pointer font-medium">
+                Solo Traveller (Pair roommate/tent)
               </label>
             </div>
 
             <div className="space-y-1">
-              <label className="block text-[10px] font-black font-display uppercase tracking-wider text-white/70">
-                Dietary Preference
-              </label>
               <select
                 value={formData.dietaryPreference || "Veg"}
                 onChange={(e) => setFormData({ ...formData, dietaryPreference: e.target.value })}
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2 text-xs text-white font-bold focus:outline-none focus:border-brand-red"
+                className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none focus:border-white/20"
               >
-                <option value="Veg">Vegetarian</option>
-                <option value="Non-Veg">Non-Vegetarian</option>
-                <option value="Jain">Jain (No Onion / Garlic)</option>
+                <option value="Veg">Diet: Vegetarian</option>
+                <option value="Non-Veg">Diet: Non-Vegetarian</option>
+                <option value="Jain">Diet: Jain Food</option>
               </select>
             </div>
           </div>
 
           {/* Special Notes */}
           <div className="space-y-1">
-            <label className="block text-xs font-bold font-display uppercase tracking-wider text-white/80">
+            <label className="block text-xs font-medium text-zinc-400">
               Special Instructions / Marshal Notes
             </label>
             <textarea
               rows={2}
               value={formData.notes || ""}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-              placeholder="e.g. Certified mountain driver, has camera drone, requested pickup at GAU airport terminal 1."
-              className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-brand-red font-medium"
+              placeholder="e.g. Pickup at GAU airport terminal 1."
+              className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-white/20"
             />
           </div>
 
           {/* Form Actions */}
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/10">
+          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-white/[0.08]">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-white/80 text-xs font-bold font-display uppercase tracking-wider transition-colors"
+              className="px-3.5 py-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 text-xs font-medium transition-colors"
             >
               Cancel
             </button>
 
             <button
               type="submit"
-              className="px-6 py-2.5 rounded-xl bg-brand-red hover:bg-brand-red-hover text-white text-xs font-black font-display uppercase tracking-widest transition-all shadow-glow-red flex items-center gap-2"
+              className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition-all border border-white/15 flex items-center gap-1.5 shadow-sm"
             >
-              <Save className="w-4 h-4" />
+              <Save className="w-3.5 h-3.5" />
               <span>{isEditing ? "Update Roster Entry" : "Add to Manifest"}</span>
             </button>
           </div>

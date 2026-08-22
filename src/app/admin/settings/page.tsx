@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Settings, ShieldCheck, Key, Bell, Phone, Save, Sparkles, RefreshCw } from "lucide-react";
+import { Settings, ShieldCheck, Key, Bell, Phone, Save, RefreshCw } from "lucide-react";
 import { useToast } from "@/components/admin/Toast";
 
 export default function AdminSettingsPage() {
@@ -13,104 +13,118 @@ export default function AdminSettingsPage() {
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
-    showToast("Settings Saved", "Operations contact details updated successfully.", "success");
+    showToast("Settings Saved", "Operations contact details updated.", "success");
   };
 
   return (
-    <div className="space-y-6 text-left max-w-4xl">
+    <div className="space-y-5 text-left max-w-4xl">
       
       {/* Top Banner */}
-      <div className="bg-[#121418] border border-white/10 rounded-2xl p-5 sm:p-6 shadow-lg space-y-1">
-        <h2 className="text-xl sm:text-2xl font-black font-display uppercase tracking-tight text-white flex items-center gap-2">
-          <Settings className="w-5 h-5 text-brand-red" />
+      <div className="bg-[#111318] border border-white/[0.08] rounded-2xl p-4 sm:p-5 space-y-0.5">
+        <h2 className="text-lg sm:text-xl font-bold font-display tracking-tight text-white flex items-center gap-2">
+          <Settings className="w-5 h-5 text-zinc-400" />
           <span>Console & Operations Settings</span>
         </h2>
-        <p className="text-xs text-white/60 font-medium">
+        <p className="text-xs text-zinc-400">
           Configure emergency dispatch phone lines, WhatsApp routing, and admin notification preferences.
         </p>
       </div>
 
-      <form onSubmit={handleSave} className="space-y-6">
+      <form onSubmit={handleSave} className="space-y-5">
         
         {/* Contact Dispatch Settings */}
-        <div className="bg-[#121418] border border-white/10 rounded-2xl p-5 sm:p-6 space-y-4 shadow-xl">
-          <h3 className="text-sm font-black font-display uppercase tracking-wider text-white flex items-center gap-2">
-            <Phone className="w-4 h-4 text-emerald-400" />
+        <div className="bg-[#111318] border border-white/[0.08] rounded-2xl p-5 sm:p-6 space-y-4">
+          <h3 className="text-xs font-mono uppercase tracking-wider text-zinc-300 flex items-center gap-2">
+            <Phone className="w-3.5 h-3.5 text-zinc-400" />
             <span>Emergency Dispatch & Booking Desk</span>
           </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
-            <div className="space-y-1.5">
-              <label className="block text-xs font-bold font-display uppercase tracking-wider text-white/80">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
+            <div className="space-y-1">
+              <label className="block text-xs font-medium text-zinc-300">
                 Support Telephone Number
               </label>
               <input
                 type="text"
                 value={supportPhone}
                 onChange={(e) => setSupportPhone(e.target.value)}
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-brand-red font-mono"
+                className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-white/20 font-mono"
               />
             </div>
 
-            <div className="space-y-1.5">
-              <label className="block text-xs font-bold font-display uppercase tracking-wider text-white/80">
-                Official WhatsApp Number (Country Code)
+            <div className="space-y-1">
+              <label className="block text-xs font-medium text-zinc-300">
+                Official WhatsApp Number (With Country Code)
               </label>
               <input
                 type="text"
                 value={supportWhatsApp}
                 onChange={(e) => setSupportWhatsApp(e.target.value)}
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-brand-red font-mono"
+                className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-white/20 font-mono"
               />
             </div>
           </div>
 
-          <div className="space-y-1.5">
-            <label className="block text-xs font-bold font-display uppercase tracking-wider text-white/80">
+          <div className="space-y-1">
+            <label className="block text-xs font-medium text-zinc-300">
               Operations Lead Email
             </label>
             <input
               type="email"
               value={leadEmail}
               onChange={(e) => setLeadEmail(e.target.value)}
-              className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-brand-red font-mono"
+              className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-white/20 font-mono"
             />
           </div>
         </div>
 
-        {/* Lead Notification Preferences */}
-        <div className="bg-[#121418] border border-white/10 rounded-2xl p-5 sm:p-6 space-y-4 shadow-xl">
-          <h3 className="text-sm font-black font-display uppercase tracking-wider text-white flex items-center gap-2">
-            <Bell className="w-4 h-4 text-amber-400" />
-            <span>Lead Notifications & Dispatch</span>
+        {/* Notifications & System Info */}
+        <div className="bg-[#111318] border border-white/[0.08] rounded-2xl p-5 sm:p-6 space-y-4">
+          <h3 className="text-xs font-mono uppercase tracking-wider text-zinc-300 flex items-center gap-2">
+            <Bell className="w-3.5 h-3.5 text-zinc-400" />
+            <span>Notification & State Preferences</span>
           </h3>
 
-          <div className="flex items-center justify-between p-3.5 bg-black/40 rounded-xl border border-white/10">
+          <div className="flex items-center justify-between p-3.5 bg-[#0B0D10] rounded-xl border border-white/[0.06]">
             <div className="space-y-0.5">
-              <span className="text-xs font-bold font-display text-white block">
-                Instant WhatsApp Booking Alerts
+              <span className="text-xs font-medium text-white block">
+                Instant WhatsApp Booking Notifications
               </span>
-              <span className="text-[11px] text-white/50 block">
-                Automatically generate wa.me deep links with customer enquiry specs.
+              <span className="text-[11px] text-zinc-400 block">
+                Generate pre-filled wa.me links for direct customer chat.
               </span>
             </div>
             <input
               type="checkbox"
               checked={enableWhatsAppAlerts}
               onChange={(e) => setEnableWhatsAppAlerts(e.target.checked)}
-              className="w-4 h-4 rounded accent-brand-red cursor-pointer"
+              className="w-4 h-4 rounded accent-zinc-400 cursor-pointer"
             />
+          </div>
+
+          <div className="p-3.5 bg-[#0B0D10] rounded-xl border border-white/[0.06] flex items-center justify-between">
+            <div className="space-y-0.5">
+              <span className="text-xs font-medium text-white block">
+                In-Memory Demo Environment
+              </span>
+              <span className="text-[11px] text-zinc-400 block">
+                Changes persist across client navigations during this session.
+              </span>
+            </div>
+            <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-white/[0.06] text-zinc-300">
+              Demo Active
+            </span>
           </div>
         </div>
 
-        {/* Submit */}
-        <div className="flex items-center justify-end">
+        {/* Save Button */}
+        <div className="flex justify-end">
           <button
             type="submit"
-            className="px-6 py-2.5 bg-brand-red hover:bg-brand-red-hover active:scale-95 text-white rounded-xl text-xs font-black font-display uppercase tracking-widest transition-all shadow-glow-red flex items-center gap-2"
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-white/10 hover:bg-white/15 active:scale-95 text-white rounded-xl text-xs font-semibold transition-all border border-white/15 shadow-sm"
           >
-            <Save className="w-4 h-4" />
-            <span>Save Preferences</span>
+            <Save className="w-3.5 h-3.5" />
+            <span>Save Settings</span>
           </button>
         </div>
 

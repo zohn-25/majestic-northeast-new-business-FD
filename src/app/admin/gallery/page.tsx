@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import Image from "next/image";
-import { Image as ImageIcon, Upload, Trash2, Filter, Sparkles, AlertCircle, Plus, Eye } from "lucide-react";
+import { Image as ImageIcon, Upload, Trash2, Filter, AlertCircle, Plus, Eye } from "lucide-react";
 import { useData, GalleryItem } from "@/context/DataContext";
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
 import { useToast } from "@/components/admin/Toast";
@@ -25,9 +25,9 @@ export default function AdminGalleryPage() {
   const categories = [
     { label: `All Photos (${galleryImages.length})`, value: "all" },
     { label: `Fleet Vehicles (${galleryImages.filter((g) => g.category === "vehicle").length})`, value: "vehicle" },
-    { label: `Expedition Tours (${galleryImages.filter((g) => g.category === "tour").length})`, value: "tour" },
+    { label: `Expeditions (${galleryImages.filter((g) => g.category === "tour").length})`, value: "tour" },
     { label: `Destinations (${galleryImages.filter((g) => g.category === "destination").length})`, value: "destination" },
-    { label: `Uploaded Photos (${galleryImages.filter((g) => g.category === "uploaded" || g.isUploaded).length})`, value: "uploaded" },
+    { label: `Custom Uploads (${galleryImages.filter((g) => g.category === "uploaded" || g.isUploaded).length})`, value: "uploaded" },
   ];
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,7 +43,7 @@ export default function AdminGalleryPage() {
 
       showToast(
         "Photo Uploaded",
-        `"${file.name}" has been added to the media library locally.`,
+        `"${file.name}" added to media library.`,
         "success"
       );
 
@@ -69,21 +69,21 @@ export default function AdminGalleryPage() {
   };
 
   return (
-    <div className="space-y-6 text-left">
+    <div className="space-y-5 text-left">
       
       {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#121418] border border-white/10 rounded-2xl p-5 shadow-lg">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#111318] border border-white/[0.08] rounded-2xl p-4 sm:p-5">
         <div className="space-y-0.5">
-          <h2 className="text-xl sm:text-2xl font-black font-display uppercase tracking-tight text-white flex items-center gap-2">
-            <ImageIcon className="w-5 h-5 text-brand-red" />
-            <span>Expedition Photo Gallery & Media</span>
+          <h2 className="text-lg sm:text-xl font-bold font-display tracking-tight text-white flex items-center gap-2">
+            <ImageIcon className="w-5 h-5 text-zinc-400" />
+            <span>Photo Gallery & Media Assets</span>
           </h2>
-          <p className="text-xs text-white/60 font-medium">
-            Manage high-resolution scenery, vehicle fleet shots, and mountain convoy photos.
+          <p className="text-xs text-zinc-400">
+            Preview media collected from fleet vehicles, tour packages, destinations, and uploads.
           </p>
         </div>
 
-        {/* Upload Action */}
+        {/* Upload Button */}
         <div>
           <input
             type="file"
@@ -95,25 +95,25 @@ export default function AdminGalleryPage() {
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="inline-flex items-center gap-2 px-4 py-2.5 bg-brand-red hover:bg-brand-red-hover active:scale-95 text-white rounded-xl text-xs font-black font-display uppercase tracking-wider transition-all shadow-glow-red"
+            className="inline-flex items-center gap-2 px-3.5 py-2 bg-white/10 hover:bg-white/15 active:scale-95 text-white rounded-xl text-xs font-semibold transition-all border border-white/15 shrink-0 shadow-sm"
           >
-            <Upload className="w-4 h-4" />
-            <span>Upload New Photo</span>
+            <Upload className="w-3.5 h-3.5" />
+            <span>Upload Photo</span>
           </button>
         </div>
       </div>
 
-      {/* Category Filter Pills */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+      {/* Filter Tabs */}
+      <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
         {categories.map((cat) => (
           <button
             key={cat.value}
             type="button"
             onClick={() => setActiveCategory(cat.value)}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-bold font-display uppercase tracking-wider whitespace-nowrap transition-all border ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all border ${
               activeCategory === cat.value
-                ? "bg-brand-red text-white border-brand-red shadow-md"
-                : "bg-[#121418] text-white/70 border-white/10 hover:border-white/20 hover:text-white"
+                ? "bg-white/15 text-white border-white/20 font-semibold"
+                : "bg-white/[0.02] text-zinc-400 border-white/[0.06] hover:border-white/15 hover:text-white"
             }`}
           >
             {cat.label}
@@ -122,151 +122,122 @@ export default function AdminGalleryPage() {
       </div>
 
       {/* Gallery Grid */}
-      {filteredImages.length === 0 ? (
-        <div className="bg-[#121418] border border-white/10 rounded-2xl p-16 text-center space-y-4">
-          <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 text-white/40 flex items-center justify-center mx-auto">
-            <AlertCircle className="w-7 h-7" />
-          </div>
-          <div className="space-y-1">
-            <h3 className="text-base font-black font-display uppercase text-white">
-              No images in this category
+      <div className="bg-[#111318] border border-white/[0.08] rounded-2xl p-5 sm:p-6 shadow-xl">
+        {filteredImages.length === 0 ? (
+          <div className="py-14 text-center space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/[0.06] text-zinc-500 flex items-center justify-center mx-auto">
+              <AlertCircle className="w-5 h-5" />
+            </div>
+            <h3 className="text-sm font-semibold text-white">
+              No photos found in this category
             </h3>
-            <p className="text-xs text-white/60">
-              Upload an image or select another category filter above.
-            </p>
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="px-3.5 py-1.5 bg-white/10 text-white rounded-xl text-xs font-medium border border-white/15"
+            >
+              Upload Photo
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={() => fileInputRef.current?.click()}
-            className="inline-flex items-center gap-1.5 px-4 py-2 bg-brand-red text-white rounded-xl text-xs font-bold font-display uppercase tracking-wider shadow-md"
-          >
-            <Upload className="w-4 h-4" />
-            <span>Upload Photo</span>
-          </button>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filteredImages.map((img) => {
-            const isBlob = img.url.startsWith("blob:");
-
-            return (
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5">
+            {filteredImages.map((img) => (
               <div
                 key={img.id}
-                className="bg-[#121418] border border-white/10 hover:border-white/20 rounded-2xl overflow-hidden shadow-lg group flex flex-col justify-between transition-all"
+                className="group relative aspect-video sm:aspect-square bg-black/40 rounded-xl overflow-hidden border border-white/[0.08] hover:border-white/25 transition-all shadow-md flex flex-col justify-end"
               >
-                {/* Image Container with Fixed Aspect Ratio */}
-                <div className="relative aspect-[16/11] w-full bg-black overflow-hidden">
-                  {isBlob ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={img.url}
-                      alt={img.alt}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  ) : (
-                    <Image
-                      src={img.url}
-                      alt={img.alt}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  )}
+                <Image
+                  src={img.url}
+                  alt={img.alt || "Gallery Item"}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                />
 
-                  {/* Category Pill Tag */}
-                  <div className="absolute top-2.5 left-2.5">
-                    <span
-                      className={`text-[9px] font-black font-display uppercase tracking-wider px-2 py-0.5 rounded-md border shadow-md backdrop-blur-md ${
-                        img.category === "vehicle"
-                          ? "bg-blue-600/80 text-white border-blue-400/40"
-                          : img.category === "tour"
-                          ? "bg-amber-600/80 text-white border-amber-400/40"
-                          : img.category === "uploaded"
-                          ? "bg-emerald-600/80 text-white border-emerald-400/40"
-                          : "bg-purple-600/80 text-white border-purple-400/40"
-                      }`}
-                    >
-                      {img.category}
-                    </span>
-                  </div>
-
-                  {/* Actions Overlay on Hover */}
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 backdrop-blur-[2px]">
+                {/* Overlay on hover */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-2.5 flex flex-col justify-between">
+                  <div className="flex justify-end gap-1">
                     <button
                       type="button"
                       onClick={() => setPreviewImage(img)}
-                      className="p-2 rounded-xl bg-white/20 hover:bg-white text-white hover:text-black transition-colors"
-                      title="View Full Size"
+                      className="w-7 h-7 rounded-lg bg-black/60 hover:bg-black text-white/80 hover:text-white flex items-center justify-center transition-colors"
+                      title="Preview Full Screen"
                     >
-                      <Eye className="w-4 h-4" />
+                      <Eye className="w-3.5 h-3.5" />
                     </button>
                     <button
                       type="button"
                       onClick={() => handleDeleteClick(img)}
-                      className="p-2 rounded-xl bg-red-600/80 hover:bg-red-600 text-white transition-colors"
+                      className="w-7 h-7 rounded-lg bg-red-600/80 hover:bg-red-600 text-white flex items-center justify-center transition-colors"
                       title="Delete Image"
                     >
-                      <Trash2 className="w-4 h-4" />
+                      <Trash2 className="w-3.5 h-3.5" />
                     </button>
                   </div>
-                </div>
 
-                {/* Footer Info */}
-                <div className="p-3 space-y-0.5 border-t border-white/5 bg-black/20">
-                  <span className="text-xs font-bold font-display text-white block truncate">
-                    {img.entityName}
-                  </span>
-                  <span className="text-[10px] text-white/40 block truncate">
-                    {img.alt}
-                  </span>
+                  <div className="leading-tight">
+                    <span className="text-[11px] font-medium text-white truncate block">
+                      {img.entityName}
+                    </span>
+                    <span className="text-[9px] font-mono text-zinc-400 uppercase">
+                      {img.category}
+                    </span>
+                  </div>
                 </div>
               </div>
-            );
-          })}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
 
-      {/* Full Image Preview Modal */}
+      {/* Lightbox Preview Modal */}
       {previewImage && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 animate-fadeIn"
           onClick={() => setPreviewImage(null)}
         >
           <div
-            className="relative max-w-4xl w-full bg-[#121418] border border-white/20 rounded-3xl overflow-hidden shadow-2xl space-y-3 p-4 text-left"
+            className="relative max-w-4xl w-full bg-[#111318] border border-white/15 rounded-2xl overflow-hidden shadow-2xl p-2"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between pb-2 border-b border-white/10">
+            <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-black">
+              <Image
+                src={previewImage.url}
+                alt={previewImage.alt}
+                fill
+                className="object-contain"
+              />
+            </div>
+            <div className="p-3 flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-bold font-display text-white">{previewImage.entityName}</h3>
-                <p className="text-[11px] text-white/50">{previewImage.alt}</p>
+                <h4 className="text-xs font-semibold text-white">
+                  {previewImage.entityName}
+                </h4>
+                <p className="text-[10px] text-zinc-400 font-mono">
+                  Category: {previewImage.category}
+                </p>
               </div>
               <button
                 type="button"
                 onClick={() => setPreviewImage(null)}
-                className="p-1.5 rounded-lg bg-white/10 text-white/60 hover:text-white"
+                className="px-3 py-1 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-medium"
               >
-                ✕
+                Close
               </button>
-            </div>
-
-            <div className="relative aspect-[16/10] w-full bg-black rounded-2xl overflow-hidden">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={previewImage.url} alt={previewImage.alt} className="w-full h-full object-contain" />
             </div>
           </div>
         </div>
       )}
 
-      {/* Delete Confirm Dialog */}
+      {/* Delete Confirmation */}
       <ConfirmDialog
         isOpen={deleteConfirmOpen}
-        title="Delete Photo"
-        message={`Are you sure you want to remove this photo (${imageToDelete?.entityName}) from the active media library?`}
-        confirmLabel="Delete Photo"
+        title="Remove Photo"
+        message={`Are you sure you want to remove this photo (${imageToDelete?.entityName}) from the gallery?`}
+        confirmLabel="Remove Photo"
         onConfirm={handleConfirmDelete}
         onCancel={() => setDeleteConfirmOpen(false)}
       />
+
     </div>
   );
 }

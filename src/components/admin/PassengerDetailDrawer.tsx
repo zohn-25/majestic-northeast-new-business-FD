@@ -53,7 +53,7 @@ export function PassengerDetailDrawer({
   if (!isOpen || !passenger) return null;
 
   const rawPhone = passenger.phone.replace(/[^0-9]/g, "");
-  const whatsAppMessage = `Hi ${passenger.name}! This is the Majestic Northeast Expedition Team regarding your upcoming group departure for "${passenger.tourTitle}". We are confirming your convoy roll-call and vehicle assignment (${passenger.assignedVehicle}).`;
+  const whatsAppMessage = `Hi ${passenger.name}! This is the Majestic Northeast Expedition Team regarding your upcoming departure for "${passenger.tourTitle}". We are confirming your vehicle assignment (${passenger.assignedVehicle}).`;
   const whatsAppUrl = buildWhatsAppUrl(rawPhone || "919876543210", whatsAppMessage);
 
   return (
@@ -62,76 +62,76 @@ export function PassengerDetailDrawer({
       onClick={onClose}
     >
       <div
-        className="w-full max-w-xl bg-[#121418] border border-white/15 rounded-3xl p-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.9)] space-y-6 my-8 max-h-[90vh] overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 text-left animate-scaleUp"
+        className="w-full max-w-xl bg-[#111318] border border-white/[0.12] rounded-2xl p-5 sm:p-6 shadow-2xl space-y-5 my-8 max-h-[90vh] overflow-y-auto scrollbar-thin scrollbar-thumb-white/5 text-left animate-scaleUp"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header */}
-        <div className="flex items-start justify-between gap-4 pb-4 border-b border-white/10">
+        <div className="flex items-start justify-between gap-3 pb-3.5 border-b border-white/[0.08]">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <span
-                className={`text-[9px] font-black font-display uppercase tracking-wider px-2.5 py-0.5 rounded-md border ${
+                className={`text-[9px] font-mono uppercase px-2 py-0.5 rounded border ${
                   passenger.tripStatus === "Boarded / Departed"
-                    ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/40"
+                    ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
                     : passenger.tripStatus === "Fully Paid"
-                    ? "bg-blue-500/20 text-blue-400 border-blue-500/40"
-                    : "bg-amber-500/20 text-amber-400 border-amber-500/40"
+                    ? "bg-blue-500/15 text-blue-400 border-blue-500/30"
+                    : "bg-amber-500/15 text-amber-400 border-amber-500/30"
                 }`}
               >
                 {passenger.tripStatus}
               </span>
               {passenger.isSoloTraveller && (
-                <span className="text-[9px] font-black font-display uppercase tracking-wider px-2 py-0.5 rounded-md bg-purple-500/20 text-purple-300 border border-purple-500/30">
-                  Solo Stranger Booking
+                <span className="text-[9px] font-mono uppercase px-1.5 py-0.5 rounded bg-purple-500/15 text-purple-300 border border-purple-500/30">
+                  Solo Traveller
                 </span>
               )}
             </div>
 
-            <h3 className="text-xl font-black font-display text-white">
+            <h3 className="text-base sm:text-lg font-bold text-white font-display">
               {passenger.name} {passenger.age ? `(${passenger.age}y, ${passenger.gender})` : ""}
             </h3>
-            <p className="text-xs text-white/50">{passenger.city} • Registered on {passenger.joinedAt}</p>
+            <p className="text-xs text-zinc-400 font-mono">{passenger.city} • Registered on {passenger.joinedAt}</p>
           </div>
 
           <button
             type="button"
             onClick={onClose}
-            className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 text-white/50 hover:text-white flex items-center justify-center transition-colors shrink-0"
+            className="w-7 h-7 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-zinc-400 hover:text-white flex items-center justify-center transition-colors shrink-0"
           >
-            <X className="w-4 h-4" />
+            <X className="w-3.5 h-3.5" />
           </button>
         </div>
 
         {/* Assigned Convoy Unit & Seat Banner */}
-        <div className="bg-black/50 border border-white/10 rounded-2xl p-4 flex items-center justify-between gap-4">
+        <div className="bg-[#0B0D10] border border-white/[0.08] rounded-xl p-3.5 flex items-center justify-between gap-4">
           <div className="space-y-0.5">
-            <span className="text-[10px] font-black font-display uppercase tracking-widest text-brand-red block">
-              CONVOY VEHICLE & SEAT ALLOCATION
+            <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 block">
+              Convoy Allocation
             </span>
-            <p className="text-sm font-black font-display text-white">
+            <p className="text-xs sm:text-sm font-semibold text-white font-mono">
               {passenger.assignedVehicle}
             </p>
           </div>
           <div className="text-right">
-            <span className="text-[10px] font-bold text-white/50 block">Position</span>
-            <span className="text-xs font-black font-display text-white bg-white/10 px-2.5 py-1 rounded-lg border border-white/15">
+            <span className="text-[10px] text-zinc-500 block font-mono">Position</span>
+            <span className="text-xs font-mono text-zinc-200 bg-white/[0.06] px-2 py-0.5 rounded border border-white/[0.08]">
               {passenger.seatNumber}
             </span>
           </div>
         </div>
 
         {/* Contact & Verification Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
           {/* Phone */}
-          <div className="bg-white/[0.02] border border-white/10 rounded-xl p-3 space-y-1">
-            <span className="text-[10px] font-bold font-display uppercase tracking-wider text-white/40 block">
+          <div className="bg-[#0B0D10] border border-white/[0.06] rounded-xl p-3 space-y-1">
+            <span className="text-[10px] font-mono uppercase text-zinc-500 block">
               Phone Number
             </span>
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-white font-mono">{passenger.phone}</span>
+              <span className="text-xs font-mono text-zinc-200">{passenger.phone}</span>
               <a
                 href={`tel:${passenger.phone}`}
-                className="text-xs font-bold text-brand-red hover:underline flex items-center gap-1"
+                className="text-xs text-zinc-400 hover:text-white flex items-center gap-1 font-mono"
               >
                 <Phone className="w-3 h-3" />
                 <span>Call</span>
@@ -140,30 +140,30 @@ export function PassengerDetailDrawer({
           </div>
 
           {/* Email */}
-          <div className="bg-white/[0.02] border border-white/10 rounded-xl p-3 space-y-1">
-            <span className="text-[10px] font-bold font-display uppercase tracking-wider text-white/40 block">
+          <div className="bg-[#0B0D10] border border-white/[0.06] rounded-xl p-3 space-y-1">
+            <span className="text-[10px] font-mono uppercase text-zinc-500 block">
               Email Address
             </span>
-            <span className="text-xs font-bold text-white truncate block">{passenger.email}</span>
+            <span className="text-xs text-zinc-300 font-mono truncate block">{passenger.email}</span>
           </div>
 
           {/* Payment Status */}
-          <div className="bg-white/[0.02] border border-white/10 rounded-xl p-3 space-y-1">
-            <span className="text-[10px] font-bold font-display uppercase tracking-wider text-white/40 block">
+          <div className="bg-[#0B0D10] border border-white/[0.06] rounded-xl p-3 space-y-1">
+            <span className="text-[10px] font-mono uppercase text-zinc-500 block">
               Payment Status
             </span>
-            <span className="text-xs font-bold text-white flex items-center gap-1.5">
-              <CreditCard className="w-3.5 h-3.5 text-brand-red" />
+            <span className="text-xs text-zinc-200 flex items-center gap-1.5 font-mono">
+              <CreditCard className="w-3.5 h-3.5 text-zinc-400" />
               <span>{passenger.paymentStatus}</span>
             </span>
           </div>
 
           {/* Permit Status */}
-          <div className="bg-white/[0.02] border border-white/10 rounded-xl p-3 space-y-1">
-            <span className="text-[10px] font-bold font-display uppercase tracking-wider text-white/40 block">
-              ILP / Border Permit
+          <div className="bg-[#0B0D10] border border-white/[0.06] rounded-xl p-3 space-y-1">
+            <span className="text-[10px] font-mono uppercase text-zinc-500 block">
+              ILP Permit
             </span>
-            <span className="text-xs font-bold text-white flex items-center gap-1.5">
+            <span className="text-xs text-zinc-200 flex items-center gap-1.5 font-mono">
               <FileCheck2 className="w-3.5 h-3.5 text-emerald-400" />
               <span>{passenger.permitStatus} ({passenger.idProofType})</span>
             </span>
@@ -171,29 +171,29 @@ export function PassengerDetailDrawer({
         </div>
 
         {/* Emergency Contact & Diet */}
-        <div className="bg-black/30 border border-white/10 rounded-2xl p-4 space-y-2">
+        <div className="bg-[#0B0D10] border border-white/[0.06] rounded-xl p-3.5 space-y-2">
           <div className="flex items-center justify-between text-xs">
-            <span className="text-white/50 font-bold uppercase tracking-wider text-[10px]">Emergency Next-of-Kin</span>
-            <span className="text-white font-bold">{passenger.emergencyContact}</span>
+            <span className="text-zinc-500 font-mono text-[10px]">Emergency Next-of-Kin</span>
+            <span className="text-zinc-300 font-medium">{passenger.emergencyContact}</span>
           </div>
-          <div className="flex items-center justify-between text-xs pt-1 border-t border-white/5">
-            <span className="text-white/50 font-bold uppercase tracking-wider text-[10px]">Dietary Preference</span>
-            <span className="text-white font-bold">{passenger.dietaryPreference || "Vegetarian"}</span>
+          <div className="flex items-center justify-between text-xs pt-1 border-t border-white/[0.04]">
+            <span className="text-zinc-500 font-mono text-[10px]">Dietary Preference</span>
+            <span className="text-zinc-300 font-medium">{passenger.dietaryPreference || "Vegetarian"}</span>
           </div>
           {passenger.notes && (
-            <div className="pt-2 border-t border-white/5 space-y-0.5">
-              <span className="text-white/50 font-bold uppercase tracking-wider text-[10px]">Marshal Notes</span>
-              <p className="text-xs text-white/80 italic">&ldquo;{passenger.notes}&rdquo;</p>
+            <div className="pt-2 border-t border-white/[0.04] space-y-0.5">
+              <span className="text-zinc-500 font-mono text-[10px]">Marshal Notes</span>
+              <p className="text-xs text-zinc-400 italic">&ldquo;{passenger.notes}&rdquo;</p>
             </div>
           )}
         </div>
 
         {/* Attendance & Boarding Status Controls */}
-        <div className="space-y-2 pt-1">
-          <span className="text-[10px] font-black font-display uppercase tracking-wider text-white/50 block">
-            Update Departure & Boarding Status
+        <div className="space-y-2 pt-0.5">
+          <span className="text-[10px] font-mono uppercase text-zinc-400 block">
+            Update Attendance Status
           </span>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
             {[
               "Applied / Pending",
               "Advance Paid (30%)",
@@ -208,31 +208,25 @@ export function PassengerDetailDrawer({
                 key={st}
                 type="button"
                 onClick={() => onStatusChange(passenger.id, st as PassengerTripStatus)}
-                className={`py-2 px-2.5 rounded-xl text-[11px] font-bold font-display uppercase tracking-wider border transition-all text-center ${
+                className={`py-1.5 px-2 rounded-lg text-[10px] font-mono transition-all text-center border ${
                   passenger.tripStatus === st
-                    ? st === "Boarded / Departed" || st === "On Tour"
-                      ? "bg-emerald-600 text-white border-emerald-500 shadow-md"
-                      : st === "Fully Paid"
-                      ? "bg-blue-600 text-white border-blue-500 shadow-md"
-                      : st === "No Show" || st === "Cancelled"
-                      ? "bg-red-600 text-white border-red-500 shadow-md"
-                      : "bg-brand-red text-white border-brand-red shadow-md"
-                    : "bg-white/5 text-white/60 border-white/10 hover:border-white/20 hover:text-white"
+                    ? "bg-white/15 text-white border-white/25 font-semibold shadow-sm"
+                    : "bg-[#0B0D10] text-zinc-400 border-white/[0.06] hover:border-white/15 hover:text-white"
                 }`}
               >
-                {st === "Boarded / Departed" ? "Boarded (Chala gaya)" : st}
+                {st === "Boarded / Departed" ? "Departed" : st}
               </button>
             ))}
           </div>
         </div>
 
         {/* Actions Row */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-white/10">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-2.5 pt-3.5 border-t border-white/[0.08]">
+          <div className="flex items-center gap-1.5">
             <button
               type="button"
               onClick={() => onEdit(passenger)}
-              className="px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold font-display uppercase tracking-wider flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 hover:text-white text-xs font-medium flex items-center gap-1.5 transition-colors border border-white/[0.06]"
             >
               <Edit className="w-3.5 h-3.5" />
               <span>Edit Details</span>
@@ -241,17 +235,17 @@ export function PassengerDetailDrawer({
             <button
               type="button"
               onClick={() => onDelete(passenger)}
-              className="px-3.5 py-2.5 rounded-xl bg-red-500/15 hover:bg-red-500/25 text-red-400 text-xs font-bold font-display uppercase tracking-wider flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-medium flex items-center gap-1.5 transition-colors"
             >
               <Trash2 className="w-3.5 h-3.5" />
               <span>Remove</span>
             </button>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             <a
               href={`tel:${passenger.phone}`}
-              className="px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold font-display uppercase tracking-wider flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 hover:text-white text-xs font-medium flex items-center gap-1.5 border border-white/[0.06]"
             >
               <Phone className="w-3.5 h-3.5" />
               <span>Call</span>
@@ -261,9 +255,9 @@ export function PassengerDetailDrawer({
               href={whatsAppUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black font-display uppercase tracking-wider flex items-center gap-1.5 shadow-md"
+              className="px-3.5 py-1.5 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 text-xs font-semibold flex items-center gap-1.5 border border-emerald-500/30 transition-colors"
             >
-              <MessageCircle className="w-4 h-4" />
+              <MessageCircle className="w-3.5 h-3.5" />
               <span>WhatsApp</span>
             </a>
           </div>

@@ -199,7 +199,7 @@ export default function AdminToursPage() {
               {actions.onEdit && (
                 <button
                   type="button"
-                  onClick={actions.onEdit}
+                  onClick={() => actions.onEdit?.(t)}
                   className="px-3 py-1.5 rounded-lg bg-blue-500/15 text-blue-400 text-xs font-bold font-display uppercase tracking-wider flex items-center gap-1"
                 >
                   <Edit className="w-3.5 h-3.5" />
@@ -209,7 +209,7 @@ export default function AdminToursPage() {
               {actions.onDelete && (
                 <button
                   type="button"
-                  onClick={actions.onDelete}
+                  onClick={() => actions.onDelete?.(t)}
                   className="px-3 py-1.5 rounded-lg bg-red-500/15 text-red-400 text-xs font-bold font-display uppercase tracking-wider flex items-center gap-1"
                 >
                   <Trash2 className="w-3.5 h-3.5" />

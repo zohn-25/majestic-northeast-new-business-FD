@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Lock, Mail, ShieldAlert, ArrowRight, Compass, ShieldCheck, Sparkles, KeyRound } from "lucide-react";
+import { Lock, Mail, ArrowRight, ShieldCheck, KeyRound } from "lucide-react";
 import { useData } from "@/context/DataContext";
 
 export default function AdminLoginPage() {
@@ -40,55 +40,45 @@ export default function AdminLoginPage() {
     // Simulate swift login redirect
     setTimeout(() => {
       router.push("/admin");
-    }, 450);
+    }, 350);
   };
 
   return (
-    <div className="min-h-screen bg-[#090A0C] flex flex-col items-center justify-center p-4 sm:p-6 relative overflow-hidden text-white font-body selection:bg-brand-red selection:text-white">
-      {/* Subtle Background Glows */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-brand-red/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-72 h-72 bg-orange-500/5 rounded-full blur-3xl pointer-events-none" />
-
-      {/* Main Centered Login Card */}
-      <div className="relative z-10 w-full max-w-md bg-[#121418]/95 backdrop-blur-2xl border border-white/15 rounded-3xl p-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.8)] space-y-6">
+    <div className="min-h-screen bg-[#0B0D10] flex flex-col items-center justify-center p-4 sm:p-6 relative text-zinc-100 font-body">
+      {/* Centered Login Card */}
+      <div className="w-full max-w-md bg-[#111318] border border-white/[0.12] rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6">
         
         {/* Brand Header */}
-        <div className="text-center space-y-2">
-          {/* Logo Pill */}
-          <div className="inline-flex items-center justify-center h-12 px-5 bg-brand-red rounded-full shadow-lg shadow-brand-red/30 border-2 border-white/80 mb-2">
-            <span className="text-sm font-black font-display tracking-wider text-white italic">
-              MAJESTIC
-            </span>
-            <span className="text-[9px] font-bold tracking-widest text-white/90 uppercase ml-1.5 font-body">
-              NORTHEAST
-            </span>
+        <div className="text-center space-y-1.5">
+          <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/10 border border-white/15 mb-2">
+            <span className="text-sm font-black font-display text-white">M</span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-black font-display uppercase tracking-tight text-white">
-            Expedition Console
+          <h1 className="text-xl sm:text-2xl font-bold font-display text-white">
+            Operations Console
           </h1>
-          <p className="text-xs text-white/60 font-medium">
-            Fleet Operations, Guided Tours & Lead Desk
+          <p className="text-xs text-zinc-400">
+            Sign in to manage fleet inventory, group batches & bookings.
           </p>
         </div>
 
         {/* Demo Mode Notice Banner */}
-        <div className="flex items-start gap-2.5 bg-brand-red/10 border border-brand-red/20 rounded-xl p-3 text-[11px] text-white/80 leading-relaxed">
-          <KeyRound className="w-4 h-4 text-brand-red shrink-0 mt-0.5" />
+        <div className="flex items-start gap-2.5 bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-xs text-zinc-300 leading-relaxed">
+          <KeyRound className="w-4 h-4 text-zinc-400 shrink-0 mt-0.5" />
           <span>
-            <strong>Frontend Demo Mode:</strong> Pre-filled credentials ready. Click <strong>Log In</strong> to access the management dashboard.
+            <strong>Frontend Demo:</strong> Pre-filled credentials ready. Click <strong>Sign In</strong> to enter the console.
           </span>
         </div>
 
         {/* Login Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 text-left">
           {/* Email Field */}
-          <div className="space-y-1.5 text-left">
-            <label className="block text-xs font-bold font-display uppercase tracking-wider text-white/80">
+          <div className="space-y-1">
+            <label className="block text-xs font-medium text-zinc-300">
               Admin Email
             </label>
             <div className="relative flex items-center">
-              <Mail className="w-4 h-4 text-white/40 absolute left-3.5 pointer-events-none" />
+              <Mail className="w-3.5 h-3.5 text-zinc-500 absolute left-3 pointer-events-none" />
               <input
                 type="email"
                 value={email}
@@ -97,29 +87,24 @@ export default function AdminLoginPage() {
                   if (errors.email) setErrors((prev) => ({ ...prev, email: undefined }));
                 }}
                 placeholder="admin@majesticnortheast.com"
-                className={`w-full bg-black/60 border ${
-                  errors.email ? "border-red-500 focus:ring-red-500" : "border-white/15 focus:border-brand-red"
-                } rounded-xl pl-10 pr-4 py-3 text-xs text-white placeholder-white/30 focus:outline-none transition-colors font-medium`}
+                className={`w-full bg-[#0B0D10] border ${
+                  errors.email ? "border-red-500" : "border-white/[0.08] focus:border-white/25"
+                } rounded-xl pl-9 pr-3.5 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none transition-colors font-mono`}
               />
             </div>
-            {errors.email && (
-              <p className="text-[11px] text-red-400 font-medium flex items-center gap-1 pt-0.5">
-                <ShieldAlert className="w-3.5 h-3.5 shrink-0" />
-                <span>{errors.email}</span>
-              </p>
-            )}
+            {errors.email && <p className="text-[10px] text-red-400">{errors.email}</p>}
           </div>
 
           {/* Password Field */}
-          <div className="space-y-1.5 text-left">
+          <div className="space-y-1">
             <div className="flex items-center justify-between">
-              <label className="block text-xs font-bold font-display uppercase tracking-wider text-white/80">
-                Security Key / Password
+              <label className="block text-xs font-medium text-zinc-300">
+                Password
               </label>
-              <span className="text-[10px] text-white/40 font-mono">Demo: any key</span>
+              <span className="text-[10px] text-zinc-500 font-mono">Demo: majestic2026</span>
             </div>
             <div className="relative flex items-center">
-              <Lock className="w-4 h-4 text-white/40 absolute left-3.5 pointer-events-none" />
+              <Lock className="w-3.5 h-3.5 text-zinc-500 absolute left-3 pointer-events-none" />
               <input
                 type="password"
                 value={password}
@@ -127,55 +112,41 @@ export default function AdminLoginPage() {
                   setPassword(e.target.value);
                   if (errors.password) setErrors((prev) => ({ ...prev, password: undefined }));
                 }}
-                placeholder="••••••••"
-                className={`w-full bg-black/60 border ${
-                  errors.password ? "border-red-500 focus:ring-red-500" : "border-white/15 focus:border-brand-red"
-                } rounded-xl pl-10 pr-4 py-3 text-xs text-white placeholder-white/30 focus:outline-none transition-colors font-medium`}
+                placeholder="••••••••••••"
+                className={`w-full bg-[#0B0D10] border ${
+                  errors.password ? "border-red-500" : "border-white/[0.08] focus:border-white/25"
+                } rounded-xl pl-9 pr-3.5 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none transition-colors font-mono`}
               />
             </div>
-            {errors.password && (
-              <p className="text-[11px] text-red-400 font-medium flex items-center gap-1 pt-0.5">
-                <ShieldAlert className="w-3.5 h-3.5 shrink-0" />
-                <span>{errors.password}</span>
-              </p>
-            )}
+            {errors.password && <p className="text-[10px] text-red-400">{errors.password}</p>}
           </div>
 
           {/* Submit Button */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 bg-brand-red hover:bg-brand-red-hover active:scale-[0.98] text-white rounded-xl text-xs font-black font-display uppercase tracking-widest transition-all shadow-glow-red flex items-center justify-center gap-2 mt-2 disabled:opacity-75 cursor-pointer"
+            className="w-full py-2.5 bg-white/10 hover:bg-white/20 active:scale-[0.99] text-white rounded-xl text-xs font-semibold transition-all border border-white/15 flex items-center justify-center gap-2 shadow-sm disabled:opacity-50"
           >
             {loading ? (
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                <span>Authenticating Console...</span>
-              </div>
+              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
             ) : (
               <>
-                <span>Enter Admin Dashboard</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>Sign In to Console</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </>
             )}
           </button>
         </form>
 
-        {/* Return to live site link */}
-        <div className="pt-2 text-center border-t border-white/10">
+        {/* Back Link */}
+        <div className="pt-2 text-center border-t border-white/[0.06]">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs text-white/60 hover:text-brand-red transition-colors font-bold font-display uppercase tracking-wider"
+            className="text-xs text-zinc-400 hover:text-white transition-colors"
           >
-            <Compass className="w-3.5 h-3.5" />
-            <span>← Back to Public Website</span>
+            ← Back to Public Website
           </Link>
         </div>
-      </div>
-
-      {/* Footer copyright note */}
-      <div className="relative z-10 mt-6 text-center text-[11px] text-white/40">
-        Majestic Northeast Tours & Adventures • Admin Operations System v1.0
       </div>
     </div>
   );

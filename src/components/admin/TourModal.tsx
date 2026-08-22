@@ -150,21 +150,21 @@ export function TourModal({ isOpen, tour, onClose, onSave }: TourModalProps) {
       onClick={onClose}
     >
       <div
-        className="w-full max-w-2xl bg-[#121418] border border-white/15 rounded-3xl p-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.9)] space-y-6 my-8 max-h-[90vh] overflow-y-auto scrollbar-thin scrollbar-thumb-white/10"
+        className="w-full max-w-2xl bg-[#111318] border border-white/[0.12] rounded-2xl p-5 sm:p-6 shadow-2xl space-y-5 my-8 max-h-[90vh] overflow-y-auto scrollbar-thin scrollbar-thumb-white/5 text-left"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-white/10">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center">
-              <Compass className="w-5 h-5" />
+        <div className="flex items-center justify-between pb-3.5 border-b border-white/[0.08]">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-white/[0.06] border border-white/[0.08] text-zinc-300 flex items-center justify-center">
+              <Compass className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-lg font-black font-display uppercase tracking-tight text-white">
-                {isEditing ? `Edit Tour: ${tour?.title}` : "Create New Tour Package"}
+              <h3 className="text-sm sm:text-base font-semibold text-white">
+                {isEditing ? `Edit Tour: ${tour?.title}` : "Create Tour Package"}
               </h3>
-              <p className="text-[11px] text-white/50">
-                Set expedition route, vehicle type, pricing per person, and seat limits.
+              <p className="text-[11px] text-zinc-400">
+                Set expedition route, vehicle type, and pricing.
               </p>
             </div>
           </div>
@@ -172,9 +172,9 @@ export function TourModal({ isOpen, tour, onClose, onSave }: TourModalProps) {
           <button
             type="button"
             onClick={onClose}
-            className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 text-white/50 hover:text-white flex items-center justify-center transition-colors"
+            className="w-7 h-7 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-zinc-400 hover:text-white flex items-center justify-center transition-colors"
           >
-            <X className="w-4 h-4" />
+            <X className="w-3.5 h-3.5" />
           </button>
         </div>
 
@@ -340,20 +340,20 @@ export function TourModal({ isOpen, tour, onClose, onSave }: TourModalProps) {
           </div>
 
           {/* Form Actions */}
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/10">
+          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-white/[0.08]">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-white/80 text-xs font-bold font-display uppercase tracking-wider transition-colors"
+              className="px-3.5 py-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 text-xs font-medium transition-colors"
             >
               Cancel
             </button>
 
             <button
               type="submit"
-              className="px-6 py-2.5 rounded-xl bg-brand-red hover:bg-brand-red-hover text-white text-xs font-black font-display uppercase tracking-widest transition-all shadow-glow-red flex items-center gap-2"
+              className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition-all border border-white/15 flex items-center gap-1.5 shadow-sm"
             >
-              <Save className="w-4 h-4" />
+              <Save className="w-3.5 h-3.5" />
               <span>{isEditing ? "Update Tour" : "Publish Tour"}</span>
             </button>
           </div>

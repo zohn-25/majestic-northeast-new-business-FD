@@ -1,15 +1,5 @@
 "use client";
 
-/*
-  =============================================================================
-  MAJESTIC NORTHEAST — ADMIN OPERATIONS CONSOLE (DEMO MODE)
-  =============================================================================
-  NOTE: This is a frontend-only demo admin console. All operations (add, edit,
-  delete, status change) update local in-memory React Context state during the
-  session. No real backend, database, or persistent auth API is attached yet.
-  =============================================================================
-*/
-
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -33,7 +23,6 @@ import {
   Users,
 } from "lucide-react";
 import { useData } from "@/context/DataContext";
-
 import { ToastProvider } from "@/components/admin/Toast";
 
 interface AdminLayoutProps {
@@ -78,10 +67,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   if (isCheckingAuth || !isAdminLoggedIn) {
     return (
-      <div className="min-h-screen bg-[#090A0C] flex flex-col items-center justify-center text-white space-y-3">
-        <div className="w-8 h-8 border-2 border-brand-red border-t-transparent rounded-full animate-spin" />
-        <span className="text-xs font-bold font-display uppercase tracking-widest text-white/60">
-          Checking Admin Credentials...
+      <div className="min-h-screen bg-[#0B0D10] flex flex-col items-center justify-center text-white space-y-3">
+        <div className="w-7 h-7 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+        <span className="text-xs font-mono text-zinc-400">
+          Authenticating Admin...
         </span>
       </div>
     );
@@ -92,28 +81,28 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   const navItems = [
     {
-      name: "Dashboard",
+      name: "Overview",
       href: "/admin",
       icon: LayoutDashboard,
       badge: null,
       exact: true,
     },
     {
-      name: "Vehicles",
+      name: "Vehicles Fleet",
       href: "/admin/vehicles",
       icon: Car,
       badge: `${vehicles.length}`,
       exact: false,
     },
     {
-      name: "Tours & Convoys",
+      name: "Guided Tours",
       href: "/admin/tours",
       icon: Compass,
       badge: `${tours.length}`,
       exact: false,
     },
     {
-      name: "Batch Rosters & Manifest",
+      name: "Passenger Manifest",
       href: "/admin/batches",
       icon: Users,
       badge: inProgressBatchesCount > 0 ? `${inProgressBatchesCount} Active` : `${batches.length}`,
@@ -131,7 +120,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       name: "Enquiries & Leads",
       href: "/admin/enquiries",
       icon: MessageSquareText,
-      badge: pendingEnquiriesCount > 0 ? `${pendingEnquiriesCount} New` : `${enquiries.length}`,
+      badge: pendingEnquiriesCount > 0 ? `${pendingEnquiriesCount}` : `${enquiries.length}`,
       badgeHighlight: pendingEnquiriesCount > 0,
       exact: false,
     },
@@ -143,7 +132,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       exact: false,
     },
     {
-      name: "Settings",
+      name: "Console Settings",
       href: "/admin/settings",
       icon: Settings,
       badge: null,
@@ -165,368 +154,357 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   return (
     <ToastProvider>
-      <div className="min-h-screen bg-[#090A0C] text-white flex font-body antialiased selection:bg-brand-red selection:text-white">
-      
-      {/* ========================================================================= */}
-      {/* 1. DESKTOP SIDEBAR (Visible on Viewport >= 1024px)                        */}
-      {/* ========================================================================= */}
-      <aside className="hidden lg:flex w-64 xl:w-72 bg-[#101216] border-r border-white/10 flex-col justify-between shrink-0 fixed inset-y-0 left-0 z-30">
+      <div className="min-h-screen bg-[#0B0D10] text-zinc-100 flex font-body antialiased selection:bg-white/20 selection:text-white">
         
-        {/* Top: Brand Badge & Navigation */}
-        <div className="flex flex-col h-full overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 p-5 space-y-6">
+        {/* ========================================================================= */}
+        {/* 1. DESKTOP SIDEBAR (Minimalist Graphite Linear / Vercel style)             */}
+        {/* ========================================================================= */}
+        <aside className="hidden lg:flex w-64 bg-[#111318] border-r border-white/[0.08] flex-col justify-between shrink-0 fixed inset-y-0 left-0 z-30">
           
-          {/* Brand Emblem */}
-          <div className="flex items-center gap-3 pt-1 pb-2 border-b border-white/10">
-            <div className="h-10 px-3.5 bg-brand-red rounded-full flex items-center justify-center shadow-lg shadow-brand-red/40 border-2 border-white/80 shrink-0">
-              <span className="text-xs font-black font-display tracking-wider text-white italic">
-                MAJESTIC
-              </span>
-            </div>
-            <div className="leading-tight">
-              <span className="text-xs font-black font-display uppercase tracking-wide text-white block">
-                Admin Console
-              </span>
-              <span className="text-[10px] text-brand-red font-bold uppercase tracking-widest block font-display">
-                Demo Operations
-              </span>
-            </div>
-          </div>
-
-          {/* Nav Links */}
-          <div className="space-y-1.5 flex-1">
-            <span className="text-[10px] font-black uppercase tracking-widest text-white/40 font-display px-3 block mb-2">
-              Operations Menu
-            </span>
-            {navItems.map((item) => {
-              const active = isRouteActive(item.href, item.exact);
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold font-display uppercase tracking-wider transition-all group ${
-                    active
-                      ? "bg-brand-red text-white shadow-lg shadow-brand-red/30 scale-[1.01]"
-                      : "text-white/70 hover:text-white hover:bg-white/5"
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <Icon
-                      className={`w-4 h-4 ${
-                        active ? "text-white" : "text-white/50 group-hover:text-brand-red"
-                      } transition-colors`}
-                    />
-                    <span>{item.name}</span>
-                  </div>
-
-                  {item.badge && (
-                    <span
-                      className={`text-[10px] px-2 py-0.5 rounded-full font-black tracking-normal ${
-                        item.badgeHighlight
-                          ? "bg-emerald-500 text-white animate-pulse"
-                          : active
-                          ? "bg-black/30 text-white"
-                          : "bg-white/10 text-white/70"
-                      }`}
-                    >
-                      {item.badge}
-                    </span>
-                  )}
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* Live Website Quick Action */}
-          <div className="pt-3 border-t border-white/10">
-            <Link
-              href="/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold font-display uppercase tracking-wider text-white transition-all group"
-            >
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-brand-red" />
-                <span>View Public Site</span>
+          {/* Top: Brand Badge & Navigation */}
+          <div className="flex flex-col h-full overflow-y-auto scrollbar-thin scrollbar-thumb-white/5 p-4 space-y-6">
+            
+            {/* Brand Header */}
+            <div className="flex items-center gap-3 px-2 pt-1 pb-3 border-b border-white/[0.08]">
+              <div className="w-8 h-8 rounded-lg bg-white/10 border border-white/15 flex items-center justify-center shrink-0">
+                <span className="text-xs font-black font-display text-white">M</span>
               </div>
-              <ExternalLink className="w-3.5 h-3.5 text-white/40 group-hover:text-white" />
-            </Link>
-          </div>
-
-          {/* User Profile & Logout Bottom Card */}
-          <div className="pt-2 border-t border-white/10 flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-9 h-9 rounded-xl bg-brand-red/20 border border-brand-red/40 text-brand-red font-black font-display flex items-center justify-center text-xs shrink-0">
-                AD
-              </div>
-              <div className="leading-tight truncate">
-                <span className="text-xs font-bold font-display text-white block truncate">
-                  Expedition Admin
+              <div className="leading-tight">
+                <span className="text-xs font-bold font-display uppercase tracking-wider text-white block">
+                  Majestic Console
                 </span>
-                <span className="text-[10px] text-white/50 block truncate">
-                  Lead Dispatcher
+                <span className="text-[10px] text-zinc-400 font-mono block">
+                  v2.0 • Admin Panel
                 </span>
               </div>
             </div>
 
-            <button
-              type="button"
-              onClick={handleLogout}
-              title="Log Out"
-              aria-label="Log Out of Console"
-              className="w-8 h-8 rounded-lg bg-white/5 hover:bg-red-500/20 hover:text-red-400 border border-white/10 flex items-center justify-center text-white/60 transition-colors shrink-0"
-            >
-              <LogOut className="w-4 h-4" />
-            </button>
-          </div>
+            {/* Nav Links */}
+            <div className="space-y-1 flex-1">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 px-3 block mb-2">
+                Navigation
+              </span>
+              {navItems.map((item) => {
+                const active = isRouteActive(item.href, item.exact);
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className={`flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+                      active
+                        ? "bg-white/[0.08] text-white border-l-2 border-brand-red font-semibold pl-2.5"
+                        : "text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.03]"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <Icon
+                        className={`w-4 h-4 ${
+                          active ? "text-white" : "text-zinc-500"
+                        } transition-colors`}
+                      />
+                      <span>{item.name}</span>
+                    </div>
 
-        </div>
-      </aside>
-
-      {/* ========================================================================= */}
-      {/* 2. MOBILE DRAWER OVERLAY (Viewport < 1024px)                              */}
-      {/* ========================================================================= */}
-      {mobileDrawerOpen && (
-        <div
-          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 lg:hidden transition-opacity"
-          onClick={() => setMobileDrawerOpen(false)}
-        >
-          <div
-            className="w-72 max-w-[85vw] bg-[#101216] border-r border-white/15 h-full p-5 flex flex-col justify-between"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="space-y-6">
-              {/* Drawer Header */}
-              <div className="flex items-center justify-between pb-3 border-b border-white/10">
-                <div className="h-9 px-3 bg-brand-red rounded-full flex items-center justify-center">
-                  <span className="text-xs font-black font-display text-white italic">
-                    MAJESTIC
-                  </span>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setMobileDrawerOpen(false)}
-                  className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white/70"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-
-              {/* Mobile Nav Links */}
-              <div className="space-y-1.5">
-                {navItems.map((item) => {
-                  const active = isRouteActive(item.href, item.exact);
-                  const Icon = item.icon;
-                  return (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      onClick={() => setMobileDrawerOpen(false)}
-                      className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold font-display uppercase tracking-wider transition-all ${
-                        active
-                          ? "bg-brand-red text-white"
-                          : "text-white/70 hover:text-white hover:bg-white/5"
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <Icon className="w-4 h-4" />
-                        <span>{item.name}</span>
-                      </div>
-                      {item.badge && (
-                        <span
-                          className={`text-[10px] px-2 py-0.5 rounded-full font-black ${
-                            item.badgeHighlight
-                              ? "bg-emerald-500 text-white"
-                              : "bg-white/10 text-white/80"
-                          }`}
-                        >
-                          {item.badge}
-                        </span>
-                      )}
-                    </Link>
-                  );
-                })}
-              </div>
+                    {item.badge && (
+                      <span
+                        className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${
+                          item.badgeHighlight
+                            ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
+                            : active
+                            ? "bg-white/15 text-white"
+                            : "bg-white/[0.05] text-zinc-400"
+                        }`}
+                      >
+                        {item.badge}
+                      </span>
+                    )}
+                  </Link>
+                );
+              })}
             </div>
 
-            {/* Mobile Drawer Bottom Logout */}
-            <div className="pt-4 border-t border-white/10 space-y-3">
+            {/* Live Website Quick Action */}
+            <div className="pt-3 border-t border-white/[0.08]">
               <Link
                 href="/"
                 target="_blank"
-                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs font-bold font-display text-white uppercase tracking-wider"
+                rel="noopener noreferrer"
+                className="w-full flex items-center justify-between px-3 py-2 rounded-lg bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] text-xs font-medium text-zinc-300 hover:text-white transition-all"
               >
-                <ExternalLink className="w-3.5 h-3.5" />
-                <span>Open Live Site</span>
+                <div className="flex items-center gap-2">
+                  <ExternalLink className="w-3.5 h-3.5 text-zinc-400" />
+                  <span>View Public Website</span>
+                </div>
               </Link>
+            </div>
+
+            {/* User Profile & Logout Bottom Card */}
+            <div className="pt-2 border-t border-white/[0.08] flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-8 h-8 rounded-lg bg-white/10 border border-white/15 text-zinc-300 font-bold flex items-center justify-center text-xs shrink-0">
+                  AD
+                </div>
+                <div className="leading-tight truncate">
+                  <span className="text-xs font-medium text-zinc-200 block truncate">
+                    Operations Lead
+                  </span>
+                  <span className="text-[10px] text-zinc-500 block truncate font-mono">
+                    admin@majestic.com
+                  </span>
+                </div>
+              </div>
 
               <button
                 type="button"
                 onClick={handleLogout}
-                className="w-full py-2.5 bg-red-600/20 border border-red-500/30 text-red-400 hover:bg-red-600 hover:text-white rounded-xl text-xs font-bold font-display uppercase tracking-wider transition-colors flex items-center justify-center gap-2"
+                title="Log Out"
+                aria-label="Log Out of Console"
+                className="w-7 h-7 rounded-lg bg-white/[0.03] hover:bg-red-500/15 hover:text-red-400 border border-white/[0.08] flex items-center justify-center text-zinc-400 transition-colors shrink-0"
               >
-                <LogOut className="w-4 h-4" />
-                <span>Log Out Console</span>
+                <LogOut className="w-3.5 h-3.5" />
               </button>
             </div>
+
           </div>
-        </div>
-      )}
+        </aside>
 
-      {/* ========================================================================= */}
-      {/* 3. MAIN WORKSPACE CONTAINER                                               */}
-      {/* ========================================================================= */}
-      <div className="flex-1 flex flex-col min-w-0 lg:pl-64 xl:pl-72 pb-16 lg:pb-6">
-        
-        {/* Top Operations Header Bar */}
-        <header className="sticky top-0 z-20 h-16 bg-[#090A0C]/90 backdrop-blur-xl border-b border-white/10 px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
-          
-          {/* Left: Mobile Hamburger & Title */}
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => setMobileDrawerOpen(true)}
-              aria-label="Open Navigation Menu"
-              className="lg:hidden w-9 h-9 rounded-xl bg-white/10 border border-white/15 text-white flex items-center justify-center hover:bg-white/20 active:scale-95"
+        {/* ========================================================================= */}
+        {/* 2. MOBILE DRAWER OVERLAY (Viewport < 1024px)                              */}
+        {/* ========================================================================= */}
+        {mobileDrawerOpen && (
+          <div
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 lg:hidden transition-opacity"
+            onClick={() => setMobileDrawerOpen(false)}
+          >
+            <div
+              className="w-72 max-w-[85vw] bg-[#111318] border-r border-white/15 h-full p-4 flex flex-col justify-between"
+              onClick={(e) => e.stopPropagation()}
             >
-              <Menu className="w-5 h-5" />
-            </button>
+              <div className="space-y-5">
+                {/* Drawer Header */}
+                <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-7 h-7 rounded-md bg-white/10 flex items-center justify-center font-bold text-white text-xs">
+                      M
+                    </div>
+                    <span className="text-xs font-bold text-white uppercase tracking-wider">
+                      Admin Console
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setMobileDrawerOpen(false)}
+                    className="w-7 h-7 rounded-md bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
 
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-black font-display uppercase tracking-wider text-brand-red hidden sm:inline">
-                Admin Panel
-              </span>
-              <ChevronRight className="w-3.5 h-3.5 text-white/30 hidden sm:inline" />
-              <h2 className="text-sm sm:text-base font-black font-display uppercase tracking-tight text-white truncate">
-                {pathname === "/admin"
-                  ? "Dashboard Overview"
-                  : pathname.replace("/admin/", "").replace("-", " ")}
-              </h2>
-            </div>
-          </div>
-
-          {/* Right: Quick Links & Profile Pill */}
-          <div className="flex items-center gap-2.5">
-            {/* Quick Live Link */}
-            <Link
-              href="/"
-              target="_blank"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-[11px] font-bold font-display uppercase tracking-wider text-white/90 hover:text-white transition-all"
-            >
-              <ExternalLink className="w-3 h-3 text-brand-red" />
-              <span>Live Site</span>
-            </Link>
-
-            {/* Notification Bell with Pending count */}
-            <Link
-              href="/admin/enquiries"
-              className="relative w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/80 hover:text-white transition-colors"
-              title={`${pendingEnquiriesCount} New Enquiries`}
-            >
-              <Bell className="w-4 h-4" />
-              {pendingEnquiriesCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-brand-red text-white text-[9px] font-black flex items-center justify-center animate-pulse">
-                  {pendingEnquiriesCount}
-                </span>
-              )}
-            </Link>
-
-            {/* Profile Avatar Pill */}
-            <div className="flex items-center gap-2 pl-2 border-l border-white/10">
-              <div className="w-8 h-8 rounded-full bg-brand-red text-white font-bold font-display text-xs flex items-center justify-center border border-white/20">
-                A
+                {/* Mobile Nav Links */}
+                <div className="space-y-1">
+                  {navItems.map((item) => {
+                    const active = isRouteActive(item.href, item.exact);
+                    const Icon = item.icon;
+                    return (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        onClick={() => setMobileDrawerOpen(false)}
+                        className={`flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+                          active
+                            ? "bg-white/[0.08] text-white border-l-2 border-brand-red pl-2.5 font-semibold"
+                            : "text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.03]"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <Icon className="w-4 h-4" />
+                          <span>{item.name}</span>
+                        </div>
+                        {item.badge && (
+                          <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/[0.05] text-zinc-400">
+                            {item.badge}
+                          </span>
+                        )}
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
-              <span className="text-xs font-bold font-display text-white/90 hidden md:inline">
-                Admin
-              </span>
+
+              {/* Mobile Drawer Bottom Logout */}
+              <div className="pt-4 border-t border-white/[0.08] space-y-2">
+                <Link
+                  href="/"
+                  target="_blank"
+                  className="w-full flex items-center justify-center gap-2 py-2 rounded-lg bg-white/[0.04] border border-white/[0.08] text-xs font-medium text-zinc-300"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>Open Public Website</span>
+                </Link>
+
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="w-full py-2 bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-2"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>Log Out Console</span>
+                </button>
+              </div>
             </div>
           </div>
-        </header>
+        )}
 
-        {/* Dynamic Page Content */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
-          {children}
-        </main>
+        {/* ========================================================================= */}
+        {/* 3. MAIN WORKSPACE CONTAINER                                               */}
+        {/* ========================================================================= */}
+        <div className="flex-1 flex flex-col min-w-0 lg:pl-64 pb-16 lg:pb-6">
+          
+          {/* Top Minimalist Header Bar */}
+          <header className="sticky top-0 z-20 h-14 bg-[#0B0D10]/95 backdrop-blur-md border-b border-white/[0.08] px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+            
+            {/* Left: Mobile Hamburger & Title */}
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setMobileDrawerOpen(true)}
+                aria-label="Open Navigation Menu"
+                className="lg:hidden w-8 h-8 rounded-lg bg-white/5 border border-white/10 text-zinc-300 flex items-center justify-center hover:bg-white/10"
+              >
+                <Menu className="w-4 h-4" />
+              </button>
+
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-zinc-500 hidden sm:inline font-mono">
+                  Console
+                </span>
+                <ChevronRight className="w-3 h-3 text-zinc-600 hidden sm:inline" />
+                <h2 className="text-xs sm:text-sm font-semibold text-zinc-100 capitalize truncate">
+                  {pathname === "/admin"
+                    ? "Operations Overview"
+                    : pathname.replace("/admin/", "").replace("-", " ")}
+                </h2>
+              </div>
+            </div>
+
+            {/* Right: Quick Links & Profile Pill */}
+            <div className="flex items-center gap-2.5">
+              {/* Quick Live Link */}
+              <Link
+                href="/"
+                target="_blank"
+                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-xs text-zinc-300 hover:text-white transition-all"
+              >
+                <ExternalLink className="w-3 h-3 text-zinc-400" />
+                <span>Live Site</span>
+              </Link>
+
+              {/* Notification Bell */}
+              <Link
+                href="/admin/enquiries"
+                className="relative w-8 h-8 rounded-md bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] flex items-center justify-center text-zinc-400 hover:text-white transition-colors"
+                title={`${pendingEnquiriesCount} New Leads`}
+              >
+                <Bell className="w-3.5 h-3.5" />
+                {pendingEnquiriesCount > 0 && (
+                  <span className="absolute 1.5 -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400" />
+                )}
+              </Link>
+
+              {/* Minimal Avatar */}
+              <div className="flex items-center gap-2 pl-2 border-l border-white/[0.08]">
+                <div className="w-6 h-6 rounded-md bg-white/10 border border-white/15 text-zinc-300 font-medium text-xs flex items-center justify-center">
+                  A
+                </div>
+              </div>
+            </div>
+          </header>
+
+          {/* Dynamic Page Content */}
+          <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
+            {children}
+          </main>
+        </div>
+
+        {/* ========================================================================= */}
+        {/* 4. MOBILE BOTTOM TAB BAR (375px Thumb Reach)                              */}
+        {/* ========================================================================= */}
+        <nav
+          aria-label="Mobile Admin Bottom Bar"
+          className="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-[#111318]/95 backdrop-blur-xl border-t border-white/[0.08] px-3 py-1.5 flex items-center justify-around"
+        >
+          <Link
+            href="/admin"
+            className={`flex flex-col items-center gap-0.5 py-1 px-2 rounded-md text-[10px] font-medium transition-colors ${
+              pathname === "/admin" ? "text-white font-semibold" : "text-zinc-500 hover:text-zinc-300"
+            }`}
+          >
+            <LayoutDashboard className="w-4 h-4" />
+            <span>Overview</span>
+          </Link>
+
+          <Link
+            href="/admin/vehicles"
+            className={`flex flex-col items-center gap-0.5 py-1 px-2 rounded-md text-[10px] font-medium transition-colors ${
+              pathname.startsWith("/admin/vehicles") ? "text-white font-semibold" : "text-zinc-500 hover:text-zinc-300"
+            }`}
+          >
+            <Car className="w-4 h-4" />
+            <span>Vehicles</span>
+          </Link>
+
+          <Link
+            href="/admin/tours"
+            className={`flex flex-col items-center gap-0.5 py-1 px-2 rounded-md text-[10px] font-medium transition-colors ${
+              pathname.startsWith("/admin/tours") ? "text-white font-semibold" : "text-zinc-500 hover:text-zinc-300"
+            }`}
+          >
+            <Compass className="w-4 h-4" />
+            <span>Tours</span>
+          </Link>
+
+          <Link
+            href="/admin/batches"
+            className={`flex flex-col items-center gap-0.5 py-1 px-2 rounded-md text-[10px] font-medium transition-colors relative ${
+              pathname.startsWith("/admin/batches") ? "text-white font-semibold" : "text-zinc-500 hover:text-zinc-300"
+            }`}
+          >
+            <div className="relative">
+              <Users className="w-4 h-4" />
+              {inProgressBatchesCount > 0 && (
+                <span className="absolute -top-1 -right-1.5 w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              )}
+            </div>
+            <span>Manifest</span>
+          </Link>
+
+          <Link
+            href="/admin/enquiries"
+            className={`flex flex-col items-center gap-0.5 py-1 px-2 rounded-md text-[10px] font-medium transition-colors relative ${
+              pathname.startsWith("/admin/enquiries") ? "text-white font-semibold" : "text-zinc-500 hover:text-zinc-300"
+            }`}
+          >
+            <div className="relative">
+              <MessageSquareText className="w-4 h-4" />
+              {pendingEnquiriesCount > 0 && (
+                <span className="absolute -top-1 -right-1.5 w-1.5 h-1.5 rounded-full bg-blue-400" />
+              )}
+            </div>
+            <span>Leads</span>
+          </Link>
+
+          <button
+            type="button"
+            onClick={() => setMobileDrawerOpen(true)}
+            className="flex flex-col items-center gap-0.5 py-1 px-2 rounded-md text-[10px] font-medium text-zinc-500 hover:text-zinc-300 transition-colors"
+          >
+            <Menu className="w-4 h-4" />
+            <span>More</span>
+          </button>
+        </nav>
+
       </div>
-
-      {/* ========================================================================= */}
-      {/* 4. MOBILE BOTTOM TAB BAR (Super Easy 375px Thumb Reach)                   */}
-      {/* ========================================================================= */}
-      <nav
-        aria-label="Mobile Admin Bottom Bar"
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-[#101216]/95 backdrop-blur-2xl border-t border-white/10 px-3 py-1.5 flex items-center justify-around"
-      >
-        <Link
-          href="/admin"
-          className={`flex flex-col items-center gap-0.5 py-1 px-2.5 rounded-lg text-[10px] font-bold font-display uppercase tracking-wider transition-colors ${
-            pathname === "/admin" ? "text-brand-red" : "text-white/60 hover:text-white"
-          }`}
-        >
-          <LayoutDashboard className="w-4 h-4" />
-          <span>Overview</span>
-        </Link>
-
-        <Link
-          href="/admin/vehicles"
-          className={`flex flex-col items-center gap-0.5 py-1 px-2.5 rounded-lg text-[10px] font-bold font-display uppercase tracking-wider transition-colors ${
-            pathname.startsWith("/admin/vehicles") ? "text-brand-red" : "text-white/60 hover:text-white"
-          }`}
-        >
-          <Car className="w-4 h-4" />
-          <span>Vehicles</span>
-        </Link>
-
-        <Link
-          href="/admin/tours"
-          className={`flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg text-[9px] font-bold font-display uppercase tracking-wider transition-colors ${
-            pathname.startsWith("/admin/tours") ? "text-brand-red" : "text-white/60 hover:text-white"
-          }`}
-        >
-          <Compass className="w-4 h-4" />
-          <span>Tours</span>
-        </Link>
-
-        <Link
-          href="/admin/batches"
-          className={`flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg text-[9px] font-bold font-display uppercase tracking-wider transition-colors relative ${
-            pathname.startsWith("/admin/batches") ? "text-brand-red" : "text-white/60 hover:text-white"
-          }`}
-        >
-          <div className="relative">
-            <Users className="w-4 h-4" />
-            {inProgressBatchesCount > 0 && (
-              <span className="absolute -top-1 -right-1.5 w-2 h-2 rounded-full bg-emerald-400" />
-            )}
-          </div>
-          <span>Manifest</span>
-        </Link>
-
-        <Link
-          href="/admin/enquiries"
-          className={`flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg text-[9px] font-bold font-display uppercase tracking-wider transition-colors relative ${
-            pathname.startsWith("/admin/enquiries") ? "text-brand-red" : "text-white/60 hover:text-white"
-          }`}
-        >
-          <div className="relative">
-            <MessageSquareText className="w-4 h-4" />
-            {pendingEnquiriesCount > 0 && (
-              <span className="absolute -top-1 -right-1.5 w-2 h-2 rounded-full bg-brand-red" />
-            )}
-          </div>
-          <span>Leads</span>
-        </Link>
-
-        <button
-          type="button"
-          onClick={() => setMobileDrawerOpen(true)}
-          className="flex flex-col items-center gap-0.5 py-1 px-2.5 rounded-lg text-[10px] font-bold font-display uppercase tracking-wider text-white/60 hover:text-white transition-colors"
-        >
-          <Menu className="w-4 h-4" />
-          <span>More</span>
-        </button>
-      </nav>
-
-    </div>
     </ToastProvider>
   );
 }

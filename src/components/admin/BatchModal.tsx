@@ -135,21 +135,21 @@ export function BatchModal({
       onClick={onClose}
     >
       <div
-        className="w-full max-w-xl bg-[#121418] border border-white/15 rounded-3xl p-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.9)] space-y-6 my-8 text-left"
+        className="w-full max-w-xl bg-[#111318] border border-white/[0.12] rounded-2xl p-5 sm:p-6 shadow-2xl space-y-5 my-8 text-left"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-white/10">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center">
-              <Calendar className="w-5 h-5" />
+        <div className="flex items-center justify-between pb-3.5 border-b border-white/[0.08]">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-white/[0.06] border border-white/[0.08] text-zinc-300 flex items-center justify-center">
+              <Calendar className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-lg font-black font-display uppercase tracking-tight text-white">
-                {isEditing ? "Edit Departure Batch" : "Schedule New Group Batch"}
+              <h3 className="text-sm sm:text-base font-semibold text-white">
+                {isEditing ? "Edit Departure Batch" : "Schedule Departure Batch"}
               </h3>
-              <p className="text-[11px] text-white/50">
-                Configure departure dates, road captain, and convoy vehicles.
+              <p className="text-[11px] text-zinc-400">
+                Configure departure dates, road captain, and convoy units.
               </p>
             </div>
           </div>
@@ -157,9 +157,9 @@ export function BatchModal({
           <button
             type="button"
             onClick={onClose}
-            className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 text-white/50 hover:text-white flex items-center justify-center transition-colors"
+            className="w-7 h-7 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-zinc-400 hover:text-white flex items-center justify-center transition-colors"
           >
-            <X className="w-4 h-4" />
+            <X className="w-3.5 h-3.5" />
           </button>
         </div>
 
@@ -168,13 +168,13 @@ export function BatchModal({
           
           {/* Select Expedition Circuit */}
           <div className="space-y-1">
-            <label className="block text-xs font-bold font-display uppercase tracking-wider text-white/80">
+            <label className="block text-xs font-medium text-zinc-300">
               Expedition Tour Circuit *
             </label>
             <select
               value={formData.tourId}
               onChange={(e) => handleTourSelect(e.target.value)}
-              className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white font-bold focus:outline-none focus:border-brand-red"
+              className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-white/20 font-medium"
             >
               {tours.map((t) => (
                 <option key={t.id} value={t.id}>
@@ -187,27 +187,27 @@ export function BatchModal({
           {/* Departure & Return Dates */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="block text-xs font-bold font-display uppercase tracking-wider text-white/80">
+              <label className="block text-xs font-medium text-zinc-300">
                 Departure Date *
               </label>
               <input
                 type="date"
                 value={formData.startDate || ""}
                 onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2 text-xs text-white font-mono focus:outline-none focus:border-brand-red"
+                className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-white/20"
               />
               {errors.startDate && <p className="text-[10px] text-red-400">{errors.startDate}</p>}
             </div>
 
             <div className="space-y-1">
-              <label className="block text-xs font-bold font-display uppercase tracking-wider text-white/80">
+              <label className="block text-xs font-medium text-zinc-300">
                 Return Date *
               </label>
               <input
                 type="date"
                 value={formData.endDate || ""}
                 onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2 text-xs text-white font-mono focus:outline-none focus:border-brand-red"
+                className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-white/20"
               />
               {errors.endDate && <p className="text-[10px] text-red-400">{errors.endDate}</p>}
             </div>
@@ -216,37 +216,37 @@ export function BatchModal({
           {/* Seats & Status */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="space-y-1">
-              <label className="block text-[10px] font-black font-display uppercase tracking-wider text-white/70">
-                Total Seat Limit
+              <label className="block text-xs font-medium text-zinc-400">
+                Total Seats
               </label>
               <input
                 type="number"
                 value={formData.totalSeats || ""}
                 onChange={(e) => setFormData({ ...formData, totalSeats: Number(e.target.value) })}
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2 text-xs text-white font-bold focus:outline-none focus:border-brand-red"
+                className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-white/20"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="block text-[10px] font-black font-display uppercase tracking-wider text-white/70">
+              <label className="block text-xs font-medium text-zinc-400">
                 Seats Booked
               </label>
               <input
                 type="number"
                 value={formData.bookedSeats || 0}
                 onChange={(e) => setFormData({ ...formData, bookedSeats: Number(e.target.value) })}
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2 text-xs text-white font-bold focus:outline-none focus:border-brand-red"
+                className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-white/20"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="block text-[10px] font-black font-display uppercase tracking-wider text-white/70">
+              <label className="block text-xs font-medium text-zinc-400">
                 Batch Status
               </label>
               <select
                 value={formData.status || "Upcoming"}
                 onChange={(e) => setFormData({ ...formData, status: e.target.value as BatchStatus })}
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-2.5 py-2 text-xs text-white font-bold focus:outline-none focus:border-brand-red"
+                className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none focus:border-white/20"
               >
                 <option value="Upcoming">Upcoming</option>
                 <option value="Filling Fast">Filling Fast</option>
@@ -261,7 +261,7 @@ export function BatchModal({
           {/* Road Captain & Lead Vehicle */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="block text-xs font-bold font-display uppercase tracking-wider text-white/80">
+              <label className="block text-xs font-medium text-zinc-300">
                 Lead Road Captain Name
               </label>
               <input
@@ -269,12 +269,12 @@ export function BatchModal({
                 value={formData.leadCaptainName || ""}
                 onChange={(e) => setFormData({ ...formData, leadCaptainName: e.target.value })}
                 placeholder="e.g. Dorjee Tsering"
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-brand-red font-medium"
+                className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-white/20"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="block text-xs font-bold font-display uppercase tracking-wider text-white/80">
+              <label className="block text-xs font-medium text-zinc-300">
                 Captain Phone / Radio
               </label>
               <input
@@ -282,7 +282,7 @@ export function BatchModal({
                 value={formData.leadCaptainPhone || ""}
                 onChange={(e) => setFormData({ ...formData, leadCaptainPhone: e.target.value })}
                 placeholder="+91 94360 11223"
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2 text-xs text-white font-mono focus:outline-none focus:border-brand-red"
+                className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-white/20"
               />
             </div>
           </div>
@@ -290,48 +290,48 @@ export function BatchModal({
           {/* Pickup & Drop Points */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="block text-xs font-bold font-display uppercase tracking-wider text-white/80">
-                Convoy Rollout Pickup Point
+              <label className="block text-xs font-medium text-zinc-300">
+                Pickup Point
               </label>
               <input
                 type="text"
                 value={formData.startLocation || ""}
                 onChange={(e) => setFormData({ ...formData, startLocation: e.target.value })}
                 placeholder="e.g. Guwahati Airport (GAU)"
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-brand-red font-medium"
+                className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-white/20"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="block text-xs font-bold font-display uppercase tracking-wider text-white/80">
-                Trip Completion Drop Point
+              <label className="block text-xs font-medium text-zinc-300">
+                Drop Point
               </label>
               <input
                 type="text"
                 value={formData.endLocation || ""}
                 onChange={(e) => setFormData({ ...formData, endLocation: e.target.value })}
                 placeholder="e.g. Guwahati Airport (GAU)"
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-brand-red font-medium"
+                className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-white/20"
               />
             </div>
           </div>
 
           {/* Form Actions */}
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/10">
+          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-white/[0.08]">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-white/80 text-xs font-bold font-display uppercase tracking-wider transition-colors"
+              className="px-3.5 py-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 text-xs font-medium transition-colors"
             >
               Cancel
             </button>
 
             <button
               type="submit"
-              className="px-6 py-2.5 rounded-xl bg-brand-red hover:bg-brand-red-hover text-white text-xs font-black font-display uppercase tracking-widest transition-all shadow-glow-red flex items-center gap-2"
+              className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition-all border border-white/15 flex items-center gap-1.5 shadow-sm"
             >
-              <Save className="w-4 h-4" />
-              <span>{isEditing ? "Update Batch" : "Publish Departure Batch"}</span>
+              <Save className="w-3.5 h-3.5" />
+              <span>{isEditing ? "Update Batch" : "Publish Batch"}</span>
             </button>
           </div>
 
