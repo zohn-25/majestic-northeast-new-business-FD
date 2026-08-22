@@ -1,13 +1,28 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { X, Save, User, Phone, Mail, ShieldCheck, Car, Bike, AlertCircle, Sparkles, MapPin } from "lucide-react";
+import {
+  X,
+  Save,
+  User,
+  Phone,
+  Mail,
+  ShieldCheck,
+  Car,
+  Bike,
+  AlertCircle,
+  Sparkles,
+  MapPin,
+  Compass,
+  Calendar,
+} from "lucide-react";
 import { Passenger, TourBatch, PermitStatus, PaymentStatus, PassengerTripStatus } from "@/lib/types";
 
 interface PassengerModalProps {
   isOpen: boolean;
   passenger?: Passenger | null;
-  batch: TourBatch;
+  batches: TourBatch[];
+  selectedBatchId?: string;
   onClose: () => void;
   onSave: (passenger: Passenger) => void;
 }
@@ -15,11 +30,19 @@ interface PassengerModalProps {
 export function PassengerModal({
   isOpen,
   passenger,
-  batch,
+  batches,
+  selectedBatchId,
   onClose,
   onSave,
 }: PassengerModalProps) {
   const isEditing = Boolean(passenger);
+
+  // Active target batch for this passenger
+  const [targetBatchId, setTargetBatchId] = useState<string>(
+    passenger?.batchId || selectedBatchId || batches[0]?.id || ""
+  );
+
+  const activeBatch = batches.find((b) => b.id === targetBatchId) || batches[0];
 
   const [formData, setFormData] = useState<Partial<Passenger>>({
     name: "",
@@ -33,7 +56,7 @@ export function PassengerModal({
     permitStatus: "Verified & Issued",
     paymentStatus: "Advance Paid",
     tripStatus: "Advance Paid (30%)",
-    assignedVehicle: batch.assignedVehicles[0] || "Thar 4x4 #01 (Lead)",
+    assignedVehicle: activeBatch?.assignedVehicles[0] || "Thar 4x4 #01 (Lead)",
     seatNumber: "Co-Driver (Front Right)",
     isSoloTraveller: true,
     dietaryPreference: "Veg",
@@ -45,12 +68,15 @@ export function PassengerModal({
   useEffect(() => {
     if (passenger) {
       setFormData(passenger);
+      setTargetBatchId(passenger.batchId);
     } else {
+      const defaultBatch = batches.find((b) => b.id === selectedBatchId) || batches[0];
+      setTargetBatchId(defaultBatch?.id || "");
       setFormData({
         id: `pax-${Date.now().toString().slice(-4)}`,
-        batchId: batch.id,
-        tourId: batch.tourId,
-        tourTitle: batch.tourTitle,
+        batchId: defaultBatch?.id,
+        tourId: defaultBatch?.tourId,
+        tourTitle: defaultBatch?.tourTitle,
         name: "",
         age: 28,
         gender: "Male",
@@ -62,7 +88,7 @@ export function PassengerModal({
         permitStatus: "Verified & Issued",
         paymentStatus: "Advance Paid",
         tripStatus: "Advance Paid (30%)",
-        assignedVehicle: batch.assignedVehicles[0] || "Thar 4x4 #01 (Lead)",
+        assignedVehicle: defaultBatch?.assignedVehicles[0] || "Thar 4x4 #01 (Lead)",
         seatNumber: "Co-Driver (Front Right)",
         isSoloTraveller: true,
         dietaryPreference: "Veg",
@@ -71,7 +97,22 @@ export function PassengerModal({
       });
     }
     setErrors({});
-  }, [passenger, batch, isOpen]);
+  }, [passenger, selectedBatchId, batches, isOpen]);
+
+  // When target batch changes, update assigned vehicles if not in current batch
+  const handleBatchChange = (newBatchId: string) => {
+    setTargetBatchId(newBatchId);
+    const selected = batches.find((b) => b.id === newBatchId);
+    if (selected) {
+      setFormData((prev) => ({
+        ...prev,
+        batchId: selected.id,
+        tourId: selected.tourId,
+        tourTitle: selected.tourTitle,
+        assignedVehicle: selected.assignedVehicles[0] || "Thar 4x4 #01",
+      }));
+    }
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -83,7 +124,7 @@ export function PassengerModal({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !activeBatch) return null;
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
@@ -100,9 +141,9 @@ export function PassengerModal({
 
     const fullPassenger: Passenger = {
       id: formData.id || passenger?.id || `pax-${Date.now()}`,
-      batchId: batch.id,
-      tourId: batch.tourId,
-      tourTitle: batch.tourTitle,
+      batchId: activeBatch.id,
+      tourId: activeBatch.tourId,
+      tourTitle: activeBatch.tourTitle,
       name: formData.name || "",
       age: Number(formData.age) || 28,
       gender: formData.gender || "Male",
@@ -114,8 +155,8 @@ export function PassengerModal({
       permitStatus: (formData.permitStatus as PermitStatus) || "Verified & Issued",
       paymentStatus: (formData.paymentStatus as PaymentStatus) || "Advance Paid",
       tripStatus: (formData.tripStatus as PassengerTripStatus) || "Advance Paid (30%)",
-      assignedVehicle: formData.assignedVehicle || batch.assignedVehicles[0] || "Thar 4x4 #01",
-      seatNumber: formData.seatNumber || "Seat 1A",
+      assignedVehicle: formData.assignedVehicle || activeBatch.assignedVehicles[0] || "Thar 4x4 #01",
+      seatNumber: formData.seatNumber || "Co-Driver (Front Right)",
       isSoloTraveller: Boolean(formData.isSoloTraveller),
       dietaryPreference: formData.dietaryPreference || "Veg",
       notes: formData.notes || "",
@@ -142,10 +183,10 @@ export function PassengerModal({
             </div>
             <div>
               <h3 className="text-lg font-black font-display uppercase tracking-tight text-white">
-                {isEditing ? `Edit Passenger: ${passenger?.name}` : "Add Traveller to Batch"}
+                {isEditing ? `Edit Passenger: ${passenger?.name}` : "Add Traveller to Batch Manifest"}
               </h3>
               <p className="text-[11px] text-white/50">
-                Batch: {batch.tourTitle} ({batch.startDate})
+                Assign destination tour circuit, departure date, and convoy seat.
               </p>
             </div>
           </div>
@@ -162,6 +203,41 @@ export function PassengerModal({
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="space-y-4">
           
+          {/* ========================================================================= */}
+          {/* 🎯 DESTINATION TOUR CIRCUIT & BATCH DEPARTURE DATE SELECTOR              */}
+          {/* ========================================================================= */}
+          <div className="p-4 bg-black/60 rounded-2xl border-2 border-brand-red/40 space-y-2.5">
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-black font-display uppercase tracking-wider text-brand-red flex items-center gap-1.5">
+                <Compass className="w-4 h-4" />
+                <span>Select Tour Destination & Departure Batch *</span>
+              </label>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-white/10 text-white/70 font-mono">
+                {activeBatch.bookedSeats}/{activeBatch.totalSeats} Booked
+              </span>
+            </div>
+
+            {/* Batch Select Dropdown */}
+            <select
+              value={targetBatchId}
+              onChange={(e) => handleBatchChange(e.target.value)}
+              className="w-full bg-[#16191F] border border-white/20 rounded-xl px-3.5 py-3 text-xs text-white font-bold focus:outline-none focus:border-brand-red shadow-inner cursor-pointer"
+            >
+              {batches.map((b) => (
+                <option key={b.id} value={b.id}>
+                  {b.tourTitle} ── [Dep: {b.startDate} to {b.endDate}] ({b.status} • {b.tripFormat === "car" ? "4x4 Convoy" : "Motorcycle"})
+                </option>
+              ))}
+            </select>
+
+            {/* Selected Batch Details Strip */}
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/70 pt-1">
+              <span>📍 Route: <strong className="text-white">{activeBatch.startLocation}</strong></span>
+              <span>📅 Window: <strong className="text-brand-red">{activeBatch.startDate} → {activeBatch.endDate}</strong></span>
+              <span>👨‍✈️ Captain: <strong className="text-white">{activeBatch.leadCaptainName}</strong></span>
+            </div>
+          </div>
+
           {/* Name & Age / Gender */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="sm:col-span-2 space-y-1">
@@ -273,11 +349,11 @@ export function PassengerModal({
                 Assigned 4x4 / Bike in Convoy
               </label>
               <select
-                value={formData.assignedVehicle || batch.assignedVehicles[0]}
+                value={formData.assignedVehicle || activeBatch.assignedVehicles[0]}
                 onChange={(e) => setFormData({ ...formData, assignedVehicle: e.target.value })}
                 className="w-full bg-[#121418] border border-white/15 rounded-xl px-3 py-2 text-xs text-white font-bold focus:outline-none focus:border-brand-red"
               >
-                {batch.assignedVehicles.map((veh) => (
+                {activeBatch.assignedVehicles.map((veh) => (
                   <option key={veh} value={veh}>
                     {veh}
                   </option>

@@ -865,15 +865,14 @@ export default function AdminBatchesManifestPage() {
       {/* ========================================================================= */}
       
       {/* Passenger Modal (Add/Edit) */}
-      {selectedBatch && (
-        <PassengerModal
-          isOpen={passengerModalOpen}
-          passenger={editingPassenger}
-          batch={selectedBatch}
-          onClose={() => setPassengerModalOpen(false)}
-          onSave={handleSavePassenger}
-        />
-      )}
+      <PassengerModal
+        isOpen={passengerModalOpen}
+        passenger={editingPassenger}
+        batches={batches}
+        selectedBatchId={selectedBatch?.id}
+        onClose={() => setPassengerModalOpen(false)}
+        onSave={handleSavePassenger}
+      />
 
       {/* Batch Modal (Schedule/Edit) */}
       <BatchModal
