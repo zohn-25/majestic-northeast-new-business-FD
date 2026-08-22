@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { X, Save, Compass, AlertCircle, Plus, Trash2 } from "lucide-react";
+import { X, Save, Compass } from "lucide-react";
 import { SharedTour } from "@/lib/types";
 
 interface TourModalProps {
@@ -11,73 +11,61 @@ interface TourModalProps {
   onSave: (tour: SharedTour) => void;
 }
 
-export function TourModal({ isOpen, tour, onClose, onSave }: TourModalProps) {
+export function TourModal({
+  isOpen,
+  tour,
+  onClose,
+  onSave,
+}: TourModalProps) {
   const isEditing = Boolean(tour);
 
   const [formData, setFormData] = useState<Partial<SharedTour>>({
     title: "",
     slug: "",
-    destinationId: "meghalaya",
     destinationName: "Meghalaya",
+    destinationId: "meghalaya",
+    durationDays: 6,
+    durationNights: 5,
     tripFormat: "car",
     vehicleProvided: "Mahindra Thar 4x4",
-    route: "Guwahati -> Shillong -> Cherrapunji -> Dawki -> Guwahati",
-    durationDays: 5,
-    durationNights: 4,
-    startDates: ["2026-09-15", "2026-10-01", "2026-10-15"],
-    pricePerPerson: 17999,
+    pricePerPerson: 28500,
+    route: "Guwahati -> Shillong -> Cherrapunji -> Dawki -> Kaziranga",
+    heroImage:
+      "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=80",
+    shortHighlights: ["Living Root Bridges", "Dawki River Boating", "Waterfalls"],
     totalSeats: 12,
-    seatsBooked: 4,
-    heroImage: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80",
-    gallery: [],
-    shortHighlights: ["4x4 Off-Road Khasi Trail", "Living Root Bridge Trek", "Crystal Umngot Boating"],
-    inclusions: ["All 3-Star Stays", "Breakfast & Dinner", "Inner Line Permits", "Mechanic Truck"],
-    exclusions: ["Personal expenses", "Airfare to Guwahati"],
-    pickupDropPoints: ["Guwahati Airport (GAU)"],
-    accommodationDetails: "Handpicked mountain resorts & riverside glamping",
-    importantNotes: ["Carry valid Govt ID for ILP verification"],
-    isFeatured: true,
+    seatsBooked: 0,
+    isFeatured: false,
   });
 
+  const [highlightsInput, setHighlightsInput] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     if (tour) {
       setFormData(tour);
+      setHighlightsInput(tour.shortHighlights?.join(", ") || "");
     } else {
       setFormData({
-        id: `t-custom-${Date.now().toString().slice(-4)}`,
+        id: `tour-${Date.now().toString().slice(-4)}`,
         title: "",
         slug: "",
-        destinationId: "meghalaya",
         destinationName: "Meghalaya",
-        tripFormat: "car",
-        vehicleProvided: "Mahindra Thar 4x4",
-        route: "",
+        destinationId: "meghalaya",
         durationDays: 6,
         durationNights: 5,
-        startDates: ["2026-09-20"],
-        pricePerPerson: 19500,
+        tripFormat: "car",
+        vehicleProvided: "Mahindra Thar 4x4",
+        pricePerPerson: 28500,
+        route: "Guwahati -> Shillong -> Cherrapunji -> Dawki -> Kaziranga",
+        heroImage:
+          "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=80",
+        shortHighlights: ["Living Root Bridges", "Dawki River Boating", "Waterfalls"],
         totalSeats: 12,
         seatsBooked: 0,
-        heroImage: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1200&q=80",
-        gallery: [],
-        shortHighlights: ["Off-road Mountain Trail", "Guided Convoy Escort"],
-        inclusions: ["Boutique stays", "Backup truck", "Trip Captain"],
-        exclusions: ["Personal laundry", "Airfare"],
-        pickupDropPoints: ["Guwahati Airport (GAU)"],
-        accommodationDetails: "Deluxe stays & tea estate bungalows",
-        importantNotes: ["Original Driving license required for self-drive drivers"],
         isFeatured: false,
-        itinerary: [
-          { day: 1, title: "Arrival in Guwahati & Convoy Rollout", description: "Vehicle briefing and check-in." },
-          { day: 2, title: "Scenic Mountain Drive", description: "Scenic trails and waterfalls." },
-        ],
-        cancellationPolicy: [
-          { daysBefore: 15, refundPercent: 100, description: "Full refund 15+ days before" },
-        ],
-        faqs: [],
       });
+      setHighlightsInput("Living Root Bridges, Dawki River Boating, Waterfalls");
     }
     setErrors({});
   }, [tour, isOpen]);
@@ -96,14 +84,10 @@ export function TourModal({ isOpen, tour, onClose, onSave }: TourModalProps) {
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
-    if (!formData.title?.trim()) newErrors.title = "Expedition title is required.";
+    if (!formData.title?.trim()) newErrors.title = "Tour title is required.";
     if (!formData.route?.trim()) newErrors.route = "Circuit route is required.";
-    if (!formData.pricePerPerson || formData.pricePerPerson <= 0) {
-      newErrors.pricePerPerson = "Enter a valid price per person.";
-    }
-    if (!formData.heroImage?.trim()) {
-      newErrors.heroImage = "Hero cover image URL is required.";
-    }
+    if (!formData.pricePerPerson || Number(formData.pricePerPerson) <= 0)
+      newErrors.pricePerPerson = "Valid price per person is required.";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -112,32 +96,50 @@ export function TourModal({ isOpen, tour, onClose, onSave }: TourModalProps) {
     e.preventDefault();
     if (!validate()) return;
 
+    const highList = highlightsInput
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+
     const fullTour: SharedTour = {
-      id: formData.id || tour?.id || `t-${Date.now()}`,
+      id: formData.id || tour?.id || `tour-${Date.now()}`,
       title: formData.title || "",
-      slug: formData.slug || formData.title?.toLowerCase().replace(/[^a-z0-9]+/g, "-") || `tour-${Date.now()}`,
+      slug:
+        formData.slug ||
+        formData.title?.toLowerCase().replace(/[^a-z0-9]+/g, "-") ||
+        `tour-${Date.now()}`,
       destinationId: formData.destinationId || "meghalaya",
       destinationName: formData.destinationName || "Meghalaya",
-      tripFormat: formData.tripFormat || "car",
+      durationDays: Number(formData.durationDays) || 6,
+      durationNights: Number(formData.durationNights) || 5,
+      tripFormat: (formData.tripFormat as "car" | "bike") || "car",
       vehicleProvided: formData.vehicleProvided || "Mahindra Thar 4x4",
-      route: formData.route || "",
-      durationDays: Number(formData.durationDays) || 5,
-      durationNights: Number(formData.durationNights) || 4,
-      startDates: formData.startDates || ["2026-09-15"],
-      pricePerPerson: Number(formData.pricePerPerson) || 18000,
+      pricePerPerson: Number(formData.pricePerPerson) || 28500,
       totalSeats: Number(formData.totalSeats) || 12,
       seatsBooked: Number(formData.seatsBooked) || 0,
-      heroImage: formData.heroImage || "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1200&q=80",
-      gallery: formData.gallery || [],
-      shortHighlights: formData.shortHighlights || [],
-      itinerary: formData.itinerary || [],
-      inclusions: formData.inclusions || [],
-      exclusions: formData.exclusions || [],
-      pickupDropPoints: formData.pickupDropPoints || ["Guwahati Airport"],
-      accommodationDetails: formData.accommodationDetails || "Boutique stays",
-      importantNotes: formData.importantNotes || [],
-      cancellationPolicy: formData.cancellationPolicy || [],
-      faqs: formData.faqs || [],
+      startDates: tour?.startDates || ["2026-09-15", "2026-10-05", "2026-10-20"],
+      route: formData.route || "",
+      heroImage:
+        formData.heroImage ||
+        "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=80",
+      gallery: tour?.gallery || [
+        "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=80",
+      ],
+      shortHighlights: highList.length ? highList : ["Living Root Bridges"],
+      itinerary: tour?.itinerary || [
+        { day: 1, title: "Arrival & Convoy Briefing", description: "Assemble at Guwahati hotel." },
+      ],
+      inclusions: tour?.inclusions || ["All Fuel & 4x4 Thar", "Hotel Stays", "Inner Line Permits"],
+      exclusions: tour?.exclusions || ["Airfare to Guwahati", "Personal Snacks"],
+      pickupDropPoints: tour?.pickupDropPoints || ["Guwahati Airport", "Guwahati Airport"],
+      accommodationDetails: tour?.accommodationDetails || "Premium boutique resorts & heritage lodges",
+      importantNotes: tour?.importantNotes || ["Carry original valid Govt photo ID", "Postpaid SIM works best in Northeast"],
+      cancellationPolicy: tour?.cancellationPolicy || [
+        { daysBefore: 15, refundPercent: 100, description: "Full refund up to 15 days before departure" },
+      ],
+      faqs: tour?.faqs || [
+        { id: "faq-1", category: "tour", question: "Can I drive the Thar?", answer: "Yes, you can take turns driving with our captain." },
+      ],
       isFeatured: Boolean(formData.isFeatured),
     };
 
@@ -146,25 +148,25 @@ export function TourModal({ isOpen, tour, onClose, onSave }: TourModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm overflow-y-auto"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-2xl bg-[#111318] border border-white/[0.12] rounded-2xl p-5 sm:p-6 shadow-2xl space-y-5 my-8 max-h-[90vh] overflow-y-auto scrollbar-thin scrollbar-thumb-white/5 text-left"
+        className="w-full max-w-2xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-white/[0.12] rounded-2xl p-5 sm:p-6 shadow-2xl space-y-5 my-8 max-h-[90vh] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-white/5 text-left transition-colors"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between pb-3.5 border-b border-white/[0.08]">
+        <div className="flex items-center justify-between pb-3.5 border-b border-slate-200 dark:border-white/[0.08]">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-white/[0.06] border border-white/[0.08] text-zinc-300 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-white/[0.06] border border-slate-200 dark:border-white/[0.08] text-slate-700 dark:text-zinc-300 flex items-center justify-center">
               <Compass className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-sm sm:text-base font-semibold text-white">
-                {isEditing ? `Edit Tour: ${tour?.title}` : "Create Tour Package"}
+              <h3 className="text-sm sm:text-base font-semibold text-slate-900 dark:text-white">
+                {isEditing ? `Edit Circuit: ${tour?.title}` : "Create Guided Expedition"}
               </h3>
-              <p className="text-[11px] text-zinc-400">
-                Set expedition route, vehicle type, and pricing.
+              <p className="text-[11px] text-slate-500 dark:text-zinc-400">
+                Configure convoy route, duration, vehicle type, and pricing.
               </p>
             </div>
           </div>
@@ -172,7 +174,7 @@ export function TourModal({ isOpen, tour, onClose, onSave }: TourModalProps) {
           <button
             type="button"
             onClick={onClose}
-            className="w-7 h-7 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-zinc-400 hover:text-white flex items-center justify-center transition-colors"
+            className="w-7 h-7 rounded-lg bg-slate-100 dark:bg-white/[0.04] hover:bg-slate-200 dark:hover:bg-white/[0.08] text-slate-400 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-colors"
           >
             <X className="w-3.5 h-3.5" />
           </button>
@@ -183,7 +185,7 @@ export function TourModal({ isOpen, tour, onClose, onSave }: TourModalProps) {
           
           {/* Title */}
           <div className="space-y-1">
-            <label className="block text-xs font-bold font-display uppercase tracking-wider text-white/80">
+            <label className="block text-xs font-medium text-slate-700 dark:text-zinc-300">
               Expedition Title *
             </label>
             <input
@@ -191,14 +193,14 @@ export function TourModal({ isOpen, tour, onClose, onSave }: TourModalProps) {
               value={formData.title || ""}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               placeholder="e.g. 7D Tawang & Sela Pass 4x4 Thar Convoy Expedition"
-              className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-white/30 focus:outline-none focus:border-brand-red font-medium"
+              className="w-full bg-white dark:bg-[#0B0D10] border border-slate-200 dark:border-white/[0.08] rounded-lg px-3 py-2 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-500 focus:outline-none focus:border-slate-400 dark:focus:border-white/20"
             />
-            {errors.title && <p className="text-[10px] text-red-400 font-bold">{errors.title}</p>}
+            {errors.title && <p className="text-[10px] text-red-500">{errors.title}</p>}
           </div>
 
           {/* Route */}
           <div className="space-y-1">
-            <label className="block text-xs font-bold font-display uppercase tracking-wider text-white/80">
+            <label className="block text-xs font-medium text-slate-700 dark:text-zinc-300">
               Circuit Route *
             </label>
             <input
@@ -206,35 +208,35 @@ export function TourModal({ isOpen, tour, onClose, onSave }: TourModalProps) {
               value={formData.route || ""}
               onChange={(e) => setFormData({ ...formData, route: e.target.value })}
               placeholder="e.g. Guwahati -> Bhalukpong -> Dirang -> Tawang -> Bomdila -> Guwahati"
-              className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-white/30 focus:outline-none focus:border-brand-red font-medium"
+              className="w-full bg-white dark:bg-[#0B0D10] border border-slate-200 dark:border-white/[0.08] rounded-lg px-3 py-2 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-500 focus:outline-none focus:border-slate-400 dark:focus:border-white/20 font-mono"
             />
-            {errors.route && <p className="text-[10px] text-red-400 font-bold">{errors.route}</p>}
+            {errors.route && <p className="text-[10px] text-red-500">{errors.route}</p>}
           </div>
 
           {/* Format & Destination State */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="space-y-1">
-              <label className="block text-[10px] font-black font-display uppercase tracking-wider text-white/70">
+              <label className="block text-xs font-medium text-slate-700 dark:text-zinc-300">
                 Format
               </label>
               <select
                 value={formData.tripFormat || "car"}
                 onChange={(e) => setFormData({ ...formData, tripFormat: e.target.value as "car" | "bike" })}
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2 text-xs text-white font-bold focus:outline-none focus:border-brand-red"
+                className="w-full bg-white dark:bg-[#0B0D10] border border-slate-200 dark:border-white/[0.08] rounded-lg px-2.5 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-slate-400 dark:focus:border-white/20"
               >
-                <option value="car">🚗 4x4 SUV Convoy</option>
-                <option value="bike">🏍️ Motorcycle Tour</option>
+                <option value="car">4x4 SUV Convoy</option>
+                <option value="bike">Motorcycle Tour</option>
               </select>
             </div>
 
             <div className="space-y-1">
-              <label className="block text-[10px] font-black font-display uppercase tracking-wider text-white/70">
+              <label className="block text-xs font-medium text-slate-700 dark:text-zinc-300">
                 Destination State
               </label>
               <select
                 value={formData.destinationName || "Meghalaya"}
-                onChange={(e) => setFormData({ ...formData, destinationName: e.target.value })}
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2 text-xs text-white font-bold focus:outline-none focus:border-brand-red"
+                onChange={(e) => setFormData({ ...formData, destinationName: e.target.value, destinationId: e.target.value.toLowerCase().replace(/[^a-z0-9]/g, "") })}
+                className="w-full bg-white dark:bg-[#0B0D10] border border-slate-200 dark:border-white/[0.08] rounded-lg px-2.5 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-slate-400 dark:focus:border-white/20"
               >
                 <option value="Meghalaya">Meghalaya</option>
                 <option value="Arunachal Pradesh">Arunachal Pradesh</option>
@@ -245,7 +247,7 @@ export function TourModal({ isOpen, tour, onClose, onSave }: TourModalProps) {
             </div>
 
             <div className="space-y-1">
-              <label className="block text-[10px] font-black font-display uppercase tracking-wider text-white/70">
+              <label className="block text-xs font-medium text-slate-700 dark:text-zinc-300">
                 Vehicle Model
               </label>
               <input
@@ -253,108 +255,122 @@ export function TourModal({ isOpen, tour, onClose, onSave }: TourModalProps) {
                 value={formData.vehicleProvided || ""}
                 onChange={(e) => setFormData({ ...formData, vehicleProvided: e.target.value })}
                 placeholder="e.g. Mahindra Thar 4x4"
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2 text-xs text-white font-bold focus:outline-none focus:border-brand-red"
+                className="w-full bg-white dark:bg-[#0B0D10] border border-slate-200 dark:border-white/[0.08] rounded-lg px-3 py-2 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-500 focus:outline-none focus:border-slate-400 dark:focus:border-white/20"
               />
             </div>
           </div>
 
           {/* Pricing & Duration */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="space-y-1">
-              <label className="block text-[10px] font-black font-display uppercase tracking-wider text-white/70">
-                Price / Person (₹) *
+              <label className="block text-xs font-medium text-slate-700 dark:text-zinc-300">
+                Price Per Person (₹) *
               </label>
               <input
                 type="number"
-                value={formData.pricePerPerson || ""}
+                value={formData.pricePerPerson || 28500}
                 onChange={(e) => setFormData({ ...formData, pricePerPerson: Number(e.target.value) })}
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2 text-xs text-white font-bold focus:outline-none focus:border-brand-red"
+                className="w-full bg-white dark:bg-[#0B0D10] border border-slate-200 dark:border-white/[0.08] rounded-lg px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-slate-400 dark:focus:border-white/20 font-mono"
               />
-              {errors.pricePerPerson && <p className="text-[9px] text-red-400">{errors.pricePerPerson}</p>}
+              {errors.pricePerPerson && <p className="text-[10px] text-red-500">{errors.pricePerPerson}</p>}
             </div>
 
             <div className="space-y-1">
-              <label className="block text-[10px] font-black font-display uppercase tracking-wider text-white/70">
-                Duration (Days)
+              <label className="block text-xs font-medium text-slate-700 dark:text-zinc-300">
+                Duration Days
               </label>
               <input
                 type="number"
-                value={formData.durationDays || ""}
+                value={formData.durationDays || 6}
                 onChange={(e) => setFormData({ ...formData, durationDays: Number(e.target.value) })}
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2 text-xs text-white font-bold focus:outline-none focus:border-brand-red"
+                className="w-full bg-white dark:bg-[#0B0D10] border border-slate-200 dark:border-white/[0.08] rounded-lg px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-slate-400 dark:focus:border-white/20 font-mono"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="block text-[10px] font-black font-display uppercase tracking-wider text-white/70">
-                Total Seats
+              <label className="block text-xs font-medium text-slate-700 dark:text-zinc-300">
+                Duration Nights
               </label>
               <input
                 type="number"
-                value={formData.totalSeats || ""}
-                onChange={(e) => setFormData({ ...formData, totalSeats: Number(e.target.value) })}
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2 text-xs text-white font-bold focus:outline-none focus:border-brand-red"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <label className="block text-[10px] font-black font-display uppercase tracking-wider text-white/70">
-                Seats Booked
-              </label>
-              <input
-                type="number"
-                value={formData.seatsBooked || ""}
-                onChange={(e) => setFormData({ ...formData, seatsBooked: Number(e.target.value) })}
-                className="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2 text-xs text-white font-bold focus:outline-none focus:border-brand-red"
+                value={formData.durationNights || 5}
+                onChange={(e) => setFormData({ ...formData, durationNights: Number(e.target.value) })}
+                className="w-full bg-white dark:bg-[#0B0D10] border border-slate-200 dark:border-white/[0.08] rounded-lg px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-slate-400 dark:focus:border-white/20 font-mono"
               />
             </div>
           </div>
 
-          {/* Hero Image */}
+          {/* Max Seats */}
           <div className="space-y-1">
-            <label className="block text-xs font-bold font-display uppercase tracking-wider text-white/80">
-              Hero Cover Photo URL *
+            <label className="block text-xs font-medium text-slate-700 dark:text-zinc-300">
+              Max Convoy Seats
+            </label>
+            <input
+              type="number"
+              value={formData.totalSeats || 12}
+              onChange={(e) => setFormData({ ...formData, totalSeats: Number(e.target.value) })}
+              className="w-full bg-white dark:bg-[#0B0D10] border border-slate-200 dark:border-white/[0.08] rounded-lg px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-slate-400 dark:focus:border-white/20 font-mono"
+            />
+          </div>
+
+          {/* Highlights */}
+          <div className="space-y-1">
+            <label className="block text-xs font-medium text-slate-700 dark:text-zinc-300">
+              Highlights (Comma separated)
+            </label>
+            <input
+              type="text"
+              value={highlightsInput}
+              onChange={(e) => setHighlightsInput(e.target.value)}
+              placeholder="e.g. Living Root Bridges, Dawki Clear Water Boating, Laitlum Canyons"
+              className="w-full bg-white dark:bg-[#0B0D10] border border-slate-200 dark:border-white/[0.08] rounded-lg px-3 py-2 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-500 focus:outline-none focus:border-slate-400 dark:focus:border-white/20"
+            />
+          </div>
+
+          {/* Hero Image URL */}
+          <div className="space-y-1">
+            <label className="block text-xs font-medium text-slate-700 dark:text-zinc-300">
+              Hero Cover Image URL
             </label>
             <input
               type="text"
               value={formData.heroImage || ""}
               onChange={(e) => setFormData({ ...formData, heroImage: e.target.value })}
-              placeholder="https://images.unsplash.com/photo-..."
-              className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-white/30 focus:outline-none focus:border-brand-red font-mono"
+              placeholder="https://images.unsplash.com/..."
+              className="w-full bg-white dark:bg-[#0B0D10] border border-slate-200 dark:border-white/[0.08] rounded-lg px-3 py-2 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-500 focus:outline-none focus:border-slate-400 dark:focus:border-white/20 font-mono"
             />
-            {errors.heroImage && <p className="text-[10px] text-red-400">{errors.heroImage}</p>}
           </div>
 
-          {/* Featured Toggle */}
-          <div className="flex items-center gap-3 p-3 bg-black/40 rounded-xl border border-white/10">
+          {/* Featured Checkbox */}
+          <div className="flex items-center gap-2.5 pt-1">
             <input
               type="checkbox"
               id="isFeaturedTour"
               checked={Boolean(formData.isFeatured)}
               onChange={(e) => setFormData({ ...formData, isFeatured: e.target.checked })}
-              className="w-4 h-4 rounded accent-brand-red cursor-pointer"
+              className="w-4 h-4 rounded accent-slate-700 cursor-pointer"
             />
-            <label htmlFor="isFeaturedTour" className="text-xs font-bold font-display text-white cursor-pointer">
-              Pin as Bestseller / Featured Tour on Homepage
+            <label htmlFor="isFeaturedTour" className="text-xs text-slate-700 dark:text-zinc-300 cursor-pointer font-medium">
+              Feature on Homepage & Spotlight Expeditions
             </label>
           </div>
 
           {/* Form Actions */}
-          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-white/[0.08]">
+          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100 dark:border-white/[0.08]">
             <button
               type="button"
               onClick={onClose}
-              className="px-3.5 py-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 text-xs font-medium transition-colors"
+              className="px-3.5 py-2 rounded-lg bg-slate-100 dark:bg-white/[0.04] hover:bg-slate-200 dark:hover:bg-white/[0.08] text-slate-700 dark:text-zinc-300 text-xs font-medium transition-colors"
             >
               Cancel
             </button>
 
             <button
               type="submit"
-              className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition-all border border-white/15 flex items-center gap-1.5 shadow-sm"
+              className="px-4 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white dark:bg-white/10 dark:hover:bg-white/20 text-xs font-semibold transition-all border border-slate-700 dark:border-white/15 flex items-center gap-1.5 shadow-sm"
             >
               <Save className="w-3.5 h-3.5" />
-              <span>{isEditing ? "Update Tour" : "Publish Tour"}</span>
+              <span>{isEditing ? "Update Expedition Circuit" : "Publish Circuit"}</span>
             </button>
           </div>
 

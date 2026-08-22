@@ -1,8 +1,7 @@
-# Graph Report - majestic new business demo  (2026-08-22)
+# Graph Report - .  (2026-08-22)
 
 ## Corpus Check
-- 77 files · ~56,019 words
-- Verdict: corpus is large enough that graph structure adds value.
+- cluster-only mode — file stats not available
 
 ## Summary
 - 169 nodes · 101 edges · 3 communities detected

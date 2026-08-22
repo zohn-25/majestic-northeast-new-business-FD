@@ -9,16 +9,12 @@ import {
   MessageSquareText,
   Plus,
   ArrowRight,
-  TrendingUp,
   Clock,
   CheckCircle2,
   Users,
-  ShieldCheck,
   Calendar,
   ExternalLink,
   ChevronRight,
-  Phone,
-  Mail,
   AlertCircle,
   Flag,
   FileCheck2,
@@ -55,28 +51,28 @@ export default function AdminDashboardPage() {
   const getStatusBadge = (status: EnquiryStatus) => {
     switch (status) {
       case "New":
-        return "bg-blue-500/15 text-blue-400 border-blue-500/30";
+        return "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30";
       case "Contacted":
-        return "bg-amber-500/15 text-amber-400 border-amber-500/30";
+        return "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30";
       case "Confirmed":
-        return "bg-emerald-500/15 text-emerald-400 border-emerald-500/30";
+        return "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30";
       case "Cancelled":
-        return "bg-zinc-500/15 text-zinc-400 border-zinc-500/30";
+        return "bg-slate-200 dark:bg-zinc-500/15 text-slate-600 dark:text-zinc-400 border-slate-300 dark:border-zinc-500/30";
     }
   };
 
   const getBatchStatusBadge = (status: BatchStatus) => {
     switch (status) {
       case "Departed / In Progress":
-        return "bg-emerald-500/15 text-emerald-400 border-emerald-500/30";
+        return "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30";
       case "Sold Out":
-        return "bg-rose-500/15 text-rose-400 border-rose-500/30";
+        return "bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/30";
       case "Filling Fast":
-        return "bg-amber-500/15 text-amber-400 border-amber-500/30";
+        return "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30";
       case "Completed":
-        return "bg-zinc-500/15 text-zinc-400 border-zinc-500/30";
+        return "bg-slate-200 dark:bg-zinc-500/15 text-slate-600 dark:text-zinc-400 border-slate-300 dark:border-zinc-500/30";
       default:
-        return "bg-zinc-500/15 text-zinc-300 border-zinc-500/30";
+        return "bg-slate-200 dark:bg-zinc-500/15 text-slate-600 dark:text-zinc-300 border-slate-300 dark:border-zinc-500/30";
     }
   };
 
@@ -84,339 +80,316 @@ export default function AdminDashboardPage() {
     <div className="space-y-6 text-left">
       
       {/* Top Banner / Welcome Row */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-[#111318] border border-white/[0.08] rounded-2xl p-5 sm:p-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white dark:bg-[#111318] border border-slate-200 dark:border-white/[0.08] rounded-2xl p-5 sm:p-6 shadow-xs transition-colors">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500 dark:text-zinc-400">
               Operations Center
             </span>
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold font-display tracking-tight text-white">
+          <h1 className="text-xl sm:text-2xl font-bold font-display tracking-tight text-slate-900 dark:text-white">
             Dashboard Overview
           </h1>
-          <p className="text-xs text-zinc-400">
+          <p className="text-xs text-slate-500 dark:text-zinc-400">
             Real-time status of group departures, passenger manifests, fleet inventory & customer bookings.
           </p>
         </div>
 
-        {/* Quick Top Actions */}
         <div className="flex flex-wrap items-center gap-2">
           <Link
             href="/admin/batches"
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.08] text-xs font-medium text-zinc-200 hover:text-white transition-all"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-900 text-white dark:bg-white/10 dark:hover:bg-white/20 hover:bg-slate-800 text-xs font-semibold transition-all border border-slate-700 dark:border-white/15 shadow-xs"
           >
-            <Users className="w-3.5 h-3.5 text-zinc-400" />
-            <span>Manifests ({totalBookedPassengers})</span>
-          </Link>
-          <Link
-            href="/admin/vehicles"
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.08] text-xs font-medium text-zinc-200 hover:text-white transition-all"
-          >
-            <Car className="w-3.5 h-3.5 text-zinc-400" />
-            <span>Vehicles ({totalVehicles})</span>
+            <Users className="w-3.5 h-3.5" />
+            <span>Passenger Roster</span>
           </Link>
           <Link
             href="/admin/enquiries"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-medium transition-all border border-white/10"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-white/[0.04] hover:bg-slate-200 dark:hover:bg-white/[0.08] text-slate-700 dark:text-zinc-300 text-xs font-semibold border border-slate-200 dark:border-white/[0.08] transition-all shadow-xs"
           >
-            <MessageSquareText className="w-3.5 h-3.5 text-zinc-300" />
-            <span>Leads ({pendingEnquiries} New)</span>
+            <MessageSquareText className="w-3.5 h-3.5" />
+            <span>Booking Desk</span>
           </Link>
         </div>
       </div>
 
       {/* ========================================================================= */}
-      {/* 4 MINIMALIST STATS CARDS                                                  */}
+      {/* 4 CORE KPI TILES (Adaptive Light / Dark Mode)                             */}
       {/* ========================================================================= */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         
-        {/* Card 1: Group Batches & Passenger Manifest */}
+        {/* 1. Group Travellers & Active Batches */}
         <Link
           href="/admin/batches"
-          className="bg-[#111318] hover:bg-[#15181E] border border-white/[0.08] hover:border-white/20 rounded-2xl p-4 sm:p-5 transition-all group"
+          className="bg-white dark:bg-[#111318] border border-slate-200 dark:border-white/[0.08] hover:border-slate-300 dark:hover:border-white/20 rounded-2xl p-4 sm:p-5 flex flex-col justify-between space-y-3 group transition-all shadow-xs hover:shadow-md"
         >
           <div className="flex items-center justify-between">
-            <div className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-zinc-300 flex items-center justify-center">
-              <Users className="w-4 h-4" />
-            </div>
-            <span className="px-2 py-0.5 bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono rounded-md">
-              {departedPassengers} On Trail
-            </span>
-          </div>
-          <div className="mt-3.5 space-y-0.5">
-            <span className="text-2xl sm:text-3xl font-bold font-display text-white block">
-              {totalBookedPassengers}
-            </span>
-            <span className="text-xs font-medium text-zinc-300 block">
+            <span className="text-[11px] font-mono text-slate-500 dark:text-zinc-400 uppercase tracking-wider">
               Group Travellers
             </span>
-            <span className="text-[11px] text-zinc-500 block font-mono">
-              {batches.length} departure batches
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+              <Users className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="space-y-0.5">
+            <span className="text-2xl sm:text-3xl font-bold font-display tracking-tight text-slate-900 dark:text-white">
+              {totalBookedPassengers}
             </span>
+            <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-zinc-400 font-mono pt-1">
+              <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{departedPassengers} Departed</span>
+              <span>•</span>
+              <span>{batches.length} Batches</span>
+            </div>
           </div>
         </Link>
 
-        {/* Card 2: Guided Tours */}
+        {/* 2. Tour Circuits */}
         <Link
           href="/admin/tours"
-          className="bg-[#111318] hover:bg-[#15181E] border border-white/[0.08] hover:border-white/20 rounded-2xl p-4 sm:p-5 transition-all group"
+          className="bg-white dark:bg-[#111318] border border-slate-200 dark:border-white/[0.08] hover:border-slate-300 dark:hover:border-white/20 rounded-2xl p-4 sm:p-5 flex flex-col justify-between space-y-3 group transition-all shadow-xs hover:shadow-md"
         >
           <div className="flex items-center justify-between">
-            <div className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-zinc-300 flex items-center justify-center">
-              <Compass className="w-4 h-4" />
-            </div>
-            <ArrowRight className="w-3.5 h-3.5 text-zinc-600 group-hover:text-zinc-300 group-hover:translate-x-0.5 transition-all" />
-          </div>
-          <div className="mt-3.5 space-y-0.5">
-            <span className="text-2xl sm:text-3xl font-bold font-display text-white block">
-              {totalTours}
-            </span>
-            <span className="text-xs font-medium text-zinc-300 block">
+            <span className="text-[11px] font-mono text-slate-500 dark:text-zinc-400 uppercase tracking-wider">
               Tour Circuits
             </span>
-            <span className="text-[11px] text-zinc-500 block font-mono">
-              {carTours} 4x4 • {bikeTours} Bikes
+            <div className="w-8 h-8 rounded-lg bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+              <Compass className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="space-y-0.5">
+            <span className="text-2xl sm:text-3xl font-bold font-display tracking-tight text-slate-900 dark:text-white">
+              {totalTours}
             </span>
+            <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-zinc-400 font-mono pt-1">
+              <span>{carTours} 4x4 Convoys</span>
+              <span>•</span>
+              <span>{bikeTours} Adv Rides</span>
+            </div>
           </div>
         </Link>
 
-        {/* Card 3: Total Fleet Vehicles */}
+        {/* 3. Fleet Inventory */}
         <Link
           href="/admin/vehicles"
-          className="bg-[#111318] hover:bg-[#15181E] border border-white/[0.08] hover:border-white/20 rounded-2xl p-4 sm:p-5 transition-all group"
+          className="bg-white dark:bg-[#111318] border border-slate-200 dark:border-white/[0.08] hover:border-slate-300 dark:hover:border-white/20 rounded-2xl p-4 sm:p-5 flex flex-col justify-between space-y-3 group transition-all shadow-xs hover:shadow-md"
         >
           <div className="flex items-center justify-between">
-            <div className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-zinc-300 flex items-center justify-center">
+            <span className="text-[11px] font-mono text-slate-500 dark:text-zinc-400 uppercase tracking-wider">
+              Fleet Inventory
+            </span>
+            <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 text-blue-600 dark:text-blue-400 flex items-center justify-center">
               <Car className="w-4 h-4" />
             </div>
-            <ArrowRight className="w-3.5 h-3.5 text-zinc-600 group-hover:text-zinc-300 group-hover:translate-x-0.5 transition-all" />
           </div>
-          <div className="mt-3.5 space-y-0.5">
-            <span className="text-2xl sm:text-3xl font-bold font-display text-white block">
+          <div className="space-y-0.5">
+            <span className="text-2xl sm:text-3xl font-bold font-display tracking-tight text-slate-900 dark:text-white">
               {totalVehicles}
             </span>
-            <span className="text-xs font-medium text-zinc-300 block">
-              Fleet Units
-            </span>
-            <span className="text-[11px] text-zinc-500 block font-mono">
-              {totalCars} 4x4 Cars • {totalBikes} Bikes
-            </span>
+            <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-zinc-400 font-mono pt-1">
+              <span>{totalCars} 4x4 SUVs</span>
+              <span>•</span>
+              <span>{totalBikes} Adv Bikes</span>
+            </div>
           </div>
         </Link>
 
-        {/* Card 4: Pending Enquiries & Leads */}
+        {/* 4. Booking Desk Leads */}
         <Link
           href="/admin/enquiries"
-          className="bg-[#111318] hover:bg-[#15181E] border border-white/[0.08] hover:border-white/20 rounded-2xl p-4 sm:p-5 transition-all group"
+          className="bg-white dark:bg-[#111318] border border-slate-200 dark:border-white/[0.08] hover:border-slate-300 dark:hover:border-white/20 rounded-2xl p-4 sm:p-5 flex flex-col justify-between space-y-3 group transition-all shadow-xs hover:shadow-md"
         >
           <div className="flex items-center justify-between">
-            <div className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] text-zinc-300 flex items-center justify-center">
+            <span className="text-[11px] font-mono text-slate-500 dark:text-zinc-400 uppercase tracking-wider">
+              Booking Leads
+            </span>
+            <div className="w-8 h-8 rounded-lg bg-purple-50 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center">
               <MessageSquareText className="w-4 h-4" />
             </div>
-            {pendingEnquiries > 0 ? (
-              <span className="px-2 py-0.5 bg-blue-500/15 border border-blue-500/30 text-blue-400 text-[10px] font-mono rounded-md">
-                {pendingEnquiries} New
-              </span>
-            ) : (
-              <span className="text-[10px] text-zinc-500 font-mono">All Clear</span>
-            )}
           </div>
-          <div className="mt-3.5 space-y-0.5">
-            <span className="text-2xl sm:text-3xl font-bold font-display text-white block">
+          <div className="space-y-0.5">
+            <span className="text-2xl sm:text-3xl font-bold font-display tracking-tight text-slate-900 dark:text-white">
               {enquiries.length}
             </span>
-            <span className="text-xs font-medium text-zinc-300 block">
-              Total Enquiries
-            </span>
-            <span className="text-[11px] text-zinc-500 block font-mono">
-              {confirmedEnquiries} confirmed bookings
-            </span>
+            <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-zinc-400 font-mono pt-1">
+              <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{pendingEnquiries} New</span>
+              <span>•</span>
+              <span>{confirmedEnquiries} Confirmed</span>
+            </div>
           </div>
         </Link>
 
       </div>
 
       {/* ========================================================================= */}
-      {/* ACTIVE BATCH DEPARTURE & PASSENGER MANIFEST MONITOR                       */}
+      {/* 2-COLUMN SECTION: Active Departures Tracker & Recent Leads                */}
       {/* ========================================================================= */}
-      <div className="bg-[#111318] border border-white/[0.08] rounded-2xl p-5 sm:p-6 space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="space-y-0.5">
-            <h3 className="text-sm sm:text-base font-semibold text-white flex items-center gap-2">
-              <Users className="w-4 h-4 text-zinc-400" />
-              <span>Upcoming & In-Progress Group Batches</span>
-            </h3>
-            <p className="text-xs text-zinc-500">
-              Live roll-call and convoy passenger attendance.
-            </p>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        {/* Left Column (2 Cols): Live Departure Batches Tracker */}
+        <div className="lg:col-span-2 space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="space-y-0.5">
+              <h3 className="text-base font-bold font-display text-slate-900 dark:text-white flex items-center gap-2">
+                <Flag className="w-4 h-4 text-emerald-500" />
+                <span>Active & Upcoming Departure Batches</span>
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-zinc-400">
+                Track stranger passenger attendance and convoy roll-call.
+              </p>
+            </div>
+            <Link
+              href="/admin/batches"
+              className="text-xs text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1 font-medium"
+            >
+              <span>Manage Manifest</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
 
-          <Link
-            href="/admin/batches"
-            className="inline-flex items-center gap-1 text-xs font-medium text-zinc-300 hover:text-white transition-colors"
-          >
-            <span>Open Manifest Desk</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
+          <div className="bg-white dark:bg-[#111318] border border-slate-200 dark:border-white/[0.08] rounded-2xl divide-y divide-slate-100 dark:divide-white/[0.04] overflow-hidden shadow-xs">
+            {batches.slice(0, 3).map((b) => {
+              const batchPax = passengers.filter((p) => p.batchId === b.id);
+              const boardedCount = batchPax.filter(
+                (p) => p.tripStatus === "Boarded / Departed" || p.tripStatus === "On Tour"
+              ).length;
+              return (
+                <div key={b.id} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-slate-50/50 dark:hover:bg-white/[0.02] transition-colors">
+                  <div className="space-y-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className={`text-[9px] font-mono px-2 py-0.5 rounded border ${getBatchStatusBadge(b.status)}`}>
+                        {b.status}
+                      </span>
+                      <span className="text-[10px] text-slate-400 dark:text-zinc-500 font-mono">
+                        {b.startDate} → {b.endDate}
+                      </span>
+                    </div>
+                    <h4 className="text-xs font-semibold text-slate-900 dark:text-zinc-200 truncate">
+                      {b.tourTitle}
+                    </h4>
+                    <p className="text-[11px] text-slate-500 dark:text-zinc-400 font-mono">
+                      Lead Captain: <span className="text-slate-700 dark:text-zinc-300 font-sans">{b.leadCaptainName}</span> • Pickup: <span className="text-slate-700 dark:text-zinc-300 font-sans">{b.startLocation}</span>
+                    </p>
+                  </div>
 
-        {/* Batches Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
-          {batches.slice(0, 3).map((b) => {
-            const batchPax = passengers.filter((p) => p.batchId === b.id);
-            const departedPax = batchPax.filter(
-              (p) => p.tripStatus === "Boarded / Departed" || p.tripStatus === "On Tour"
-            ).length;
+                  <div className="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100 dark:border-white/[0.04] shrink-0">
+                    <div className="text-left sm:text-right">
+                      <span className="text-xs font-bold font-mono text-slate-800 dark:text-zinc-200 block">
+                        {boardedCount} / {b.bookedSeats} Departed
+                      </span>
+                      <span className="text-[10px] text-slate-400 dark:text-zinc-500 font-mono block">
+                        {b.totalSeats - b.bookedSeats} Seats Remaining
+                      </span>
+                    </div>
 
-            return (
-              <div
-                key={b.id}
-                className="bg-[#0B0D10] border border-white/[0.06] rounded-xl p-4 space-y-3 flex flex-col justify-between"
-              >
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span
-                      className={`text-[9px] font-mono uppercase px-2 py-0.5 rounded border ${getBatchStatusBadge(
-                        b.status
-                      )}`}
+                    <Link
+                      href="/admin/batches"
+                      className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 dark:bg-white/[0.04] dark:hover:bg-white/[0.08] dark:text-zinc-300 dark:hover:text-white text-xs font-medium transition-colors border border-slate-200 dark:border-white/[0.06]"
                     >
-                      {b.status}
-                    </span>
-                    <span className="text-[10px] text-zinc-400 font-mono">
-                      {b.startDate}
-                    </span>
+                      Roll-Call
+                    </Link>
                   </div>
-
-                  <h4 className="text-xs font-semibold text-white line-clamp-1">
-                    {b.tourTitle}
-                  </h4>
-                  <p className="text-[11px] text-zinc-400 font-mono">
-                    Captain: {b.leadCaptainName} • {b.assignedVehicles.length} Units
-                  </p>
                 </div>
-
-                <div className="pt-2 border-t border-white/[0.06] space-y-2">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-zinc-500">Attendance</span>
-                    <span className="font-mono text-zinc-300 text-xs">
-                      <strong className="text-emerald-400">{departedPax} Departed</strong> / {batchPax.length} Booked
-                    </span>
-                  </div>
-
-                  <Link
-                    href={`/admin/batches`}
-                    className="w-full py-1.5 bg-white/[0.04] hover:bg-white/[0.08] text-zinc-200 hover:text-white text-xs font-medium rounded-lg flex items-center justify-center gap-1 transition-colors border border-white/[0.06]"
-                  >
-                    <span>View Passenger Roster</span>
-                    <ChevronRight className="w-3 h-3 text-zinc-500" />
-                  </Link>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
+
+        {/* Right Column (1 Col): Recent Booking Leads */}
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="space-y-0.5">
+              <h3 className="text-base font-bold font-display text-slate-900 dark:text-white flex items-center gap-2">
+                <MessageSquareText className="w-4 h-4 text-purple-500" />
+                <span>Recent Booking Leads</span>
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-zinc-400">
+                Latest customer enquiries from site.
+              </p>
+            </div>
+            <Link
+              href="/admin/enquiries"
+              className="text-xs text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1 font-medium"
+            >
+              <span>View All</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+
+          <div className="bg-white dark:bg-[#111318] border border-slate-200 dark:border-white/[0.08] rounded-2xl divide-y divide-slate-100 dark:divide-white/[0.04] overflow-hidden shadow-xs">
+            {recentEnquiries.length === 0 ? (
+              <div className="p-6 text-center text-xs text-slate-400 dark:text-zinc-500">
+                No recent enquiries found.
+              </div>
+            ) : (
+              recentEnquiries.map((enq) => (
+                <div key={enq.id} className="p-3.5 space-y-1.5 hover:bg-slate-50/50 dark:hover:bg-white/[0.02] transition-colors">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-semibold text-slate-900 dark:text-zinc-200 truncate">
+                      {enq.customerName}
+                    </span>
+                    <span className={`text-[9px] font-mono px-2 py-0.5 rounded border ${getStatusBadge(enq.status)}`}>
+                      {enq.status}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 dark:text-zinc-400 truncate">
+                    {enq.relatedItemName}
+                  </p>
+                  <div className="flex items-center justify-between text-[10px] text-slate-400 dark:text-zinc-500 font-mono pt-0.5">
+                    <span>{enq.phone}</span>
+                    <span>{enq.submittedDate}</span>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+
       </div>
 
       {/* ========================================================================= */}
-      {/* RECENT GUEST BOOKING ENQUIRIES TABLE                                      */}
+      {/* QUICK DISPATCH SHORTCUTS                                                  */}
       {/* ========================================================================= */}
-      <div className="bg-[#111318] border border-white/[0.08] rounded-2xl p-5 sm:p-6 space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="space-y-0.5">
-            <h3 className="text-sm sm:text-base font-semibold text-white flex items-center gap-2">
-              <MessageSquareText className="w-4 h-4 text-zinc-400" />
-              <span>Recent Booking Enquiries</span>
-            </h3>
-            <p className="text-xs text-zinc-500">
-              Latest incoming leads submitted via public quote forms.
-            </p>
-          </div>
+      <div className="bg-white dark:bg-[#111318] border border-slate-200 dark:border-white/[0.08] rounded-2xl p-5 shadow-xs space-y-3 transition-colors">
+        <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-zinc-400 block">
+          Quick Management Actions
+        </span>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <Link
+            href="/admin/batches"
+            className="p-3 rounded-xl bg-slate-50 dark:bg-[#0B0D10] hover:bg-slate-100 dark:hover:bg-white/[0.04] border border-slate-200 dark:border-white/[0.06] text-left transition-all"
+          >
+            <Users className="w-4 h-4 text-emerald-500 mb-1.5" />
+            <span className="text-xs font-semibold text-slate-800 dark:text-zinc-200 block">Add Passenger</span>
+            <span className="text-[10px] text-slate-500 dark:text-zinc-500 font-mono">Manifest update</span>
+          </Link>
 
           <Link
-            href="/admin/enquiries"
-            className="inline-flex items-center gap-1 text-xs font-medium text-zinc-300 hover:text-white transition-colors"
+            href="/admin/vehicles"
+            className="p-3 rounded-xl bg-slate-50 dark:bg-[#0B0D10] hover:bg-slate-100 dark:hover:bg-white/[0.04] border border-slate-200 dark:border-white/[0.06] text-left transition-all"
           >
-            <span>View All ({enquiries.length})</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <Car className="w-4 h-4 text-blue-500 mb-1.5" />
+            <span className="text-xs font-semibold text-slate-800 dark:text-zinc-200 block">Add Vehicle</span>
+            <span className="text-[10px] text-slate-500 dark:text-zinc-500 font-mono">Update fleet count</span>
           </Link>
-        </div>
 
-        {/* Enquiries Table */}
-        <div className="border border-white/[0.06] rounded-xl overflow-hidden bg-[#0B0D10]">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-white/[0.06] bg-white/[0.02] text-[10px] font-mono uppercase tracking-wider text-zinc-400">
-                  <th className="p-3.5">Guest</th>
-                  <th className="p-3.5">Type</th>
-                  <th className="p-3.5">Requested Item</th>
-                  <th className="p-3.5">Submitted</th>
-                  <th className="p-3.5">Status</th>
-                  <th className="p-3.5 text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/[0.04]">
-                {recentEnquiries.map((enq) => (
-                  <tr key={enq.id} className="hover:bg-white/[0.02] transition-colors">
-                    <td className="p-3.5">
-                      <div className="space-y-0.5">
-                        <span className="font-medium text-zinc-100 text-xs block">
-                          {enq.customerName}
-                        </span>
-                        <span className="text-[10px] text-zinc-500 block font-mono">
-                          {enq.phone}
-                        </span>
-                      </div>
-                    </td>
+          <Link
+            href="/admin/tours"
+            className="p-3 rounded-xl bg-slate-50 dark:bg-[#0B0D10] hover:bg-slate-100 dark:hover:bg-white/[0.04] border border-slate-200 dark:border-white/[0.06] text-left transition-all"
+          >
+            <Compass className="w-4 h-4 text-amber-500 mb-1.5" />
+            <span className="text-xs font-semibold text-slate-800 dark:text-zinc-200 block">Create Tour</span>
+            <span className="text-[10px] text-slate-500 dark:text-zinc-500 font-mono">4x4 / Bike circuit</span>
+          </Link>
 
-                    <td className="p-3.5">
-                      <span className="text-[10px] font-mono uppercase text-zinc-400 px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/[0.06]">
-                        {enq.type}
-                      </span>
-                    </td>
-
-                    <td className="p-3.5">
-                      <span className="text-xs text-zinc-300 block truncate max-w-[200px]">
-                        {enq.relatedItemName}
-                      </span>
-                    </td>
-
-                    <td className="p-3.5 text-[11px] text-zinc-500 font-mono">
-                      {enq.submittedDate}
-                    </td>
-
-                    <td className="p-3.5">
-                      <select
-                        value={enq.status}
-                        onChange={(e) =>
-                          updateEnquiryStatus(enq.id, e.target.value as EnquiryStatus)
-                        }
-                        className={`text-[10px] font-mono uppercase rounded-md px-2 py-1 border bg-[#111318] cursor-pointer focus:outline-none ${getStatusBadge(
-                          enq.status
-                        )}`}
-                      >
-                        <option value="New" className="bg-[#111318] text-blue-400">New</option>
-                        <option value="Contacted" className="bg-[#111318] text-amber-400">Contacted</option>
-                        <option value="Confirmed" className="bg-[#111318] text-emerald-400">Confirmed</option>
-                        <option value="Cancelled" className="bg-[#111318] text-zinc-400">Cancelled</option>
-                      </select>
-                    </td>
-
-                    <td className="p-3.5 text-right">
-                      <Link
-                        href="/admin/enquiries"
-                        className="p-1 rounded-md bg-white/[0.04] hover:bg-white/[0.08] text-zinc-400 hover:text-white inline-flex items-center transition-colors"
-                        title="View In Enquiries Desk"
-                      >
-                        <ChevronRight className="w-4 h-4" />
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <Link
+            href="/admin/gallery"
+            className="p-3 rounded-xl bg-slate-50 dark:bg-[#0B0D10] hover:bg-slate-100 dark:hover:bg-white/[0.04] border border-slate-200 dark:border-white/[0.06] text-left transition-all"
+          >
+            <FileCheck2 className="w-4 h-4 text-purple-500 mb-1.5" />
+            <span className="text-xs font-semibold text-slate-800 dark:text-zinc-200 block">Media Library</span>
+            <span className="text-[10px] text-slate-500 dark:text-zinc-500 font-mono">Upload photos</span>
+          </Link>
         </div>
       </div>
 

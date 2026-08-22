@@ -83,6 +83,8 @@ export interface SharedTour {
   isFeatured: boolean;
 }
 
+export type Tour = SharedTour;
+
 export interface PopularPlace {
   name: string;
   description: string;

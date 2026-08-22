@@ -65,11 +65,10 @@ export default function AdminEnquiriesPage() {
       header: "Type",
       cell: (e) => (
         <span
-          className={`inline-flex items-center px-2 py-0.5 rounded-md text-[9px] font-black font-display uppercase tracking-wider border ${
-            e.type === "tour"
+          className={`inline-flex items-center px-2 py-0.5 rounded-md text-[9px] font-black font-display uppercase tracking-wider border ${e.type === "tour"
               ? "bg-amber-500/15 text-amber-400 border-amber-500/30"
               : "bg-blue-500/15 text-blue-400 border-blue-500/30"
-          }`}
+            }`}
         >
           {e.type === "tour" ? "Tour Package" : "Vehicle Rental"}
         </span>
@@ -173,11 +172,10 @@ export default function AdminEnquiriesPage() {
             <div className="flex items-center justify-between">
               <span className="text-xs font-black font-display text-white">{e.customerName}</span>
               <span
-                className={`text-[9px] font-black font-display uppercase tracking-wider px-2 py-0.5 rounded-md border ${
-                  e.type === "tour"
+                className={`text-[9px] font-black font-display uppercase tracking-wider px-2 py-0.5 rounded-md border ${e.type === "tour"
                     ? "bg-amber-500/15 text-amber-400 border-amber-500/30"
                     : "bg-blue-500/15 text-blue-400 border-blue-500/30"
-                }`}
+                  }`}
               >
                 {e.type === "tour" ? "Tour" : "Rental"}
               </span>

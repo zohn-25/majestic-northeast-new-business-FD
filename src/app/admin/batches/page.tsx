@@ -100,91 +100,99 @@ export default function AdminBatchesManifestPage() {
     return passengers.filter((p) => p.batchId === selectedBatch.id);
   }, [passengers, selectedBatch]);
 
-  // Search & Filtered Passengers in current batch
+  // Filtered Passengers based on search and status filter
   const filteredPassengers = useMemo(() => {
-    let list = [...batchPassengers];
+    let result = [...batchPassengers];
 
     if (paxFilterStatus !== "all") {
       if (paxFilterStatus === "solo") {
-        list = list.filter((p) => p.isSoloTraveller);
+        result = result.filter((p) => p.isSoloTraveller);
       } else {
-        list = list.filter((p) => p.tripStatus === paxFilterStatus);
+        result = result.filter((p) => p.tripStatus === paxFilterStatus);
       }
     }
 
     if (paxSearchQuery.trim()) {
-      const q = paxSearchQuery.toLowerCase();
-      list = list.filter(
+      const q = paxSearchQuery.toLowerCase().trim();
+      result = result.filter(
         (p) =>
           p.name.toLowerCase().includes(q) ||
-          p.phone.includes(q) ||
-          p.email.toLowerCase().includes(q) ||
+          p.phone.toLowerCase().includes(q) ||
           p.city.toLowerCase().includes(q) ||
           p.assignedVehicle.toLowerCase().includes(q) ||
           p.seatNumber.toLowerCase().includes(q)
       );
     }
 
-    return list;
+    return result;
   }, [batchPassengers, paxFilterStatus, paxSearchQuery]);
 
-  // Stats for the active batch
+  // Stats for selected batch
   const departedCount = batchPassengers.filter(
     (p) => p.tripStatus === "Boarded / Departed" || p.tripStatus === "On Tour"
   ).length;
+
   const advancePaidCount = batchPassengers.filter(
-    (p) => p.tripStatus === "Advance Paid (30%)" || p.tripStatus === "Fully Paid"
+    (p) =>
+      p.tripStatus === "Advance Paid (30%)" || p.tripStatus === "Fully Paid"
   ).length;
+
   const pendingCount = batchPassengers.filter(
     (p) => p.tripStatus === "Applied / Pending"
   ).length;
+
   const permitsIssuedCount = batchPassengers.filter(
     (p) => p.permitStatus === "Verified & Issued"
   ).length;
 
   // Handlers
+  const handleQuickBoard = (p: Passenger) => {
+    updatePassengerTripStatus(p.id, "Boarded / Departed");
+    showToast(
+      "Boarded / Departed",
+      `${p.name} marked as Boarded ("Chala Gaya") for convoy rollout.`,
+      "success"
+    );
+  };
+
   const handleFlagOffConvoy = () => {
-    if (selectedBatch) {
-      flagOffBatchConvoy(selectedBatch.id);
-      showToast(
-        "Convoy Flagged Off",
-        `${selectedBatch.tourTitle} batch is now marked as departed on trail.`,
-        "success"
-      );
-      setFlagOffConfirmOpen(false);
-    }
+    if (!selectedBatch) return;
+    flagOffBatchConvoy(selectedBatch.id);
+    showToast(
+      "Convoy Flagged Off!",
+      `"${selectedBatch.tourTitle}" is now On Tour (In-Transit). All confirmed travellers marked Departed.`,
+      "success"
+    );
+    setFlagOffConfirmOpen(false);
   };
 
   const handlePrintManifest = () => {
     window.print();
   };
 
-  const handleQuickBoard = (p: Passenger) => {
-    updatePassengerTripStatus(p.id, "Boarded / Departed");
-    showToast("Passenger Boarded", `${p.name} marked as Boarded / Departed.`, "success");
-  };
-
-  const handleSavePassenger = (savedPax: Passenger) => {
-    if (editingPassenger) {
-      updatePassenger(savedPax.id, savedPax);
-      showToast("Passenger Updated", `${savedPax.name}'s record updated.`, "success");
-    } else {
-      addPassenger(savedPax);
-      showToast("Passenger Added", `${savedPax.name} added to manifest roster.`, "success");
-    }
-    setPassengerModalOpen(false);
-  };
-
-  const handleSaveBatch = (savedBatch: TourBatch) => {
+  const handleSaveBatch = (saved: TourBatch) => {
     if (editingBatch) {
-      updateBatch(savedBatch.id, savedBatch);
-      showToast("Batch Updated", `Departure batch updated.`, "success");
+      updateBatch(saved.id, saved);
+      showToast("Batch Updated", `Batch "${saved.tourTitle}" details updated.`, "success");
     } else {
-      addBatch(savedBatch);
-      setSelectedBatchId(savedBatch.id);
-      showToast("Batch Scheduled", `New departure batch scheduled.`, "success");
+      addBatch(saved);
+      setSelectedBatchId(saved.id);
+      showToast("Batch Published", `New batch departure scheduled successfully.`, "success");
     }
     setBatchModalOpen(false);
+    setEditingBatch(null);
+  };
+
+  const handleSavePassenger = (saved: Passenger) => {
+    if (editingPassenger) {
+      updatePassenger(saved.id, saved);
+      showToast("Passenger Updated", `Details for ${saved.name} saved.`, "success");
+    } else {
+      addPassenger(saved);
+      showToast("Passenger Added", `${saved.name} added to batch manifest.`, "success");
+    }
+    setPassengerModalOpen(false);
+    setEditingPassenger(null);
   };
 
   const handleDeletePassenger = (p: Passenger) => {
@@ -195,7 +203,7 @@ export default function AdminBatchesManifestPage() {
   const handleConfirmDelete = () => {
     if (passengerToDelete) {
       deletePassenger(passengerToDelete.id);
-      showToast("Passenger Removed", `${passengerToDelete.name} removed from manifest.`, "info");
+      showToast("Passenger Removed", `${passengerToDelete.name} removed from roster.`, "info");
       setDeleteConfirmOpen(false);
       setDetailDrawerOpen(false);
       setPassengerToDelete(null);
@@ -205,15 +213,15 @@ export default function AdminBatchesManifestPage() {
   const getStatusBadge = (status: BatchStatus) => {
     switch (status) {
       case "Departed / In Progress":
-        return "bg-emerald-500/15 text-emerald-400 border-emerald-500/30";
+        return "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30";
       case "Sold Out":
-        return "bg-rose-500/15 text-rose-400 border-rose-500/30";
+        return "bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/30";
       case "Filling Fast":
-        return "bg-amber-500/15 text-amber-400 border-amber-500/30";
+        return "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30";
       case "Completed":
-        return "bg-zinc-500/15 text-zinc-400 border-zinc-500/30";
+        return "bg-slate-200 dark:bg-zinc-500/15 text-slate-600 dark:text-zinc-400 border-slate-300 dark:border-zinc-500/30";
       default:
-        return "bg-zinc-500/15 text-zinc-300 border-zinc-500/30";
+        return "bg-slate-200 dark:bg-zinc-500/15 text-slate-600 dark:text-zinc-300 border-slate-300 dark:border-zinc-500/30";
     }
   };
 
@@ -221,16 +229,16 @@ export default function AdminBatchesManifestPage() {
     switch (status) {
       case "Boarded / Departed":
       case "On Tour":
-        return "bg-emerald-500/15 text-emerald-400 border-emerald-500/30";
+        return "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30";
       case "Fully Paid":
-        return "bg-blue-500/15 text-blue-400 border-blue-500/30";
+        return "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30";
       case "Advance Paid (30%)":
-        return "bg-amber-500/15 text-amber-400 border-amber-500/30";
+        return "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30";
       case "No Show":
       case "Cancelled":
-        return "bg-rose-500/15 text-rose-400 border-rose-500/30";
+        return "bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/30";
       default:
-        return "bg-purple-500/15 text-purple-300 border-purple-500/30";
+        return "bg-purple-500/15 text-purple-600 dark:text-purple-300 border-purple-500/30";
     }
   };
 
@@ -238,21 +246,21 @@ export default function AdminBatchesManifestPage() {
     <div className="space-y-6 text-left">
       
       {/* Top Action Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#111318] border border-white/[0.08] rounded-2xl p-5 sm:p-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#111318] border border-slate-200 dark:border-white/[0.08] rounded-2xl p-5 sm:p-6 shadow-xs transition-colors">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500 dark:text-zinc-400">
               Roster & Attendance Desk
             </span>
-            <span className="text-[10px] bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 rounded text-zinc-300 font-mono">
+            <span className="text-[10px] bg-slate-100 dark:bg-white/[0.06] border border-slate-200 dark:border-white/[0.08] px-2 py-0.5 rounded text-slate-700 dark:text-zinc-300 font-mono">
               Live Manifest
             </span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-bold font-display tracking-tight text-white flex items-center gap-2">
-            <Users className="w-5 h-5 text-zinc-400" />
+          <h2 className="text-xl sm:text-2xl font-bold font-display tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+            <Users className="w-5 h-5 text-slate-400 dark:text-zinc-400" />
             <span>Group Batches & Passenger Manifest</span>
           </h2>
-          <p className="text-xs text-zinc-400">
+          <p className="text-xs text-slate-500 dark:text-zinc-400">
             Track stranger participant bookings, vehicle seat assignments, permit verification, and live trail departure attendance.
           </p>
         </div>
@@ -265,9 +273,9 @@ export default function AdminBatchesManifestPage() {
               setEditingBatch(null);
               setBatchModalOpen(true);
             }}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white/[0.05] hover:bg-white/[0.09] active:scale-95 text-zinc-200 hover:text-white rounded-xl text-xs font-medium transition-all border border-white/[0.08]"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.05] dark:hover:bg-white/[0.09] active:scale-95 text-slate-700 hover:text-slate-900 dark:text-zinc-200 dark:hover:text-white rounded-xl text-xs font-medium transition-all border border-slate-200 dark:border-white/[0.08]"
           >
-            <Calendar className="w-3.5 h-3.5 text-zinc-400" />
+            <Calendar className="w-3.5 h-3.5 text-slate-500 dark:text-zinc-400" />
             <span>+ Schedule Batch</span>
           </button>
 
@@ -277,7 +285,7 @@ export default function AdminBatchesManifestPage() {
               setEditingPassenger(null);
               setPassengerModalOpen(true);
             }}
-            className="inline-flex items-center gap-1.5 px-4 py-2 bg-white/10 hover:bg-white/15 active:scale-95 text-white rounded-xl text-xs font-semibold transition-all border border-white/15 shadow-sm"
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white dark:bg-white/10 dark:hover:bg-white/15 active:scale-95 rounded-xl text-xs font-semibold transition-all border border-slate-700 dark:border-white/15 shadow-xs"
           >
             <Plus className="w-4 h-4" />
             <span>+ Add Passenger</span>
@@ -290,7 +298,7 @@ export default function AdminBatchesManifestPage() {
       {/* ========================================================================= */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-medium text-zinc-400 font-mono uppercase tracking-wider">
+          <span className="text-xs font-medium text-slate-500 dark:text-zinc-400 font-mono uppercase tracking-wider">
             Select Active Batch ({batches.length})
           </span>
           <div className="flex items-center gap-1 text-[11px]">
@@ -301,8 +309,8 @@ export default function AdminBatchesManifestPage() {
                 onClick={() => setBatchFilterStatus(tab)}
                 className={`px-2.5 py-1 rounded-md font-mono text-xs transition-all ${
                   batchFilterStatus === tab
-                    ? "bg-white/15 text-white font-semibold"
-                    : "text-zinc-500 hover:text-zinc-300"
+                    ? "bg-slate-900 text-white dark:bg-white/15 dark:text-white font-semibold"
+                    : "text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:hover:text-zinc-300"
                 }`}
               >
                 {tab === "in-progress" ? "Active" : tab}
@@ -326,8 +334,8 @@ export default function AdminBatchesManifestPage() {
                 onClick={() => setSelectedBatchId(b.id)}
                 className={`p-3.5 rounded-xl border cursor-pointer transition-all flex flex-col justify-between space-y-2.5 relative ${
                   isSelected
-                    ? "bg-[#16191F] border-white/30 shadow-md ring-1 ring-white/10"
-                    : "bg-[#111318] border-white/[0.08] hover:border-white/15"
+                    ? "bg-slate-100 border-slate-400 shadow-md ring-1 ring-slate-300 dark:bg-[#16191F] dark:border-white/30 dark:ring-white/10"
+                    : "bg-white border-slate-200 hover:border-slate-300 dark:bg-[#111318] dark:border-white/[0.08] dark:hover:border-white/15"
                 }`}
               >
                 {/* Top Badge */}
@@ -339,32 +347,32 @@ export default function AdminBatchesManifestPage() {
                   >
                     {b.status}
                   </span>
-                  <span className="text-[10px] text-zinc-500 font-mono">
+                  <span className="text-[10px] text-slate-400 dark:text-zinc-500 font-mono">
                     {b.tripFormat === "car" ? "4x4" : "Moto"}
                   </span>
                 </div>
 
                 {/* Circuit Info */}
                 <div className="space-y-1">
-                  <h4 className="text-xs font-semibold text-white line-clamp-1 leading-snug">
+                  <h4 className="text-xs font-semibold text-slate-900 dark:text-white line-clamp-1 leading-snug">
                     {b.tourTitle}
                   </h4>
-                  <p className="text-[10px] text-zinc-400 font-mono">
+                  <p className="text-[10px] text-slate-500 dark:text-zinc-400 font-mono">
                     {b.startDate} → {b.endDate}
                   </p>
                 </div>
 
                 {/* Seats Progress Bar */}
-                <div className="space-y-1 pt-1 border-t border-white/[0.06]">
+                <div className="space-y-1 pt-1 border-t border-slate-100 dark:border-white/[0.06]">
                   <div className="flex items-center justify-between text-[10px]">
-                    <span className="text-zinc-500 font-mono">Capacity</span>
-                    <span className="font-mono text-zinc-300 text-[10px]">
+                    <span className="text-slate-500 dark:text-zinc-500 font-mono">Capacity</span>
+                    <span className="font-mono text-slate-700 dark:text-zinc-300 text-[10px]">
                       {b.bookedSeats}/{b.totalSeats}
                     </span>
                   </div>
-                  <div className="h-1 w-full bg-white/[0.06] rounded-full overflow-hidden">
+                  <div className="h-1 w-full bg-slate-200 dark:bg-white/[0.06] rounded-full overflow-hidden">
                     <div
-                      className="h-full rounded-full bg-zinc-300 transition-all"
+                      className="h-full rounded-full bg-slate-800 dark:bg-zinc-300 transition-all"
                       style={{ width: `${progressPercent}%` }}
                     />
                   </div>
@@ -379,10 +387,10 @@ export default function AdminBatchesManifestPage() {
       {/* 2. SELECTED BATCH COMMAND BAR                                             */}
       {/* ========================================================================= */}
       {selectedBatch && (
-        <div className="bg-[#111318] border border-white/[0.08] rounded-2xl p-5 sm:p-6 space-y-5">
+        <div className="bg-white dark:bg-[#111318] border border-slate-200 dark:border-white/[0.08] rounded-2xl p-5 sm:p-6 space-y-5 shadow-xs transition-colors">
           
           {/* Header Row: Title, Dates, Captain & Action Buttons */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-white/[0.08]">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-slate-200 dark:border-white/[0.08]">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <span
@@ -392,19 +400,19 @@ export default function AdminBatchesManifestPage() {
                 >
                   {selectedBatch.status}
                 </span>
-                <span className="text-xs text-zinc-500 font-mono">
+                <span className="text-xs text-slate-400 dark:text-zinc-500 font-mono">
                   Batch ID: {selectedBatch.id}
                 </span>
               </div>
 
-              <h3 className="text-lg sm:text-xl font-bold font-display text-white">
+              <h3 className="text-lg sm:text-xl font-bold font-display text-slate-900 dark:text-white">
                 {selectedBatch.tourTitle}
               </h3>
 
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-zinc-400">
-                <span>📍 Pickup: <strong className="text-zinc-200">{selectedBatch.startLocation}</strong></span>
-                <span>📅 Window: <strong className="text-zinc-200">{selectedBatch.startDate} to {selectedBatch.endDate}</strong></span>
-                <span>👨‍✈️ Captain: <strong className="text-zinc-200">{selectedBatch.leadCaptainName}</strong> ({selectedBatch.leadCaptainPhone})</span>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-600 dark:text-zinc-400">
+                <span>📍 Pickup: <strong className="text-slate-800 dark:text-zinc-200">{selectedBatch.startLocation}</strong></span>
+                <span>📅 Window: <strong className="text-slate-800 dark:text-zinc-200">{selectedBatch.startDate} to {selectedBatch.endDate}</strong></span>
+                <span>👨‍✈️ Captain: <strong className="text-slate-800 dark:text-zinc-200">{selectedBatch.leadCaptainName}</strong> ({selectedBatch.leadCaptainPhone})</span>
               </div>
             </div>
 
@@ -416,7 +424,7 @@ export default function AdminBatchesManifestPage() {
                   <button
                     type="button"
                     onClick={() => setFlagOffConfirmOpen(true)}
-                    className="px-3.5 py-2 bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/30 active:scale-95 text-emerald-400 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5"
+                    className="px-3.5 py-2 bg-emerald-50 dark:bg-emerald-600/20 hover:bg-emerald-100 dark:hover:bg-emerald-600/30 border border-emerald-300 dark:border-emerald-500/30 active:scale-95 text-emerald-700 dark:text-emerald-400 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 shadow-xs"
                   >
                     <Flag className="w-3.5 h-3.5" />
                     <span>Flag-Off Convoy</span>
@@ -427,10 +435,10 @@ export default function AdminBatchesManifestPage() {
               <button
                 type="button"
                 onClick={handlePrintManifest}
-                className="px-3 py-2 bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 hover:text-white rounded-xl text-xs font-medium transition-all border border-white/[0.08] flex items-center gap-1.5"
+                className="px-3 py-2 bg-slate-100 dark:bg-white/[0.04] hover:bg-slate-200 dark:hover:bg-white/[0.08] text-slate-700 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white rounded-xl text-xs font-medium transition-all border border-slate-200 dark:border-white/[0.08] flex items-center gap-1.5 shadow-xs"
                 title="Print Manifest"
               >
-                <Printer className="w-3.5 h-3.5 text-zinc-400" />
+                <Printer className="w-3.5 h-3.5 text-slate-500 dark:text-zinc-400" />
                 <span>Print</span>
               </button>
 
@@ -441,9 +449,9 @@ export default function AdminBatchesManifestPage() {
                   setEditingBatch(selectedBatch);
                   setBatchModalOpen(true);
                 }}
-                className="px-3 py-2 bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 hover:text-white rounded-xl text-xs font-medium transition-all border border-white/[0.08] flex items-center gap-1.5"
+                className="px-3 py-2 bg-slate-100 dark:bg-white/[0.04] hover:bg-slate-200 dark:hover:bg-white/[0.08] text-slate-700 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white rounded-xl text-xs font-medium transition-all border border-slate-200 dark:border-white/[0.08] flex items-center gap-1.5 shadow-xs"
               >
-                <Edit className="w-3.5 h-3.5 text-zinc-400" />
+                <Edit className="w-3.5 h-3.5 text-slate-500 dark:text-zinc-400" />
                 <span>Edit Batch</span>
               </button>
             </div>
@@ -452,73 +460,73 @@ export default function AdminBatchesManifestPage() {
           {/* 4 Dispatch Summary KPI Badges */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {/* Total Booked */}
-            <div className="bg-[#0B0D10] border border-white/[0.06] rounded-xl p-3.5 space-y-1">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-500 block">
+            <div className="bg-slate-50 dark:bg-[#0B0D10] border border-slate-200 dark:border-white/[0.06] rounded-xl p-3.5 space-y-1">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-zinc-500 block">
                 Total Booked
               </span>
               <div className="flex items-baseline gap-1.5">
-                <span className="text-xl font-bold text-white font-display">
+                <span className="text-xl font-bold text-slate-900 dark:text-white font-display">
                   {batchPassengers.length}
                 </span>
-                <span className="text-xs text-zinc-500">/ {selectedBatch.totalSeats} seats</span>
+                <span className="text-xs text-slate-500 dark:text-zinc-500">/ {selectedBatch.totalSeats} seats</span>
               </div>
             </div>
 
             {/* Boarded / Departed */}
-            <div className="bg-[#0B0D10] border border-white/[0.06] rounded-xl p-3.5 space-y-1">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400 block flex items-center gap-1">
+            <div className="bg-slate-50 dark:bg-[#0B0D10] border border-slate-200 dark:border-white/[0.06] rounded-xl p-3.5 space-y-1">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-600 dark:text-emerald-400 block flex items-center gap-1">
                 <CheckCircle2 className="w-3 h-3" />
                 <span>Departed</span>
               </span>
               <div className="flex items-baseline gap-1.5">
-                <span className="text-xl font-bold text-emerald-400 font-display">
+                <span className="text-xl font-bold text-emerald-600 dark:text-emerald-400 font-display">
                   {departedCount}
                 </span>
-                <span className="text-xs text-zinc-500">on trail</span>
+                <span className="text-xs text-slate-500 dark:text-zinc-500">on trail</span>
               </div>
             </div>
 
             {/* Pending Confirmation */}
-            <div className="bg-[#0B0D10] border border-white/[0.06] rounded-xl p-3.5 space-y-1">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-amber-400 block flex items-center gap-1">
+            <div className="bg-slate-50 dark:bg-[#0B0D10] border border-slate-200 dark:border-white/[0.06] rounded-xl p-3.5 space-y-1">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-amber-600 dark:text-amber-400 block flex items-center gap-1">
                 <Clock className="w-3 h-3" />
                 <span>Advance Paid</span>
               </span>
               <div className="flex items-baseline gap-1.5">
-                <span className="text-xl font-bold text-amber-400 font-display">
+                <span className="text-xl font-bold text-amber-600 dark:text-amber-400 font-display">
                   {advancePaidCount}
                 </span>
-                <span className="text-xs text-zinc-500">confirmed</span>
+                <span className="text-xs text-slate-500 dark:text-zinc-500">confirmed</span>
               </div>
             </div>
 
             {/* Permits Verified */}
-            <div className="bg-[#0B0D10] border border-white/[0.06] rounded-xl p-3.5 space-y-1">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-blue-400 block flex items-center gap-1">
+            <div className="bg-slate-50 dark:bg-[#0B0D10] border border-slate-200 dark:border-white/[0.06] rounded-xl p-3.5 space-y-1">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-blue-600 dark:text-blue-400 block flex items-center gap-1">
                 <FileCheck2 className="w-3 h-3" />
                 <span>Permits Issued</span>
               </span>
               <div className="flex items-baseline gap-1.5">
-                <span className="text-xl font-bold text-blue-400 font-display">
+                <span className="text-xl font-bold text-blue-600 dark:text-blue-400 font-display">
                   {permitsIssuedCount}
                 </span>
-                <span className="text-xs text-zinc-500">verified</span>
+                <span className="text-xs text-slate-500 dark:text-zinc-500">verified</span>
               </div>
             </div>
           </div>
 
           {/* Assigned Convoy Vehicles Pill Strip */}
-          <div className="bg-[#0B0D10] border border-white/[0.06] rounded-xl p-3 space-y-2">
-            <span className="text-[10px] font-mono uppercase text-zinc-400 block">
+          <div className="bg-slate-50 dark:bg-[#0B0D10] border border-slate-200 dark:border-white/[0.06] rounded-xl p-3 space-y-2">
+            <span className="text-[10px] font-mono uppercase text-slate-500 dark:text-zinc-400 block">
               Assigned Convoy Fleet ({selectedBatch.assignedVehicles.length} Units)
             </span>
             <div className="flex flex-wrap items-center gap-2">
               {selectedBatch.assignedVehicles.map((veh, idx) => (
                 <span
                   key={idx}
-                  className="px-2.5 py-1 bg-white/[0.04] border border-white/[0.08] rounded-lg text-xs text-zinc-200 flex items-center gap-1.5 font-medium"
+                  className="px-2.5 py-1 bg-white dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] rounded-lg text-xs text-slate-800 dark:text-zinc-200 flex items-center gap-1.5 font-medium shadow-xs"
                 >
-                  <Car className="w-3.5 h-3.5 text-zinc-400" />
+                  <Car className="w-3.5 h-3.5 text-slate-500 dark:text-zinc-400" />
                   <span>{veh}</span>
                 </span>
               ))}
@@ -551,8 +559,8 @@ export default function AdminBatchesManifestPage() {
                     onClick={() => setPaxFilterStatus(tab.value)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all border ${
                       paxFilterStatus === tab.value
-                        ? "bg-white/15 text-white border-white/20 font-semibold"
-                        : "bg-white/[0.02] text-zinc-400 border-white/[0.06] hover:border-white/15 hover:text-white"
+                        ? "bg-slate-900 text-white border-slate-900 dark:bg-white/15 dark:text-white dark:border-white/20 font-semibold shadow-xs"
+                        : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 dark:bg-white/[0.02] dark:text-zinc-400 dark:border-white/[0.06] dark:hover:border-white/15 dark:hover:text-white"
                     }`}
                   >
                     {tab.label}
@@ -562,25 +570,25 @@ export default function AdminBatchesManifestPage() {
 
               {/* Passenger Search Input */}
               <div className="relative min-w-[220px]">
-                <Search className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <Search className="w-3.5 h-3.5 text-slate-400 dark:text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input
                   type="text"
                   value={paxSearchQuery}
                   onChange={(e) => setPaxSearchQuery(e.target.value)}
                   placeholder="Filter name, phone, city..."
-                  className="w-full bg-[#0B0D10] border border-white/[0.08] rounded-xl pl-8 pr-3 py-1.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-white/20"
+                  className="w-full bg-slate-50 dark:bg-[#0B0D10] border border-slate-200 dark:border-white/[0.08] rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-800 dark:text-zinc-200 placeholder-slate-400 dark:placeholder-zinc-500 focus:outline-none focus:border-slate-400 dark:focus:border-white/20"
                 />
               </div>
             </div>
 
             {/* Manifest Table Container */}
-            <div className="border border-white/[0.06] rounded-xl overflow-hidden bg-[#0B0D10]">
+            <div className="border border-slate-200 dark:border-white/[0.06] rounded-xl overflow-hidden bg-white dark:bg-[#0B0D10] shadow-xs">
               {filteredPassengers.length === 0 ? (
                 <div className="py-12 text-center space-y-2">
-                  <div className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/[0.06] text-zinc-500 flex items-center justify-center mx-auto">
+                  <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/[0.06] text-slate-400 dark:text-zinc-500 flex items-center justify-center mx-auto">
                     <Users className="w-5 h-5" />
                   </div>
-                  <h4 className="text-xs font-medium text-zinc-300">
+                  <h4 className="text-xs font-medium text-slate-600 dark:text-zinc-300">
                     No travellers found in this view
                   </h4>
                 </div>
@@ -590,7 +598,7 @@ export default function AdminBatchesManifestPage() {
                   <div className="hidden md:block overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                       <thead>
-                        <tr className="border-b border-white/[0.06] bg-white/[0.02] text-[10px] font-mono uppercase tracking-wider text-zinc-400">
+                        <tr className="border-b border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.02] text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-zinc-400">
                           <th className="p-3.5">Traveller</th>
                           <th className="p-3.5">Assigned Vehicle</th>
                           <th className="p-3.5">ILP Permit</th>
@@ -600,7 +608,7 @@ export default function AdminBatchesManifestPage() {
                           <th className="p-3.5 text-right">Actions</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-white/[0.04]">
+                      <tbody className="divide-y divide-slate-100 dark:divide-white/[0.04]">
                         {filteredPassengers.map((p) => {
                           const isDeparted =
                             p.tripStatus === "Boarded / Departed" ||
@@ -609,22 +617,22 @@ export default function AdminBatchesManifestPage() {
                           return (
                             <tr
                               key={p.id}
-                              className="hover:bg-white/[0.02] transition-colors"
+                              className="hover:bg-slate-50 dark:hover:bg-white/[0.02] transition-colors"
                             >
                               {/* Traveller Name & Solo Tag */}
                               <td className="p-3.5">
                                 <div className="space-y-0.5">
                                   <div className="flex items-center gap-1.5">
-                                    <span className="font-medium text-zinc-100 text-xs block">
+                                    <span className="font-medium text-slate-900 dark:text-zinc-100 text-xs block">
                                       {p.name}
                                     </span>
                                     {p.isSoloTraveller && (
-                                      <span className="text-[8px] font-mono uppercase px-1 py-0.2 rounded bg-purple-500/15 text-purple-300 border border-purple-500/30">
+                                      <span className="text-[8px] font-mono uppercase px-1 py-0.2 rounded bg-purple-500/15 text-purple-600 dark:text-purple-300 border border-purple-500/30">
                                         Solo
                                       </span>
                                     )}
                                   </div>
-                                  <span className="text-[10px] text-zinc-500 block font-mono">
+                                  <span className="text-[10px] text-slate-400 dark:text-zinc-500 block font-mono">
                                     {p.city} • {p.phone}
                                   </span>
                                 </div>
@@ -633,10 +641,10 @@ export default function AdminBatchesManifestPage() {
                               {/* Assigned Vehicle & Seat */}
                               <td className="p-3.5">
                                 <div className="space-y-0.5">
-                                  <span className="text-xs text-zinc-300 block truncate max-w-[160px]">
+                                  <span className="text-xs text-slate-800 dark:text-zinc-300 block truncate max-w-[160px]">
                                     {p.assignedVehicle}
                                   </span>
-                                  <span className="text-[10px] text-zinc-500 font-mono block">
+                                  <span className="text-[10px] text-slate-400 dark:text-zinc-500 font-mono block">
                                     {p.seatNumber}
                                   </span>
                                 </div>
@@ -647,10 +655,10 @@ export default function AdminBatchesManifestPage() {
                                 <span
                                   className={`inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-mono uppercase border ${
                                     p.permitStatus === "Verified & Issued"
-                                      ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
+                                      ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30"
                                       : p.permitStatus === "Not Required"
-                                      ? "bg-zinc-500/15 text-zinc-400 border-zinc-500/30"
-                                      : "bg-amber-500/15 text-amber-400 border-amber-500/30"
+                                      ? "bg-slate-200 dark:bg-zinc-500/15 text-slate-600 dark:text-zinc-400 border-slate-300 dark:border-zinc-500/30"
+                                      : "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30"
                                   }`}
                                 >
                                   {p.permitStatus}
@@ -662,10 +670,10 @@ export default function AdminBatchesManifestPage() {
                                 <span
                                   className={`inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-mono uppercase border ${
                                     p.paymentStatus === "Fully Paid"
-                                      ? "bg-blue-500/15 text-blue-400 border-blue-500/30"
+                                      ? "bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30"
                                       : p.paymentStatus === "Advance Paid"
-                                      ? "bg-amber-500/15 text-amber-400 border-amber-500/30"
-                                      : "bg-rose-500/15 text-rose-400 border-rose-500/30"
+                                      ? "bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30"
+                                      : "bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/30"
                                   }`}
                                 >
                                   {p.paymentStatus}
@@ -686,56 +694,32 @@ export default function AdminBatchesManifestPage() {
                                       "info"
                                     );
                                   }}
-                                  className={`text-[10px] font-mono uppercase rounded-md px-2 py-1 border bg-[#111318] cursor-pointer focus:outline-none ${getPaxTripStatusBadge(
+                                  className={`text-[10px] font-mono uppercase rounded-md px-2 py-1 border bg-white dark:bg-[#111318] cursor-pointer focus:outline-none ${getPaxTripStatusBadge(
                                     p.tripStatus
                                   )}`}
                                 >
-                                  <option
-                                    value="Applied / Pending"
-                                    className="bg-[#111318] text-purple-300"
-                                  >
+                                  <option value="Applied / Pending">
                                     Applied / Pending
                                   </option>
-                                  <option
-                                    value="Advance Paid (30%)"
-                                    className="bg-[#111318] text-amber-400"
-                                  >
+                                  <option value="Advance Paid (30%)">
                                     Advance Paid (30%)
                                   </option>
-                                  <option
-                                    value="Fully Paid"
-                                    className="bg-[#111318] text-blue-400"
-                                  >
+                                  <option value="Fully Paid">
                                     Fully Paid
                                   </option>
-                                  <option
-                                    value="Boarded / Departed"
-                                    className="bg-[#111318] text-emerald-400"
-                                  >
+                                  <option value="Boarded / Departed">
                                     Boarded / Departed
                                   </option>
-                                  <option
-                                    value="On Tour"
-                                    className="bg-[#111318] text-emerald-400"
-                                  >
+                                  <option value="On Tour">
                                     On Tour (In-Transit)
                                   </option>
-                                  <option
-                                    value="Completed"
-                                    className="bg-[#111318] text-zinc-400"
-                                  >
+                                  <option value="Completed">
                                     Completed
                                   </option>
-                                  <option
-                                    value="No Show"
-                                    className="bg-[#111318] text-rose-400"
-                                  >
+                                  <option value="No Show">
                                     No Show
                                   </option>
-                                  <option
-                                    value="Cancelled"
-                                    className="bg-[#111318] text-zinc-500"
-                                  >
+                                  <option value="Cancelled">
                                     Cancelled
                                   </option>
                                 </select>
@@ -744,7 +728,7 @@ export default function AdminBatchesManifestPage() {
                               {/* 1-Click Quick Boarding Button */}
                               <td className="p-3.5 text-center">
                                 {isDeparted ? (
-                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 text-[10px] font-mono border border-emerald-500/30">
+                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono border border-emerald-500/30">
                                     <CheckCircle2 className="w-3 h-3" />
                                     <span>Departed</span>
                                   </span>
@@ -752,7 +736,7 @@ export default function AdminBatchesManifestPage() {
                                   <button
                                     type="button"
                                     onClick={() => handleQuickBoard(p)}
-                                    className="px-2.5 py-1 rounded-md bg-white/[0.06] hover:bg-emerald-600/20 hover:text-emerald-400 hover:border-emerald-500/30 border border-white/[0.08] text-zinc-300 text-[10px] font-mono uppercase transition-colors"
+                                    className="px-2.5 py-1 rounded-md bg-slate-100 hover:bg-emerald-50 hover:text-emerald-600 hover:border-emerald-300 dark:bg-white/[0.06] dark:hover:bg-emerald-600/20 dark:hover:text-emerald-400 dark:hover:border-emerald-500/30 border border-slate-200 dark:border-white/[0.08] text-slate-700 dark:text-zinc-300 text-[10px] font-mono uppercase transition-colors"
                                   >
                                     Board
                                   </button>
@@ -768,7 +752,7 @@ export default function AdminBatchesManifestPage() {
                                       setSelectedPassenger(p);
                                       setDetailDrawerOpen(true);
                                     }}
-                                    className="p-1.5 rounded-md bg-white/[0.03] hover:bg-white/[0.08] text-zinc-400 hover:text-white transition-colors"
+                                    className="p-1.5 rounded-md bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.03] dark:hover:bg-white/[0.08] text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-colors"
                                     title="View Dossier"
                                   >
                                     <Eye className="w-3.5 h-3.5" />
@@ -779,7 +763,7 @@ export default function AdminBatchesManifestPage() {
                                       setEditingPassenger(p);
                                       setPassengerModalOpen(true);
                                     }}
-                                    className="p-1.5 rounded-md bg-white/[0.03] hover:bg-white/[0.08] text-zinc-400 hover:text-white transition-colors"
+                                    className="p-1.5 rounded-md bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.03] dark:hover:bg-white/[0.08] text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-colors"
                                     title="Edit"
                                   >
                                     <Edit className="w-3.5 h-3.5" />
@@ -787,7 +771,7 @@ export default function AdminBatchesManifestPage() {
                                   <button
                                     type="button"
                                     onClick={() => handleDeletePassenger(p)}
-                                    className="p-1.5 rounded-md bg-white/[0.03] hover:bg-red-500/15 hover:text-red-400 transition-colors text-zinc-400"
+                                    className="p-1.5 rounded-md bg-red-50 hover:bg-red-100 dark:bg-white/[0.03] dark:hover:bg-red-500/15 text-red-500 dark:text-zinc-400 dark:hover:text-red-400 transition-colors"
                                     title="Remove"
                                   >
                                     <Trash2 className="w-3.5 h-3.5" />
@@ -802,7 +786,7 @@ export default function AdminBatchesManifestPage() {
                   </div>
 
                   {/* Mobile Stacked Card View */}
-                  <div className="md:hidden divide-y divide-white/[0.06]">
+                  <div className="md:hidden divide-y divide-slate-100 dark:divide-white/[0.06]">
                     {filteredPassengers.map((p) => {
                       const isDeparted =
                         p.tripStatus === "Boarded / Departed" ||
@@ -813,16 +797,16 @@ export default function AdminBatchesManifestPage() {
                           <div className="flex items-start justify-between gap-2">
                             <div>
                               <div className="flex items-center gap-1.5">
-                                <h5 className="text-xs font-medium text-white">
+                                <h5 className="text-xs font-medium text-slate-900 dark:text-white">
                                   {p.name}
                                 </h5>
                                 {p.isSoloTraveller && (
-                                  <span className="text-[8px] font-mono uppercase px-1 py-0.2 rounded bg-purple-500/15 text-purple-300">
+                                  <span className="text-[8px] font-mono uppercase px-1 py-0.2 rounded bg-purple-500/15 text-purple-600 dark:text-purple-300">
                                     Solo
                                   </span>
                                 )}
                               </div>
-                              <p className="text-[10px] text-zinc-500 font-mono">
+                              <p className="text-[10px] text-slate-500 dark:text-zinc-500 font-mono">
                                 {p.city} • {p.phone}
                               </p>
                             </div>
@@ -836,24 +820,24 @@ export default function AdminBatchesManifestPage() {
                             </span>
                           </div>
 
-                          <div className="bg-white/[0.02] p-2 rounded-lg border border-white/[0.04] text-[11px] space-y-1">
+                          <div className="bg-slate-50 dark:bg-white/[0.02] p-2 rounded-lg border border-slate-200 dark:border-white/[0.04] text-[11px] space-y-1">
                             <div className="flex justify-between">
-                              <span className="text-zinc-500">Vehicle</span>
-                              <span className="text-zinc-300 font-mono text-[10px] truncate max-w-[180px]">
+                              <span className="text-slate-500 dark:text-zinc-500">Vehicle</span>
+                              <span className="text-slate-800 dark:text-zinc-300 font-mono text-[10px] truncate max-w-[180px]">
                                 {p.assignedVehicle}
                               </span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-zinc-500">Seat</span>
-                              <span className="text-zinc-300 font-mono text-[10px]">
+                              <span className="text-slate-500 dark:text-zinc-500">Seat</span>
+                              <span className="text-slate-800 dark:text-zinc-300 font-mono text-[10px]">
                                 {p.seatNumber}
                               </span>
                             </div>
                           </div>
 
-                          <div className="flex items-center justify-between gap-2 pt-1 border-t border-white/[0.04]">
+                          <div className="flex items-center justify-between gap-2 pt-1 border-t border-slate-100 dark:border-white/[0.04]">
                             {isDeparted ? (
-                              <span className="inline-flex items-center gap-1 text-[10px] font-mono text-emerald-400">
+                              <span className="inline-flex items-center gap-1 text-[10px] font-mono text-emerald-600 dark:text-emerald-400">
                                 <CheckCircle2 className="w-3 h-3" />
                                 <span>Departed</span>
                               </span>
@@ -861,7 +845,7 @@ export default function AdminBatchesManifestPage() {
                               <button
                                 type="button"
                                 onClick={() => handleQuickBoard(p)}
-                                className="px-2.5 py-1 bg-white/[0.06] text-zinc-200 text-[10px] font-mono uppercase rounded-md border border-white/[0.08]"
+                                className="px-2.5 py-1 bg-slate-100 dark:bg-white/[0.06] text-slate-700 dark:text-zinc-200 text-[10px] font-mono uppercase rounded-md border border-slate-200 dark:border-white/[0.08]"
                               >
                                 Mark Boarded
                               </button>
@@ -874,7 +858,7 @@ export default function AdminBatchesManifestPage() {
                                   setSelectedPassenger(p);
                                   setDetailDrawerOpen(true);
                                 }}
-                                className="px-2 py-1 bg-white/[0.04] text-zinc-300 text-[10px] font-mono rounded-md"
+                                className="px-2 py-1 bg-slate-100 dark:bg-white/[0.04] text-slate-700 dark:text-zinc-300 text-[10px] font-mono rounded-md"
                               >
                                 Dossier
                               </button>
@@ -884,14 +868,14 @@ export default function AdminBatchesManifestPage() {
                                   setEditingPassenger(p);
                                   setPassengerModalOpen(true);
                                 }}
-                                className="p-1 bg-white/[0.04] text-zinc-400 rounded-md"
+                                className="p-1 bg-slate-100 dark:bg-white/[0.04] text-slate-600 dark:text-zinc-400 rounded-md"
                               >
                                 <Edit className="w-3 h-3" />
                               </button>
                               <button
                                 type="button"
                                 onClick={() => handleDeletePassenger(p)}
-                                className="p-1 bg-red-500/10 text-red-400 rounded-md"
+                                className="p-1 bg-red-50 text-red-600 dark:bg-red-500/10 dark:text-red-400 rounded-md"
                               >
                                 <Trash2 className="w-3 h-3" />
                               </button>

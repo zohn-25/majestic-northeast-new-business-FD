@@ -53,39 +53,39 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
           return (
             <div
               key={toast.id}
-              className={`pointer-events-auto flex items-start justify-between gap-3 p-4 rounded-2xl border shadow-[0_15px_30px_rgba(0,0,0,0.8)] backdrop-blur-xl animate-slideInRight ${
+              className={`pointer-events-auto flex items-start justify-between gap-3 p-3.5 rounded-xl border shadow-xl backdrop-blur-xl animate-slideInRight ${
                 isSuccess
-                  ? "bg-[#0E1B14]/95 border-emerald-500/40 text-white"
+                  ? "bg-emerald-50/95 dark:bg-[#0E1B14]/95 border-emerald-300 dark:border-emerald-500/40 text-emerald-950 dark:text-white"
                   : isError
-                  ? "bg-[#220D0E]/95 border-red-500/40 text-white"
-                  : "bg-[#121418]/95 border-white/20 text-white"
+                  ? "bg-rose-50/95 dark:bg-[#220D0E]/95 border-rose-300 dark:border-red-500/40 text-rose-950 dark:text-white"
+                  : "bg-white/95 dark:bg-[#121418]/95 border-slate-300 dark:border-white/20 text-slate-900 dark:text-white"
               }`}
             >
-              <div className="flex items-start gap-3 min-w-0">
+              <div className="flex items-start gap-2.5 min-w-0">
                 <div
-                  className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${
+                  className={`w-6 h-6 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${
                     isSuccess
-                      ? "bg-emerald-500/20 text-emerald-400"
+                      ? "bg-emerald-500/20 text-emerald-600 dark:text-emerald-400"
                       : isError
-                      ? "bg-red-500/20 text-red-400"
-                      : "bg-blue-500/20 text-blue-400"
+                      ? "bg-rose-500/20 text-rose-600 dark:text-red-400"
+                      : "bg-blue-500/20 text-blue-600 dark:text-blue-400"
                   }`}
                 >
                   {isSuccess ? (
-                    <CheckCircle2 className="w-4 h-4" />
+                    <CheckCircle2 className="w-3.5 h-3.5" />
                   ) : isError ? (
-                    <AlertCircle className="w-4 h-4" />
+                    <AlertCircle className="w-3.5 h-3.5" />
                   ) : (
-                    <Info className="w-4 h-4" />
+                    <Info className="w-3.5 h-3.5" />
                   )}
                 </div>
 
                 <div className="space-y-0.5 min-w-0">
-                  <h4 className="text-xs font-black font-display uppercase tracking-wide">
+                  <h4 className="text-xs font-semibold">
                     {toast.title}
                   </h4>
                   {toast.message && (
-                    <p className="text-[11px] text-white/70 leading-tight">
+                    <p className="text-[11px] text-slate-600 dark:text-white/70 leading-tight">
                       {toast.message}
                     </p>
                   )}
@@ -95,7 +95,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               <button
                 type="button"
                 onClick={() => removeToast(toast.id)}
-                className="text-white/40 hover:text-white transition-colors shrink-0"
+                className="text-slate-400 hover:text-slate-700 dark:text-white/40 dark:hover:text-white transition-colors shrink-0"
               >
                 <X className="w-3.5 h-3.5" />
               </button>

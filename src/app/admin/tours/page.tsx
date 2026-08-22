@@ -61,11 +61,10 @@ export default function AdminToursPage() {
       header: "Format",
       cell: (t) => (
         <span
-          className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-black font-display uppercase tracking-wider border ${
-            t.tripFormat === "car"
+          className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-black font-display uppercase tracking-wider border ${t.tripFormat === "car"
               ? "bg-red-500/15 text-brand-red border-brand-red/30"
               : "bg-amber-500/15 text-amber-400 border-amber-500/30"
-          }`}
+            }`}
         >
           {t.tripFormat === "car" ? <Car className="w-3 h-3" /> : <Bike className="w-3 h-3" />}
           <span>{t.tripFormat === "car" ? "4x4 Convoy" : "Bike Tour"}</span>
@@ -101,9 +100,8 @@ export default function AdminToursPage() {
               {remaining} / {t.totalSeats} Available
             </span>
             <span
-              className={`text-[9px] font-black uppercase tracking-wider block ${
-                remaining <= 3 ? "text-amber-400" : "text-emerald-400"
-              }`}
+              className={`text-[9px] font-black uppercase tracking-wider block ${remaining <= 3 ? "text-amber-400" : "text-emerald-400"
+                }`}
             >
               {remaining <= 3 ? "Few Seats Left" : "Filling Fast"}
             </span>

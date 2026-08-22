@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import Image from "next/image";
-import { Image as ImageIcon, Upload, Trash2, Filter, AlertCircle, Plus, Eye } from "lucide-react";
+import { Image as ImageIcon, Upload, Trash2, Eye } from "lucide-react";
 import { useData, GalleryItem } from "@/context/DataContext";
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
 import { useToast } from "@/components/admin/Toast";
@@ -72,13 +72,13 @@ export default function AdminGalleryPage() {
     <div className="space-y-5 text-left">
       
       {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#111318] border border-white/[0.08] rounded-2xl p-4 sm:p-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#111318] border border-slate-200 dark:border-white/[0.08] rounded-2xl p-4 sm:p-5 shadow-xs transition-colors">
         <div className="space-y-0.5">
-          <h2 className="text-lg sm:text-xl font-bold font-display tracking-tight text-white flex items-center gap-2">
-            <ImageIcon className="w-5 h-5 text-zinc-400" />
+          <h2 className="text-lg sm:text-xl font-bold font-display tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+            <ImageIcon className="w-5 h-5 text-slate-500 dark:text-zinc-400" />
             <span>Photo Gallery & Media Assets</span>
           </h2>
-          <p className="text-xs text-zinc-400">
+          <p className="text-xs text-slate-500 dark:text-zinc-400">
             Preview media collected from fleet vehicles, tour packages, destinations, and uploads.
           </p>
         </div>
@@ -95,7 +95,7 @@ export default function AdminGalleryPage() {
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="inline-flex items-center gap-2 px-3.5 py-2 bg-white/10 hover:bg-white/15 active:scale-95 text-white rounded-xl text-xs font-semibold transition-all border border-white/15 shrink-0 shadow-sm"
+            className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white dark:bg-white/10 dark:hover:bg-white/15 active:scale-95 rounded-xl text-xs font-semibold transition-all border border-slate-700 dark:border-white/15 shrink-0 shadow-xs"
           >
             <Upload className="w-3.5 h-3.5" />
             <span>Upload Photo</span>
@@ -103,7 +103,7 @@ export default function AdminGalleryPage() {
         </div>
       </div>
 
-      {/* Filter Tabs */}
+      {/* Category Tabs */}
       <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
         {categories.map((cat) => (
           <button
@@ -112,8 +112,8 @@ export default function AdminGalleryPage() {
             onClick={() => setActiveCategory(cat.value)}
             className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all border ${
               activeCategory === cat.value
-                ? "bg-white/15 text-white border-white/20 font-semibold"
-                : "bg-white/[0.02] text-zinc-400 border-white/[0.06] hover:border-white/15 hover:text-white"
+                ? "bg-slate-900 text-white border-slate-900 dark:bg-white/15 dark:text-white dark:border-white/20 font-semibold shadow-xs"
+                : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 dark:bg-white/[0.02] dark:text-zinc-400 dark:border-white/[0.06] dark:hover:border-white/15 dark:hover:text-white"
             }`}
           >
             {cat.label}
@@ -121,85 +121,68 @@ export default function AdminGalleryPage() {
         ))}
       </div>
 
-      {/* Gallery Grid */}
-      <div className="bg-[#111318] border border-white/[0.08] rounded-2xl p-5 sm:p-6 shadow-xl">
-        {filteredImages.length === 0 ? (
-          <div className="py-14 text-center space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/[0.06] text-zinc-500 flex items-center justify-center mx-auto">
-              <AlertCircle className="w-5 h-5" />
-            </div>
-            <h3 className="text-sm font-semibold text-white">
-              No photos found in this category
-            </h3>
-            <button
-              type="button"
-              onClick={() => fileInputRef.current?.click()}
-              className="px-3.5 py-1.5 bg-white/10 text-white rounded-xl text-xs font-medium border border-white/15"
-            >
-              Upload Photo
-            </button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5">
-            {filteredImages.map((img) => (
-              <div
-                key={img.id}
-                className="group relative aspect-video sm:aspect-square bg-black/40 rounded-xl overflow-hidden border border-white/[0.08] hover:border-white/25 transition-all shadow-md flex flex-col justify-end"
-              >
-                <Image
-                  src={img.url}
-                  alt={img.alt || "Gallery Item"}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                />
+      {/* Media Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        {filteredImages.map((img) => (
+          <div
+            key={img.id}
+            className="group relative bg-white dark:bg-[#111318] border border-slate-200 dark:border-white/[0.08] hover:border-slate-300 dark:hover:border-white/20 rounded-2xl overflow-hidden transition-all duration-300 flex flex-col justify-between shadow-xs"
+          >
+            {/* Image Box */}
+            <div className="relative h-44 w-full bg-slate-100 dark:bg-black overflow-hidden">
+              <Image
+                src={img.url}
+                alt={img.alt}
+                fill
+                sizes="(max-width: 768px) 50vw, 25vw"
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+              />
 
-                {/* Overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-2.5 flex flex-col justify-between">
-                  <div className="flex justify-end gap-1">
-                    <button
-                      type="button"
-                      onClick={() => setPreviewImage(img)}
-                      className="w-7 h-7 rounded-lg bg-black/60 hover:bg-black text-white/80 hover:text-white flex items-center justify-center transition-colors"
-                      title="Preview Full Screen"
-                    >
-                      <Eye className="w-3.5 h-3.5" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleDeleteClick(img)}
-                      className="w-7 h-7 rounded-lg bg-red-600/80 hover:bg-red-600 text-white flex items-center justify-center transition-colors"
-                      title="Delete Image"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-
-                  <div className="leading-tight">
-                    <span className="text-[11px] font-medium text-white truncate block">
-                      {img.entityName}
-                    </span>
-                    <span className="text-[9px] font-mono text-zinc-400 uppercase">
-                      {img.category}
-                    </span>
-                  </div>
-                </div>
+              {/* Hover overlay actions */}
+              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setPreviewImage(img)}
+                  className="w-8 h-8 rounded-lg bg-black/80 text-white flex items-center justify-center hover:bg-brand-red transition-colors"
+                  title="View Full Preview"
+                >
+                  <Eye className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleDeleteClick(img)}
+                  className="w-8 h-8 rounded-lg bg-black/80 text-red-400 flex items-center justify-center hover:bg-red-600 hover:text-white transition-colors"
+                  title="Delete Image"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
               </div>
-            ))}
+            </div>
+
+            {/* Meta Footer */}
+            <div className="p-3 space-y-0.5 border-t border-slate-100 dark:border-white/[0.06]">
+              <span className="text-xs font-semibold text-slate-800 dark:text-zinc-200 block truncate">
+                {img.entityName || img.alt}
+              </span>
+              <span className="text-[10px] text-slate-400 dark:text-zinc-500 font-mono uppercase block">
+                {img.category}
+              </span>
+            </div>
           </div>
-        )}
+        ))}
       </div>
 
-      {/* Lightbox Preview Modal */}
+      {/* Image Preview Modal */}
       {previewImage && (
         <div
-          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 animate-fadeIn"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn"
           onClick={() => setPreviewImage(null)}
         >
           <div
-            className="relative max-w-4xl w-full bg-[#111318] border border-white/15 rounded-2xl overflow-hidden shadow-2xl p-2"
+            className="relative max-w-3xl w-full bg-white dark:bg-[#111318] border border-slate-200 dark:border-white/15 rounded-2xl overflow-hidden shadow-2xl space-y-3 p-4 animate-scaleUp text-left"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-black">
+            <div className="relative h-96 w-full rounded-xl overflow-hidden bg-black">
               <Image
                 src={previewImage.url}
                 alt={previewImage.alt}
@@ -207,37 +190,36 @@ export default function AdminGalleryPage() {
                 className="object-contain"
               />
             </div>
-            <div className="p-3 flex items-center justify-between">
+            <div className="flex items-center justify-between px-1">
               <div>
-                <h4 className="text-xs font-semibold text-white">
-                  {previewImage.entityName}
+                <h4 className="text-sm font-semibold text-slate-900 dark:text-white">
+                  {previewImage.entityName || previewImage.alt}
                 </h4>
-                <p className="text-[10px] text-zinc-400 font-mono">
+                <p className="text-[11px] text-slate-500 dark:text-zinc-400 font-mono">
                   Category: {previewImage.category}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => setPreviewImage(null)}
-                className="px-3 py-1 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-medium"
+                className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-white/[0.06] hover:bg-slate-200 dark:hover:bg-white/[0.1] text-slate-700 dark:text-zinc-300 text-xs font-medium"
               >
-                Close
+                Close Preview
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Delete Confirmation */}
+      {/* Delete Confirmation Dialog */}
       <ConfirmDialog
         isOpen={deleteConfirmOpen}
-        title="Remove Photo"
-        message={`Are you sure you want to remove this photo (${imageToDelete?.entityName}) from the gallery?`}
-        confirmLabel="Remove Photo"
+        title="Delete Photo"
+        message={`Are you sure you want to remove "${imageToDelete?.entityName || "this image"}" from your media library?`}
+        confirmLabel="Delete Photo"
         onConfirm={handleConfirmDelete}
         onCancel={() => setDeleteConfirmOpen(false)}
       />
-
     </div>
   );
 }

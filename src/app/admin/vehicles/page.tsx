@@ -17,7 +17,7 @@ export default function AdminVehiclesPage() {
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [modalOpen, setModalOpen] = useState(false);
   const [editingVehicle, setEditingVehicle] = useState<Vehicle | null>(null);
-  
+
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [vehicleToDelete, setVehicleToDelete] = useState<Vehicle | null>(null);
 
@@ -62,11 +62,10 @@ export default function AdminVehiclesPage() {
       header: "Category",
       cell: (v) => (
         <span
-          className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-black font-display uppercase tracking-wider border ${
-            v.category === "car"
+          className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-black font-display uppercase tracking-wider border ${v.category === "car"
               ? "bg-blue-500/15 text-blue-400 border-blue-500/30"
               : "bg-amber-500/15 text-amber-400 border-amber-500/30"
-          }`}
+            }`}
         >
           {v.category === "car" ? <Car className="w-3 h-3" /> : <Bike className="w-3 h-3" />}
           <span>{v.category === "car" ? "4x4 SUV" : "Adv Bike"}</span>
@@ -102,9 +101,8 @@ export default function AdminVehiclesPage() {
               {available} / {v.totalUnits} Units
             </span>
             <span
-              className={`text-[9px] font-black uppercase tracking-wider block ${
-                available > 0 ? "text-emerald-400" : "text-red-400"
-              }`}
+              className={`text-[9px] font-black uppercase tracking-wider block ${available > 0 ? "text-emerald-400" : "text-red-400"
+                }`}
             >
               {available > 0 ? "Available" : "Fully Booked"}
             </span>
