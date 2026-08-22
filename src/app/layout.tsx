@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { DataProvider } from "@/context/DataContext";
 
 const outfit = Outfit({
   weight: ["500", "600", "700", "800", "900"],
@@ -31,7 +32,9 @@ export default function RootLayout({
     <html lang="en" className={`dark ${outfit.variable} ${plusJakartaSans.variable}`}>
       <body className={`${plusJakartaSans.className} bg-[#0B0C0E] dark:bg-[#0B0C0E] text-[#111827] dark:text-[#F3F4F6] font-body antialiased min-h-screen flex flex-col selection:bg-brand-red selection:text-white transition-colors duration-300`}>
         <ThemeProvider>
-          {children}
+          <DataProvider>
+            {children}
+          </DataProvider>
         </ThemeProvider>
       </body>
     </html>

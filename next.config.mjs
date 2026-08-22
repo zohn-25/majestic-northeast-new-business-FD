@@ -1,4 +1,3 @@
-/** @type {import('next').NextEncoding} */
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {

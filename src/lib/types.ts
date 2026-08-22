@@ -158,3 +158,24 @@ export interface AvailabilityStatusInfo {
   badgeColor: string; // Tailwind class
   label: string;
 }
+
+export type EnquiryStatus = "New" | "Contacted" | "Confirmed" | "Cancelled";
+
+export interface Enquiry {
+  id: string;
+  type: "rental" | "tour";
+  customerName: string;
+  phone: string;
+  email: string;
+  relatedItemName: string;
+  relatedItemId?: string;
+  submittedDate: string;
+  status: EnquiryStatus;
+  message?: string;
+  startDate?: string;
+  endDate?: string;
+  pickupLocation?: string;
+  dropLocation?: string;
+  preferredBatch?: string;
+  numberOfTravellers?: number;
+}
