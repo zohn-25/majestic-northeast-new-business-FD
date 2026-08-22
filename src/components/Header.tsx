@@ -2,17 +2,18 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Compass, Car, Bike, Phone, MessageCircle, Menu, X, MapPin, ChevronRight, ShieldCheck, Clock, Calendar, Sun, Moon, Sparkles } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/utils";
 import { useTheme } from "@/context/ThemeContext";
 import { MiniOffroadCar } from "./ui/MiniOffroadCar";
-import { PaintBrushDivider } from "./ui/PaintBrushDivider";
 
 interface HeaderProps {
   onOpenEnquire?: (mode?: "rental" | "tour") => void;
 }
 
 export function Header({ onOpenEnquire }: HeaderProps) {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
@@ -25,7 +26,39 @@ export function Header({ onOpenEnquire }: HeaderProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const whatsAppUrl = buildWhatsAppUrl("919876543210", "Hi Majestic Northeast! I want to check dates for upcoming 4x4 Car Trips and Bike Expeditions.");
+  const whatsAppUrl = buildWhatsAppUrl(
+    "919876543210",
+    "Hi Majestic Northeast! I want to check dates for upcoming 4x4 Car Trips and Bike Expeditions."
+  );
+
+  const isActive = (href: string) => {
+    if (href === "/") {
+      return pathname === "/";
+    }
+    return pathname === href || pathname.startsWith(href + "/");
+  };
+
+  const navLinks = [
+    { name: "Home", href: "/" },
+    {
+      name: "Group Expeditions",
+      href: "/tours",
+      icon: Compass,
+      badge: "4x4 & Bikes",
+    },
+    {
+      name: "Fleet Rentals",
+      href: "/rentals",
+      icon: Car,
+    },
+    {
+      name: "Destinations",
+      href: "/destinations",
+      icon: MapPin,
+    },
+    { name: "About Us", href: "/about" },
+    { name: "Contact", href: "/contact" },
+  ];
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 pointer-events-auto transition-colors duration-300">
@@ -75,7 +108,7 @@ export function Header({ onOpenEnquire }: HeaderProps) {
           scrolled ? "py-2.5 shadow-2xl" : "py-3 sm:py-4"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-6 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4 lg:gap-6 relative">
           {/* Brand Logo: Clean Oval Automotive Badge */}
           <Link href="/" className="flex items-center gap-3 group shrink-0">
             <div className="relative h-11 w-28 sm:w-32 bg-brand-red rounded-full flex items-center justify-center shadow-lg shadow-brand-red/40 border-2 border-white group-hover:scale-105 transition-transform px-2">
@@ -90,48 +123,50 @@ export function Header({ onOpenEnquire }: HeaderProps) {
             </div>
           </Link>
 
-          {/* Clean Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-3 text-xs font-bold uppercase tracking-wider text-white font-display">
-            <Link
-              href="/"
-              className="px-3.5 py-2 rounded-lg hover:bg-white/10 hover:text-brand-red transition-all"
-            >
-              Home
-            </Link>
+          {/* Clean Desktop Navigation Links with Active Page Highlighting */}
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-2 text-xs font-bold uppercase tracking-wider font-display">
+            {navLinks.map((link) => {
+              const active = isActive(link.href);
+              const Icon = link.icon;
 
-            {/* Single Overall Car & Bike Expeditions Search Page */}
-            <Link
-              href="/tours"
-              className="px-4 py-2 rounded-lg bg-white/5 hover:bg-brand-red border border-white/10 hover:border-brand-red text-white transition-all flex items-center gap-2 shadow-sm group"
-            >
-              <Compass className="w-3.5 h-3.5 text-brand-red group-hover:text-white transition-colors" />
-              <span>Group Expeditions (4x4 & Bikes)</span>
-              <span className="text-[9px] bg-brand-red group-hover:bg-white group-hover:text-brand-red text-white px-1.5 py-0.5 rounded font-black">
-                Search
-              </span>
-            </Link>
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`px-3.5 py-2 rounded-xl transition-all flex items-center gap-1.5 relative border ${
+                    active
+                      ? "bg-brand-red/15 text-brand-red border-brand-red/40 shadow-[0_0_15px_rgba(230,57,70,0.25)] font-black"
+                      : "text-white/75 hover:text-white hover:bg-white/10 border-transparent"
+                  }`}
+                >
+                  {Icon && (
+                    <Icon
+                      className={`w-3.5 h-3.5 ${
+                        active ? "text-brand-red" : "text-white/60 group-hover:text-white"
+                      }`}
+                    />
+                  )}
+                  <span>{link.name}</span>
 
-            <Link
-              href="/destinations"
-              className="px-3.5 py-2 rounded-lg hover:bg-white/10 hover:text-brand-red transition-all"
-            >
-              Destinations
-            </Link>
+                  {link.badge && (
+                    <span
+                      className={`text-[9px] px-1.5 py-0.5 rounded font-black tracking-normal uppercase ${
+                        active
+                          ? "bg-brand-red text-white"
+                          : "bg-white/10 text-white/90"
+                      }`}
+                    >
+                      {link.badge}
+                    </span>
+                  )}
 
-            <Link
-              href="/about"
-              className="px-3.5 py-2 rounded-lg hover:bg-white/10 hover:text-brand-red transition-all"
-            >
-              About Us
-            </Link>
-
-            <Link
-              href="/contact"
-              className="px-3.5 py-2 rounded-lg hover:bg-white/10 hover:text-brand-red transition-all"
-            >
-              Contact
-            </Link>
-
+                  {/* Active Indicator Underline Bar */}
+                  {active && (
+                    <span className="absolute -bottom-[1px] left-3 right-3 h-[2px] bg-brand-red rounded-full shadow-[0_0_8px_rgba(230,57,70,0.8)]" />
+                  )}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Right Action Controls: Theme Switcher & Book CTA */}
@@ -192,10 +227,9 @@ export function Header({ onOpenEnquire }: HeaderProps) {
         </div>
       </div>
 
-
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#0B0C0E] border-b border-white/10 px-6 pt-4 pb-6 space-y-4 text-white shadow-2xl animate-in slide-in-from-top duration-200">
+        <div className="lg:hidden bg-[#0B0C0E] border-b border-white/10 px-5 pt-4 pb-6 space-y-4 text-white shadow-2xl animate-in slide-in-from-top duration-200">
           <div className="flex items-center justify-between pb-2 border-b border-white/10">
             <span className="text-xs font-bold uppercase tracking-wider text-white/60 font-display">Theme Preference</span>
             <button
@@ -207,45 +241,57 @@ export function Header({ onOpenEnquire }: HeaderProps) {
             </button>
           </div>
 
-          <nav className="flex flex-col space-y-3 text-xs font-bold uppercase tracking-wider font-display">
-            <Link href="/" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 hover:text-brand-red flex items-center justify-between">
-              <span>Home</span>
-              <ChevronRight className="w-4 h-4 text-white/30" />
-            </Link>
+          <nav className="flex flex-col space-y-1.5 text-xs font-bold uppercase tracking-wider font-display">
+            {navLinks.map((link) => {
+              const active = isActive(link.href);
+              const Icon = link.icon;
 
-            <Link href="/tours" onClick={() => setMobileMenuOpen(false)} className="py-2.5 border-b border-white/5 hover:text-brand-red flex items-center justify-between text-brand-red font-bold">
-              <span className="flex items-center gap-2">
-                <Compass className="w-4 h-4 text-brand-red" />
-                Group Expeditions (4x4 Cars & Bikes)
-              </span>
-              <ChevronRight className="w-4 h-4 text-white/30" />
-            </Link>
-
-            <Link href="/destinations" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 hover:text-brand-red flex items-center justify-between">
-              <span className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-brand-red" />
-                8 Sister States
-              </span>
-              <ChevronRight className="w-4 h-4 text-white/30" />
-            </Link>
-
-            <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 hover:text-brand-red flex items-center justify-between">
-              <span>About Us</span>
-              <ChevronRight className="w-4 h-4 text-white/30" />
-            </Link>
-
-            <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 hover:text-brand-red flex items-center justify-between">
-              <span>Contact Us</span>
-              <ChevronRight className="w-4 h-4 text-white/30" />
-            </Link>
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`p-3 rounded-xl flex items-center justify-between transition-all border ${
+                    active
+                      ? "bg-brand-red/15 text-brand-red border-brand-red/40 font-black shadow-sm"
+                      : "text-white/80 hover:text-brand-red hover:bg-white/5 border-transparent"
+                  }`}
+                >
+                  <span className="flex items-center gap-2.5">
+                    {Icon && <Icon className={`w-4 h-4 ${active ? "text-brand-red" : "text-white/50"}`} />}
+                    <span>{link.name}</span>
+                    {link.badge && (
+                      <span className="text-[9px] px-1.5 py-0.5 rounded bg-brand-red/20 text-brand-red font-mono lowercase">
+                        {link.badge}
+                      </span>
+                    )}
+                  </span>
+                  {active ? (
+                    <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-brand-red text-white">
+                      Current
+                    </span>
+                  ) : (
+                    <ChevronRight className="w-4 h-4 text-white/30" />
+                  )}
+                </Link>
+              );
+            })}
           </nav>
 
           <div className="grid grid-cols-2 gap-3 pt-2">
-            <a href="tel:+919876543210" className="py-3 rounded-lg bg-white/10 text-white text-xs font-bold font-display uppercase tracking-wider flex items-center justify-center gap-1.5">
+            <a
+              href="tel:+919876543210"
+              className="py-3 rounded-lg bg-white/10 text-white text-xs font-bold font-display uppercase tracking-wider flex items-center justify-center gap-1.5"
+            >
               <Phone className="w-4 h-4 text-brand-red" />
               Call Now
             </a>
-            <a href={whatsAppUrl} target="_blank" rel="noopener noreferrer" className="py-3 rounded-lg bg-emerald-600 text-white text-xs font-bold font-display uppercase tracking-wider flex items-center justify-center gap-1.5">
+            <a
+              href={whatsAppUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="py-3 rounded-lg bg-emerald-600 text-white text-xs font-bold font-display uppercase tracking-wider flex items-center justify-center gap-1.5"
+            >
               <MessageCircle className="w-4 h-4" />
               WhatsApp
             </a>
