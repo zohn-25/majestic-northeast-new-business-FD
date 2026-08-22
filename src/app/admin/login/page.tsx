@@ -4,9 +4,11 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Lock, Mail, ShieldAlert, ArrowRight, Compass, ShieldCheck, Sparkles, KeyRound } from "lucide-react";
+import { useData } from "@/context/DataContext";
 
 export default function AdminLoginPage() {
   const router = useRouter();
+  const { loginAdmin } = useData();
   const [email, setEmail] = useState("admin@majesticnortheast.com");
   const [password, setPassword] = useState("majestic2026");
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
@@ -33,6 +35,7 @@ export default function AdminLoginPage() {
 
     setErrors({});
     setLoading(true);
+    loginAdmin();
 
     // Simulate swift login redirect
     setTimeout(() => {

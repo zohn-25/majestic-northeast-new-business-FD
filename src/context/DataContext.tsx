@@ -41,6 +41,11 @@ interface DataContextType {
   // Gallery
   addGalleryImage: (image: { url: string; alt: string; category: "vehicle" | "tour" | "destination" | "uploaded"; entityName: string }) => void;
   deleteGalleryImage: (id: string) => void;
+
+  // Demo Auth
+  isAdminLoggedIn: boolean;
+  loginAdmin: () => void;
+  logoutAdmin: () => void;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -102,6 +107,30 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const [destinations, setDestinations] = useState<Destination[]>(DESTINATIONS_DATA);
   const [enquiries, setEnquiries] = useState<Enquiry[]>(MOCK_ENQUIRIES_DATA);
   const [galleryImages, setGalleryImages] = useState<GalleryItem[]>(getInitialGallery());
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const stored = sessionStorage.getItem("majestic_admin_auth");
+      if (stored === "true") {
+        setIsAdminLoggedIn(true);
+      }
+    }
+  }, []);
+
+  const loginAdmin = () => {
+    setIsAdminLoggedIn(true);
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("majestic_admin_auth", "true");
+    }
+  };
+
+  const logoutAdmin = () => {
+    setIsAdminLoggedIn(false);
+    if (typeof window !== "undefined") {
+      sessionStorage.removeItem("majestic_admin_auth");
+    }
+  };
 
   // Vehicles
   const addVehicle = (vehicle: Vehicle) => {
@@ -224,6 +253,9 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         addEnquiry,
         addGalleryImage,
         deleteGalleryImage,
+        isAdminLoggedIn,
+        loginAdmin,
+        logoutAdmin,
       }}
     >
       {children}

@@ -41,13 +41,38 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
-  // In-memory data counts from DataContext
-  const { vehicles, tours, destinations, enquiries, galleryImages } = useData();
+  // In-memory data counts & auth from DataContext
+  const { vehicles, tours, destinations, enquiries, galleryImages, isAdminLoggedIn, logoutAdmin } = useData();
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsCheckingAuth(false);
+    }, 60);
+    return () => clearTimeout(timer);
+  }, []);
+
+  React.useEffect(() => {
+    if (!isCheckingAuth && !isAdminLoggedIn && pathname !== "/admin/login") {
+      router.replace("/admin/login");
+    }
+  }, [isCheckingAuth, isAdminLoggedIn, pathname, router]);
 
   // If user is on login page, don't show the dashboard shell
   if (pathname === "/admin/login") {
     return <>{children}</>;
+  }
+
+  if (isCheckingAuth || !isAdminLoggedIn) {
+    return (
+      <div className="min-h-screen bg-[#090A0C] flex flex-col items-center justify-center text-white space-y-3">
+        <div className="w-8 h-8 border-2 border-brand-red border-t-transparent rounded-full animate-spin" />
+        <span className="text-xs font-bold font-display uppercase tracking-widest text-white/60">
+          Checking Admin Credentials...
+        </span>
+      </div>
+    );
   }
 
   const pendingEnquiriesCount = enquiries.filter((e) => e.status === "New").length;
@@ -106,6 +131,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   ];
 
   const handleLogout = () => {
+    logoutAdmin();
     router.push("/admin/login");
   };
 
