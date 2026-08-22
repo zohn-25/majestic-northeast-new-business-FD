@@ -1,18 +1,18 @@
 # Graph Report - majestic new business demo  (2026-08-22)
 
 ## Corpus Check
-- 73 files · ~47,944 words
+- 77 files · ~56,938 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 152 nodes · 88 edges · 3 communities detected
-- Extraction: 91% EXTRACTED · 9% INFERRED · 0% AMBIGUOUS · INFERRED: 8 edges (avg confidence: 0.8)
+- 169 nodes · 101 edges · 3 communities detected
+- Extraction: 92% EXTRACTED · 8% INFERRED · 0% AMBIGUOUS · INFERRED: 8 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Community Hubs (Navigation)
 - [[_COMMUNITY_Community 0|Community 0]]
-- [[_COMMUNITY_Community 4|Community 4]]
-- [[_COMMUNITY_Community 14|Community 14]]
+- [[_COMMUNITY_Community 5|Community 5]]
+- [[_COMMUNITY_Community 16|Community 16]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `buildWhatsAppUrl()` - 7 edges
@@ -44,27 +44,27 @@
 Cohesion: 0.14
 Nodes (7): AboutPage(), Footer(), StickyMobileBar(), TourCard(), WhatsAppFloating(), buildWhatsAppUrl(), getAvailabilityStatus()
 
-### Community 4 - "Community 4"
+### Community 5 - "Community 5"
 Cohesion: 0.4
 Nodes (2): Header(), useTheme()
 
-### Community 14 - "Community 14"
+### Community 16 - "Community 16"
 Cohesion: 1.0
 Nodes (2): DataProvider(), getInitialGallery()
 
 ## Knowledge Gaps
-- **Thin community `Community 4`** (5 nodes): `Header()`, `ThemeProvider()`, `useTheme()`, `Header.tsx`, `ThemeContext.tsx`
+- **Thin community `Community 5`** (5 nodes): `Header()`, `ThemeProvider()`, `useTheme()`, `Header.tsx`, `ThemeContext.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 14`** (3 nodes): `DataProvider()`, `getInitialGallery()`, `DataContext.tsx`
+- **Thin community `Community 16`** (3 nodes): `DataProvider()`, `getInitialGallery()`, `DataContext.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `buildWhatsAppUrl()` connect `Community 0` to `Community 4`?**
-  _High betweenness centrality (0.013) - this node is a cross-community bridge._
-- **Why does `Header()` connect `Community 4` to `Community 0`?**
-  _High betweenness centrality (0.006) - this node is a cross-community bridge._
+- **Why does `buildWhatsAppUrl()` connect `Community 0` to `Community 5`?**
+  _High betweenness centrality (0.010) - this node is a cross-community bridge._
+- **Why does `Header()` connect `Community 5` to `Community 0`?**
+  _High betweenness centrality (0.004) - this node is a cross-community bridge._
 - **Are the 6 inferred relationships involving `buildWhatsAppUrl()` (e.g. with `AboutPage()` and `Footer()`) actually correct?**
   _`buildWhatsAppUrl()` has 6 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 2 inferred relationships involving `Header()` (e.g. with `useTheme()` and `buildWhatsAppUrl()`) actually correct?**
