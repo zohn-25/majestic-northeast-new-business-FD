@@ -9,7 +9,7 @@
       "source_file": "next-env.d.ts",
       "source_location": "L1",
       "id": "next_env_d_ts",
-      "community": 29,
+      "community": 43,
       "norm_label": "next-env.d.ts"
     },
     {
@@ -18,7 +18,7 @@
       "source_file": "next.config.mjs",
       "source_location": "L1",
       "id": "next_config_mjs",
-      "community": 30,
+      "community": 44,
       "norm_label": "next.config.mjs"
     },
     {
@@ -27,8 +27,17 @@
       "source_file": "postcss.config.js",
       "source_location": "L1",
       "id": "postcss_config_js",
-      "community": 31,
+      "community": 45,
       "norm_label": "postcss.config.js"
+    },
+    {
+      "label": "postcss.config.mjs",
+      "file_type": "code",
+      "source_file": "postcss.config.mjs",
+      "source_location": "L1",
+      "id": "postcss_config_mjs",
+      "community": 46,
+      "norm_label": "postcss.config.mjs"
     },
     {
       "label": "tailwind.config.ts",
@@ -36,7 +45,7 @@
       "source_file": "tailwind.config.ts",
       "source_location": "L1",
       "id": "tailwind_config_ts",
-      "community": 32,
+      "community": 47,
       "norm_label": "tailwind.config.ts"
     },
     {
@@ -45,7 +54,7 @@
       "source_file": "src\\app\\error.tsx",
       "source_location": "L1",
       "id": "src_app_error_tsx",
-      "community": 7,
+      "community": 15,
       "norm_label": "error.tsx"
     },
     {
@@ -54,7 +63,7 @@
       "source_file": "src\\app\\error.tsx",
       "source_location": "L7",
       "id": "app_error_error",
-      "community": 7,
+      "community": 15,
       "norm_label": "error()"
     },
     {
@@ -63,7 +72,7 @@
       "source_file": "src\\app\\global-error.tsx",
       "source_location": "L1",
       "id": "src_app_global_error_tsx",
-      "community": 8,
+      "community": 16,
       "norm_label": "global-error.tsx"
     },
     {
@@ -72,7 +81,7 @@
       "source_file": "src\\app\\global-error.tsx",
       "source_location": "L5",
       "id": "app_global_error_globalerror",
-      "community": 8,
+      "community": 16,
       "norm_label": "globalerror()"
     },
     {
@@ -81,7 +90,7 @@
       "source_file": "src\\app\\layout.tsx",
       "source_location": "L1",
       "id": "src_app_layout_tsx",
-      "community": 33,
+      "community": 48,
       "norm_label": "layout.tsx"
     },
     {
@@ -90,7 +99,7 @@
       "source_file": "src\\app\\not-found.tsx",
       "source_location": "L1",
       "id": "src_app_not_found_tsx",
-      "community": 9,
+      "community": 17,
       "norm_label": "not-found.tsx"
     },
     {
@@ -99,7 +108,7 @@
       "source_file": "src\\app\\not-found.tsx",
       "source_location": "L7",
       "id": "app_not_found_notfoundpage",
-      "community": 9,
+      "community": 17,
       "norm_label": "notfoundpage()"
     },
     {
@@ -108,7 +117,7 @@
       "source_file": "src\\app\\page.tsx",
       "source_location": "L1",
       "id": "src_app_page_tsx",
-      "community": 10,
+      "community": 18,
       "norm_label": "page.tsx"
     },
     {
@@ -117,7 +126,7 @@
       "source_file": "src\\app\\page.tsx",
       "source_location": "L22",
       "id": "app_page_homepage",
-      "community": 10,
+      "community": 18,
       "norm_label": "homepage()"
     },
     {
@@ -126,7 +135,7 @@
       "source_file": "src\\app\\about\\layout.tsx",
       "source_location": "L1",
       "id": "src_app_about_layout_tsx",
-      "community": 11,
+      "community": 19,
       "norm_label": "layout.tsx"
     },
     {
@@ -135,7 +144,7 @@
       "source_file": "src\\app\\about\\layout.tsx",
       "source_location": "L8",
       "id": "about_layout_aboutlayout",
-      "community": 11,
+      "community": 19,
       "norm_label": "aboutlayout()"
     },
     {
@@ -157,21 +166,327 @@
       "norm_label": "aboutpage()"
     },
     {
+      "label": "layout.tsx",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\layout.tsx",
+      "source_location": "L1",
+      "id": "src_app_admin_layout_tsx",
+      "community": 7,
+      "norm_label": "layout.tsx"
+    },
+    {
+      "label": "handleLogout()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\layout.tsx",
+      "source_location": "L135",
+      "id": "admin_layout_handlelogout",
+      "community": 7,
+      "norm_label": "handlelogout()"
+    },
+    {
+      "label": "isRouteActive()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\layout.tsx",
+      "source_location": "L140",
+      "id": "admin_layout_isrouteactive",
+      "community": 7,
+      "norm_label": "isrouteactive()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\page.tsx",
+      "source_location": "L1",
+      "id": "src_app_admin_page_tsx",
+      "community": 20,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "getStatusBadge()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\page.tsx",
+      "source_location": "L48",
+      "id": "admin_page_getstatusbadge",
+      "community": 20,
+      "norm_label": "getstatusbadge()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\destinations\\page.tsx",
+      "source_location": "L1",
+      "id": "src_app_admin_destinations_page_tsx",
+      "community": 8,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "handleEdit()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\destinations\\page.tsx",
+      "source_location": "L75",
+      "id": "destinations_page_handleedit",
+      "community": 8,
+      "norm_label": "handleedit()"
+    },
+    {
+      "label": "handleSave()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\destinations\\page.tsx",
+      "source_location": "L80",
+      "id": "destinations_page_handlesave",
+      "community": 8,
+      "norm_label": "handlesave()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\enquiries\\page.tsx",
+      "source_location": "L1",
+      "id": "src_app_admin_enquiries_page_tsx",
+      "community": 1,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "getStatusBadge()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\enquiries\\page.tsx",
+      "source_location": "L37",
+      "id": "enquiries_page_getstatusbadge",
+      "community": 1,
+      "norm_label": "getstatusbadge()"
+    },
+    {
+      "label": "handleView()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\enquiries\\page.tsx",
+      "source_location": "L123",
+      "id": "enquiries_page_handleview",
+      "community": 1,
+      "norm_label": "handleview()"
+    },
+    {
+      "label": "handleDeleteClick()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\enquiries\\page.tsx",
+      "source_location": "L128",
+      "id": "enquiries_page_handledeleteclick",
+      "community": 1,
+      "norm_label": "handledeleteclick()"
+    },
+    {
+      "label": "handleConfirmDelete()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\enquiries\\page.tsx",
+      "source_location": "L133",
+      "id": "enquiries_page_handleconfirmdelete",
+      "community": 1,
+      "norm_label": "handleconfirmdelete()"
+    },
+    {
+      "label": "handleStatusChangeFromModal()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\enquiries\\page.tsx",
+      "source_location": "L143",
+      "id": "enquiries_page_handlestatuschangefrommodal",
+      "community": 1,
+      "norm_label": "handlestatuschangefrommodal()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\gallery\\page.tsx",
+      "source_location": "L1",
+      "id": "src_app_admin_gallery_page_tsx",
+      "community": 5,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "handleFileUpload()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\gallery\\page.tsx",
+      "source_location": "L33",
+      "id": "gallery_page_handlefileupload",
+      "community": 5,
+      "norm_label": "handlefileupload()"
+    },
+    {
+      "label": "handleDeleteClick()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\gallery\\page.tsx",
+      "source_location": "L57",
+      "id": "gallery_page_handledeleteclick",
+      "community": 5,
+      "norm_label": "handledeleteclick()"
+    },
+    {
+      "label": "handleConfirmDelete()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\gallery\\page.tsx",
+      "source_location": "L62",
+      "id": "gallery_page_handleconfirmdelete",
+      "community": 5,
+      "norm_label": "handleconfirmdelete()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\login\\page.tsx",
+      "source_location": "L1",
+      "id": "src_app_admin_login_page_tsx",
+      "community": 21,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "handleSubmit()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\login\\page.tsx",
+      "source_location": "L17",
+      "id": "login_page_handlesubmit",
+      "community": 21,
+      "norm_label": "handlesubmit()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\settings\\page.tsx",
+      "source_location": "L1",
+      "id": "src_app_admin_settings_page_tsx",
+      "community": 22,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "AdminSettingsPage()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\settings\\page.tsx",
+      "source_location": "L7",
+      "id": "settings_page_adminsettingspage",
+      "community": 22,
+      "norm_label": "adminsettingspage()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\tours\\page.tsx",
+      "source_location": "L1",
+      "id": "src_app_admin_tours_page_tsx",
+      "community": 2,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "handleAddNew()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\tours\\page.tsx",
+      "source_location": "L115",
+      "id": "tours_page_handleaddnew",
+      "community": 2,
+      "norm_label": "handleaddnew()"
+    },
+    {
+      "label": "handleEdit()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\tours\\page.tsx",
+      "source_location": "L120",
+      "id": "tours_page_handleedit",
+      "community": 2,
+      "norm_label": "handleedit()"
+    },
+    {
+      "label": "handleDeleteClick()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\tours\\page.tsx",
+      "source_location": "L125",
+      "id": "tours_page_handledeleteclick",
+      "community": 2,
+      "norm_label": "handledeleteclick()"
+    },
+    {
+      "label": "handleConfirmDelete()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\tours\\page.tsx",
+      "source_location": "L130",
+      "id": "tours_page_handleconfirmdelete",
+      "community": 2,
+      "norm_label": "handleconfirmdelete()"
+    },
+    {
+      "label": "handleSaveTour()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\tours\\page.tsx",
+      "source_location": "L139",
+      "id": "tours_page_handlesavetour",
+      "community": 2,
+      "norm_label": "handlesavetour()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\vehicles\\page.tsx",
+      "source_location": "L1",
+      "id": "src_app_admin_vehicles_page_tsx",
+      "community": 3,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "handleAddNew()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\vehicles\\page.tsx",
+      "source_location": "L117",
+      "id": "vehicles_page_handleaddnew",
+      "community": 3,
+      "norm_label": "handleaddnew()"
+    },
+    {
+      "label": "handleEdit()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\vehicles\\page.tsx",
+      "source_location": "L122",
+      "id": "vehicles_page_handleedit",
+      "community": 3,
+      "norm_label": "handleedit()"
+    },
+    {
+      "label": "handleDeleteClick()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\vehicles\\page.tsx",
+      "source_location": "L127",
+      "id": "vehicles_page_handledeleteclick",
+      "community": 3,
+      "norm_label": "handledeleteclick()"
+    },
+    {
+      "label": "handleConfirmDelete()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\vehicles\\page.tsx",
+      "source_location": "L132",
+      "id": "vehicles_page_handleconfirmdelete",
+      "community": 3,
+      "norm_label": "handleconfirmdelete()"
+    },
+    {
+      "label": "handleSaveVehicle()",
+      "file_type": "code",
+      "source_file": "src\\app\\admin\\vehicles\\page.tsx",
+      "source_location": "L141",
+      "id": "vehicles_page_handlesavevehicle",
+      "community": 3,
+      "norm_label": "handlesavevehicle()"
+    },
+    {
       "label": "page.tsx",
       "file_type": "code",
       "source_file": "src\\app\\bikes\\page.tsx",
       "source_location": "L1",
       "id": "src_app_bikes_page_tsx",
-      "community": 12,
+      "community": 23,
       "norm_label": "page.tsx"
     },
     {
       "label": "handleReset()",
       "file_type": "code",
       "source_file": "src\\app\\bikes\\page.tsx",
-      "source_location": "L69",
+      "source_location": "L70",
       "id": "bikes_page_handlereset",
-      "community": 12,
+      "community": 23,
       "norm_label": "handlereset()"
     },
     {
@@ -180,7 +495,7 @@
       "source_file": "src\\app\\contact\\layout.tsx",
       "source_location": "L1",
       "id": "src_app_contact_layout_tsx",
-      "community": 13,
+      "community": 24,
       "norm_label": "layout.tsx"
     },
     {
@@ -189,7 +504,7 @@
       "source_file": "src\\app\\contact\\layout.tsx",
       "source_location": "L8",
       "id": "contact_layout_contactlayout",
-      "community": 13,
+      "community": 24,
       "norm_label": "contactlayout()"
     },
     {
@@ -198,7 +513,7 @@
       "source_file": "src\\app\\contact\\page.tsx",
       "source_location": "L1",
       "id": "src_app_contact_page_tsx",
-      "community": 14,
+      "community": 25,
       "norm_label": "page.tsx"
     },
     {
@@ -207,7 +522,7 @@
       "source_file": "src\\app\\contact\\page.tsx",
       "source_location": "L48",
       "id": "contact_page_handlesubmit",
-      "community": 14,
+      "community": 25,
       "norm_label": "handlesubmit()"
     },
     {
@@ -216,7 +531,7 @@
       "source_file": "src\\app\\destinations\\layout.tsx",
       "source_location": "L1",
       "id": "src_app_destinations_layout_tsx",
-      "community": 15,
+      "community": 26,
       "norm_label": "layout.tsx"
     },
     {
@@ -225,7 +540,7 @@
       "source_file": "src\\app\\destinations\\layout.tsx",
       "source_location": "L15",
       "id": "destinations_layout_destinationslayout",
-      "community": 15,
+      "community": 26,
       "norm_label": "destinationslayout()"
     },
     {
@@ -234,7 +549,7 @@
       "source_file": "src\\app\\destinations\\page.tsx",
       "source_location": "L1",
       "id": "src_app_destinations_page_tsx",
-      "community": 34,
+      "community": 49,
       "norm_label": "page.tsx"
     },
     {
@@ -243,7 +558,7 @@
       "source_file": "src\\app\\destinations\\[slug]\\page.tsx",
       "source_location": "L1",
       "id": "src_app_destinations_slug_page_tsx",
-      "community": 35,
+      "community": 50,
       "norm_label": "page.tsx"
     },
     {
@@ -252,7 +567,7 @@
       "source_file": "src\\app\\rentals\\layout.tsx",
       "source_location": "L1",
       "id": "src_app_rentals_layout_tsx",
-      "community": 16,
+      "community": 27,
       "norm_label": "layout.tsx"
     },
     {
@@ -261,7 +576,7 @@
       "source_file": "src\\app\\rentals\\layout.tsx",
       "source_location": "L16",
       "id": "rentals_layout_rentalslayout",
-      "community": 16,
+      "community": 27,
       "norm_label": "rentalslayout()"
     },
     {
@@ -270,16 +585,16 @@
       "source_file": "src\\app\\rentals\\page.tsx",
       "source_location": "L1",
       "id": "src_app_rentals_page_tsx",
-      "community": 17,
+      "community": 28,
       "norm_label": "page.tsx"
     },
     {
       "label": "handleReset()",
       "file_type": "code",
       "source_file": "src\\app\\rentals\\page.tsx",
-      "source_location": "L69",
+      "source_location": "L70",
       "id": "rentals_page_handlereset",
-      "community": 17,
+      "community": 28,
       "norm_label": "handlereset()"
     },
     {
@@ -288,16 +603,16 @@
       "source_file": "src\\app\\rentals\\[id]\\page.tsx",
       "source_location": "L1",
       "id": "src_app_rentals_id_page_tsx",
-      "community": 18,
+      "community": 29,
       "norm_label": "page.tsx"
     },
     {
       "label": "handleInlineSubmit()",
       "file_type": "code",
       "source_file": "src\\app\\rentals\\[id]\\page.tsx",
-      "source_location": "L91",
+      "source_location": "L93",
       "id": "id_page_handleinlinesubmit",
-      "community": 18,
+      "community": 29,
       "norm_label": "handleinlinesubmit()"
     },
     {
@@ -306,7 +621,7 @@
       "source_file": "src\\app\\tours\\layout.tsx",
       "source_location": "L1",
       "id": "src_app_tours_layout_tsx",
-      "community": 19,
+      "community": 30,
       "norm_label": "layout.tsx"
     },
     {
@@ -315,7 +630,7 @@
       "source_file": "src\\app\\tours\\layout.tsx",
       "source_location": "L15",
       "id": "tours_layout_tourslayout",
-      "community": 19,
+      "community": 30,
       "norm_label": "tourslayout()"
     },
     {
@@ -324,16 +639,16 @@
       "source_file": "src\\app\\tours\\page.tsx",
       "source_location": "L1",
       "id": "src_app_tours_page_tsx",
-      "community": 20,
+      "community": 31,
       "norm_label": "page.tsx"
     },
     {
       "label": "handleReset()",
       "file_type": "code",
       "source_file": "src\\app\\tours\\page.tsx",
-      "source_location": "L71",
+      "source_location": "L72",
       "id": "tours_page_handlereset",
-      "community": 20,
+      "community": 31,
       "norm_label": "handlereset()"
     },
     {
@@ -342,25 +657,25 @@
       "source_file": "src\\app\\tours\\[id]\\page.tsx",
       "source_location": "L1",
       "id": "src_app_tours_id_page_tsx",
-      "community": 3,
+      "community": 9,
       "norm_label": "page.tsx"
     },
     {
       "label": "parseExpeditionDate()",
       "file_type": "code",
       "source_file": "src\\app\\tours\\[id]\\page.tsx",
-      "source_location": "L53",
+      "source_location": "L55",
       "id": "id_page_parseexpeditiondate",
-      "community": 3,
+      "community": 9,
       "norm_label": "parseexpeditiondate()"
     },
     {
       "label": "handleBookingSubmit()",
       "file_type": "code",
       "source_file": "src\\app\\tours\\[id]\\page.tsx",
-      "source_location": "L150",
+      "source_location": "L154",
       "id": "id_page_handlebookingsubmit",
-      "community": 3,
+      "community": 9,
       "norm_label": "handlebookingsubmit()"
     },
     {
@@ -369,7 +684,7 @@
       "source_file": "src\\components\\DestinationCard.tsx",
       "source_location": "L1",
       "id": "src_components_destinationcard_tsx",
-      "community": 21,
+      "community": 32,
       "norm_label": "destinationcard.tsx"
     },
     {
@@ -378,7 +693,7 @@
       "source_file": "src\\components\\DestinationCard.tsx",
       "source_location": "L11",
       "id": "components_destinationcard_destinationcard",
-      "community": 21,
+      "community": 32,
       "norm_label": "destinationcard()"
     },
     {
@@ -387,25 +702,25 @@
       "source_file": "src\\components\\EnquiryModal.tsx",
       "source_location": "L1",
       "id": "src_components_enquirymodal_tsx",
-      "community": 4,
+      "community": 10,
       "norm_label": "enquirymodal.tsx"
     },
     {
       "label": "handleTripTypeChange()",
       "file_type": "code",
       "source_file": "src\\components\\EnquiryModal.tsx",
-      "source_location": "L90",
+      "source_location": "L91",
       "id": "components_enquirymodal_handletriptypechange",
-      "community": 4,
+      "community": 10,
       "norm_label": "handletriptypechange()"
     },
     {
       "label": "handleTourSubmit()",
       "file_type": "code",
       "source_file": "src\\components\\EnquiryModal.tsx",
-      "source_location": "L102",
+      "source_location": "L103",
       "id": "components_enquirymodal_handletoursubmit",
-      "community": 4,
+      "community": 10,
       "norm_label": "handletoursubmit()"
     },
     {
@@ -432,7 +747,7 @@
       "source_file": "src\\components\\Header.tsx",
       "source_location": "L1",
       "id": "src_components_header_tsx",
-      "community": 1,
+      "community": 4,
       "norm_label": "header.tsx"
     },
     {
@@ -441,7 +756,7 @@
       "source_file": "src\\components\\Header.tsx",
       "source_location": "L15",
       "id": "components_header_header",
-      "community": 1,
+      "community": 4,
       "norm_label": "header()"
     },
     {
@@ -457,7 +772,7 @@
       "label": "StickyMobileBar()",
       "file_type": "code",
       "source_file": "src\\components\\StickyMobileBar.tsx",
-      "source_location": "L11",
+      "source_location": "L13",
       "id": "components_stickymobilebar_stickymobilebar",
       "community": 0,
       "norm_label": "stickymobilebar()"
@@ -486,7 +801,7 @@
       "source_file": "src\\components\\VehicleCard.tsx",
       "source_location": "L1",
       "id": "src_components_vehiclecard_tsx",
-      "community": 5,
+      "community": 11,
       "norm_label": "vehiclecard.tsx"
     },
     {
@@ -495,7 +810,7 @@
       "source_file": "src\\components\\VehicleCard.tsx",
       "source_location": "L20",
       "id": "components_vehiclecard_nextimage",
-      "community": 5,
+      "community": 11,
       "norm_label": "nextimage()"
     },
     {
@@ -504,7 +819,7 @@
       "source_file": "src\\components\\VehicleCard.tsx",
       "source_location": "L26",
       "id": "components_vehiclecard_previmage",
-      "community": 5,
+      "community": 11,
       "norm_label": "previmage()"
     },
     {
@@ -526,12 +841,111 @@
       "norm_label": "whatsappfloating()"
     },
     {
+      "label": "ConfirmDialog.tsx",
+      "file_type": "code",
+      "source_file": "src\\components\\admin\\ConfirmDialog.tsx",
+      "source_location": "L1",
+      "id": "src_components_admin_confirmdialog_tsx",
+      "community": 51,
+      "norm_label": "confirmdialog.tsx"
+    },
+    {
+      "label": "DataTable.tsx",
+      "file_type": "code",
+      "source_file": "src\\components\\admin\\DataTable.tsx",
+      "source_location": "L1",
+      "id": "src_components_admin_datatable_tsx",
+      "community": 52,
+      "norm_label": "datatable.tsx"
+    },
+    {
+      "label": "DestinationModal.tsx",
+      "file_type": "code",
+      "source_file": "src\\components\\admin\\DestinationModal.tsx",
+      "source_location": "L1",
+      "id": "src_components_admin_destinationmodal_tsx",
+      "community": 33,
+      "norm_label": "destinationmodal.tsx"
+    },
+    {
+      "label": "DestinationModal()",
+      "file_type": "code",
+      "source_file": "src\\components\\admin\\DestinationModal.tsx",
+      "source_location": "L14",
+      "id": "admin_destinationmodal_destinationmodal",
+      "community": 33,
+      "norm_label": "destinationmodal()"
+    },
+    {
+      "label": "EnquiryDetailModal.tsx",
+      "file_type": "code",
+      "source_file": "src\\components\\admin\\EnquiryDetailModal.tsx",
+      "source_location": "L1",
+      "id": "src_components_admin_enquirydetailmodal_tsx",
+      "community": 53,
+      "norm_label": "enquirydetailmodal.tsx"
+    },
+    {
+      "label": "Toast.tsx",
+      "file_type": "code",
+      "source_file": "src\\components\\admin\\Toast.tsx",
+      "source_location": "L1",
+      "id": "src_components_admin_toast_tsx",
+      "community": 34,
+      "norm_label": "toast.tsx"
+    },
+    {
+      "label": "removeToast()",
+      "file_type": "code",
+      "source_file": "src\\components\\admin\\Toast.tsx",
+      "source_location": "L39",
+      "id": "admin_toast_removetoast",
+      "community": 34,
+      "norm_label": "removetoast()"
+    },
+    {
+      "label": "TourModal.tsx",
+      "file_type": "code",
+      "source_file": "src\\components\\admin\\TourModal.tsx",
+      "source_location": "L1",
+      "id": "src_components_admin_tourmodal_tsx",
+      "community": 35,
+      "norm_label": "tourmodal.tsx"
+    },
+    {
+      "label": "TourModal()",
+      "file_type": "code",
+      "source_file": "src\\components\\admin\\TourModal.tsx",
+      "source_location": "L14",
+      "id": "admin_tourmodal_tourmodal",
+      "community": 35,
+      "norm_label": "tourmodal()"
+    },
+    {
+      "label": "VehicleModal.tsx",
+      "file_type": "code",
+      "source_file": "src\\components\\admin\\VehicleModal.tsx",
+      "source_location": "L1",
+      "id": "src_components_admin_vehiclemodal_tsx",
+      "community": 36,
+      "norm_label": "vehiclemodal.tsx"
+    },
+    {
+      "label": "VehicleModal()",
+      "file_type": "code",
+      "source_file": "src\\components\\admin\\VehicleModal.tsx",
+      "source_location": "L14",
+      "id": "admin_vehiclemodal_vehiclemodal",
+      "community": 36,
+      "norm_label": "vehiclemodal()"
+    },
+    {
       "label": "CtaBanner.tsx",
       "file_type": "code",
       "source_file": "src\\components\\home\\CtaBanner.tsx",
       "source_location": "L1",
       "id": "src_components_home_ctabanner_tsx",
-      "community": 36,
+      "community": 54,
       "norm_label": "ctabanner.tsx"
     },
     {
@@ -540,7 +954,7 @@
       "source_file": "src\\components\\home\\CustomerReviews.tsx",
       "source_location": "L1",
       "id": "src_components_home_customerreviews_tsx",
-      "community": 37,
+      "community": 55,
       "norm_label": "customerreviews.tsx"
     },
     {
@@ -549,7 +963,7 @@
       "source_file": "src\\components\\home\\FaqSection.tsx",
       "source_location": "L1",
       "id": "src_components_home_faqsection_tsx",
-      "community": 22,
+      "community": 37,
       "norm_label": "faqsection.tsx"
     },
     {
@@ -558,7 +972,7 @@
       "source_file": "src\\components\\home\\FaqSection.tsx",
       "source_location": "L11",
       "id": "home_faqsection_togglefaq",
-      "community": 22,
+      "community": 37,
       "norm_label": "togglefaq()"
     },
     {
@@ -567,7 +981,7 @@
       "source_file": "src\\components\\home\\FeaturedRentals.tsx",
       "source_location": "L1",
       "id": "src_components_home_featuredrentals_tsx",
-      "community": 38,
+      "community": 56,
       "norm_label": "featuredrentals.tsx"
     },
     {
@@ -576,7 +990,7 @@
       "source_file": "src\\components\\home\\FeaturedTours.tsx",
       "source_location": "L1",
       "id": "src_components_home_featuredtours_tsx",
-      "community": 39,
+      "community": 57,
       "norm_label": "featuredtours.tsx"
     },
     {
@@ -585,7 +999,7 @@
       "source_file": "src\\components\\home\\GallerySection.tsx",
       "source_location": "L1",
       "id": "src_components_home_gallerysection_tsx",
-      "community": 40,
+      "community": 58,
       "norm_label": "gallerysection.tsx"
     },
     {
@@ -594,17 +1008,26 @@
       "source_file": "src\\components\\home\\HeroSection.tsx",
       "source_location": "L1",
       "id": "src_components_home_herosection_tsx",
-      "community": 0,
+      "community": 12,
       "norm_label": "herosection.tsx"
     },
     {
-      "label": "HeroSection()",
+      "label": "handleMobileSearch()",
       "file_type": "code",
       "source_file": "src\\components\\home\\HeroSection.tsx",
-      "source_location": "L14",
-      "id": "home_herosection_herosection",
-      "community": 0,
-      "norm_label": "herosection()"
+      "source_location": "L31",
+      "id": "home_herosection_handlemobilesearch",
+      "community": 12,
+      "norm_label": "handlemobilesearch()"
+    },
+    {
+      "label": "scrollToMiddle()",
+      "file_type": "code",
+      "source_file": "src\\components\\home\\HeroSection.tsx",
+      "source_location": "L40",
+      "id": "home_herosection_scrolltomiddle",
+      "community": 12,
+      "norm_label": "scrolltomiddle()"
     },
     {
       "label": "HowItWorks.tsx",
@@ -612,7 +1035,7 @@
       "source_file": "src\\components\\home\\HowItWorks.tsx",
       "source_location": "L1",
       "id": "src_components_home_howitworks_tsx",
-      "community": 41,
+      "community": 59,
       "norm_label": "howitworks.tsx"
     },
     {
@@ -621,7 +1044,7 @@
       "source_file": "src\\components\\home\\PopularDestinations.tsx",
       "source_location": "L1",
       "id": "src_components_home_populardestinations_tsx",
-      "community": 42,
+      "community": 60,
       "norm_label": "populardestinations.tsx"
     },
     {
@@ -630,7 +1053,7 @@
       "source_file": "src\\components\\home\\SearchWidget.tsx",
       "source_location": "L1",
       "id": "src_components_home_searchwidget_tsx",
-      "community": 23,
+      "community": 38,
       "norm_label": "searchwidget.tsx"
     },
     {
@@ -639,7 +1062,7 @@
       "source_file": "src\\components\\home\\SearchWidget.tsx",
       "source_location": "L13",
       "id": "home_searchwidget_searchwidget",
-      "community": 23,
+      "community": 38,
       "norm_label": "searchwidget()"
     },
     {
@@ -648,7 +1071,7 @@
       "source_file": "src\\components\\home\\WhyChooseUs.tsx",
       "source_location": "L1",
       "id": "src_components_home_whychooseus_tsx",
-      "community": 43,
+      "community": 61,
       "norm_label": "whychooseus.tsx"
     },
     {
@@ -657,7 +1080,7 @@
       "source_file": "src\\components\\ui\\BadgeChip.tsx",
       "source_location": "L1",
       "id": "src_components_ui_badgechip_tsx",
-      "community": 24,
+      "community": 39,
       "norm_label": "badgechip.tsx"
     },
     {
@@ -666,7 +1089,7 @@
       "source_file": "src\\components\\ui\\BadgeChip.tsx",
       "source_location": "L12",
       "id": "ui_badgechip_badgechip",
-      "community": 24,
+      "community": 39,
       "norm_label": "badgechip()"
     },
     {
@@ -675,7 +1098,7 @@
       "source_file": "src\\components\\ui\\CustomSelect.tsx",
       "source_location": "L1",
       "id": "src_components_ui_customselect_tsx",
-      "community": 6,
+      "community": 13,
       "norm_label": "customselect.tsx"
     },
     {
@@ -684,7 +1107,7 @@
       "source_file": "src\\components\\ui\\CustomSelect.tsx",
       "source_location": "L42",
       "id": "ui_customselect_handleclickoutside",
-      "community": 6,
+      "community": 13,
       "norm_label": "handleclickoutside()"
     },
     {
@@ -693,7 +1116,7 @@
       "source_file": "src\\components\\ui\\CustomSelect.tsx",
       "source_location": "L57",
       "id": "ui_customselect_handlekeydown",
-      "community": 6,
+      "community": 13,
       "norm_label": "handlekeydown()"
     },
     {
@@ -702,7 +1125,7 @@
       "source_file": "src\\components\\ui\\EmptyState.tsx",
       "source_location": "L1",
       "id": "src_components_ui_emptystate_tsx",
-      "community": 44,
+      "community": 62,
       "norm_label": "emptystate.tsx"
     },
     {
@@ -711,7 +1134,7 @@
       "source_file": "src\\components\\ui\\LoadingSkeleton.tsx",
       "source_location": "L1",
       "id": "src_components_ui_loadingskeleton_tsx",
-      "community": 2,
+      "community": 6,
       "norm_label": "loadingskeleton.tsx"
     },
     {
@@ -720,7 +1143,7 @@
       "source_file": "src\\components\\ui\\LoadingSkeleton.tsx",
       "source_location": "L3",
       "id": "ui_loadingskeleton_vehiclecardskeleton",
-      "community": 2,
+      "community": 6,
       "norm_label": "vehiclecardskeleton()"
     },
     {
@@ -729,7 +1152,7 @@
       "source_file": "src\\components\\ui\\LoadingSkeleton.tsx",
       "source_location": "L24",
       "id": "ui_loadingskeleton_tourcardskeleton",
-      "community": 2,
+      "community": 6,
       "norm_label": "tourcardskeleton()"
     },
     {
@@ -738,7 +1161,7 @@
       "source_file": "src\\components\\ui\\LoadingSkeleton.tsx",
       "source_location": "L44",
       "id": "ui_loadingskeleton_destinationcardskeleton",
-      "community": 2,
+      "community": 6,
       "norm_label": "destinationcardskeleton()"
     },
     {
@@ -747,7 +1170,7 @@
       "source_file": "src\\components\\ui\\MiniMotorcycleRider.tsx",
       "source_location": "L1",
       "id": "src_components_ui_minimotorcyclerider_tsx",
-      "community": 25,
+      "community": 40,
       "norm_label": "minimotorcyclerider.tsx"
     },
     {
@@ -756,7 +1179,7 @@
       "source_file": "src\\components\\ui\\MiniMotorcycleRider.tsx",
       "source_location": "L10",
       "id": "ui_minimotorcyclerider_minimotorcyclerider",
-      "community": 25,
+      "community": 40,
       "norm_label": "minimotorcyclerider()"
     },
     {
@@ -765,17 +1188,8 @@
       "source_file": "src\\components\\ui\\MiniOffroadCar.tsx",
       "source_location": "L1",
       "id": "src_components_ui_minioffroadcar_tsx",
-      "community": 26,
+      "community": 63,
       "norm_label": "minioffroadcar.tsx"
-    },
-    {
-      "label": "MiniOffroadCar()",
-      "file_type": "code",
-      "source_file": "src\\components\\ui\\MiniOffroadCar.tsx",
-      "source_location": "L10",
-      "id": "ui_minioffroadcar_minioffroadcar",
-      "community": 26,
-      "norm_label": "minioffroadcar()"
     },
     {
       "label": "PaintBrushDivider.tsx",
@@ -783,7 +1197,7 @@
       "source_file": "src\\components\\ui\\PaintBrushDivider.tsx",
       "source_location": "L1",
       "id": "src_components_ui_paintbrushdivider_tsx",
-      "community": 27,
+      "community": 41,
       "norm_label": "paintbrushdivider.tsx"
     },
     {
@@ -792,7 +1206,7 @@
       "source_file": "src\\components\\ui\\PaintBrushDivider.tsx",
       "source_location": "L21",
       "id": "ui_paintbrushdivider_paintbrushdivider",
-      "community": 27,
+      "community": 41,
       "norm_label": "paintbrushdivider()"
     },
     {
@@ -801,7 +1215,7 @@
       "source_file": "src\\components\\ui\\RippedEdgeDivider.tsx",
       "source_location": "L1",
       "id": "src_components_ui_rippededgedivider_tsx",
-      "community": 28,
+      "community": 42,
       "norm_label": "rippededgedivider.tsx"
     },
     {
@@ -810,7 +1224,7 @@
       "source_file": "src\\components\\ui\\RippedEdgeDivider.tsx",
       "source_location": "L10",
       "id": "ui_rippededgedivider_rippededgedivider",
-      "community": 28,
+      "community": 42,
       "norm_label": "rippededgedivider()"
     },
     {
@@ -819,8 +1233,35 @@
       "source_file": "src\\components\\ui\\SectionHeading.tsx",
       "source_location": "L1",
       "id": "src_components_ui_sectionheading_tsx",
-      "community": 45,
+      "community": 64,
       "norm_label": "sectionheading.tsx"
+    },
+    {
+      "label": "DataContext.tsx",
+      "file_type": "code",
+      "source_file": "src\\context\\DataContext.tsx",
+      "source_location": "L1",
+      "id": "src_context_datacontext_tsx",
+      "community": 14,
+      "norm_label": "datacontext.tsx"
+    },
+    {
+      "label": "getInitialGallery()",
+      "file_type": "code",
+      "source_file": "src\\context\\DataContext.tsx",
+      "source_location": "L54",
+      "id": "context_datacontext_getinitialgallery",
+      "community": 14,
+      "norm_label": "getinitialgallery()"
+    },
+    {
+      "label": "DataProvider()",
+      "file_type": "code",
+      "source_file": "src\\context\\DataContext.tsx",
+      "source_location": "L104",
+      "id": "context_datacontext_dataprovider",
+      "community": 14,
+      "norm_label": "dataprovider()"
     },
     {
       "label": "ThemeContext.tsx",
@@ -828,7 +1269,7 @@
       "source_file": "src\\context\\ThemeContext.tsx",
       "source_location": "L1",
       "id": "src_context_themecontext_tsx",
-      "community": 1,
+      "community": 4,
       "norm_label": "themecontext.tsx"
     },
     {
@@ -837,7 +1278,7 @@
       "source_file": "src\\context\\ThemeContext.tsx",
       "source_location": "L15",
       "id": "context_themecontext_themeprovider",
-      "community": 1,
+      "community": 4,
       "norm_label": "themeprovider()"
     },
     {
@@ -846,7 +1287,7 @@
       "source_file": "src\\context\\ThemeContext.tsx",
       "source_location": "L62",
       "id": "context_themecontext_usetheme",
-      "community": 1,
+      "community": 4,
       "norm_label": "usetheme()"
     },
     {
@@ -855,7 +1296,7 @@
       "source_file": "src\\lib\\data.ts",
       "source_location": "L1",
       "id": "src_lib_data_ts",
-      "community": 46,
+      "community": 65,
       "norm_label": "data.ts"
     },
     {
@@ -864,7 +1305,7 @@
       "source_file": "src\\lib\\types.ts",
       "source_location": "L1",
       "id": "src_lib_types_ts",
-      "community": 47,
+      "community": 66,
       "norm_label": "types.ts"
     },
     {
@@ -1001,8 +1442,308 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\layout.tsx",
+      "source_location": "L135",
+      "weight": 1.0,
+      "_src": "src_app_admin_layout_tsx",
+      "_tgt": "admin_layout_handlelogout",
+      "source": "src_app_admin_layout_tsx",
+      "target": "admin_layout_handlelogout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\layout.tsx",
+      "source_location": "L140",
+      "weight": 1.0,
+      "_src": "src_app_admin_layout_tsx",
+      "_tgt": "admin_layout_isrouteactive",
+      "source": "src_app_admin_layout_tsx",
+      "target": "admin_layout_isrouteactive",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\page.tsx",
+      "source_location": "L48",
+      "weight": 1.0,
+      "_src": "src_app_admin_page_tsx",
+      "_tgt": "admin_page_getstatusbadge",
+      "source": "src_app_admin_page_tsx",
+      "target": "admin_page_getstatusbadge",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\destinations\\page.tsx",
+      "source_location": "L75",
+      "weight": 1.0,
+      "_src": "src_app_admin_destinations_page_tsx",
+      "_tgt": "destinations_page_handleedit",
+      "source": "src_app_admin_destinations_page_tsx",
+      "target": "destinations_page_handleedit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\destinations\\page.tsx",
+      "source_location": "L80",
+      "weight": 1.0,
+      "_src": "src_app_admin_destinations_page_tsx",
+      "_tgt": "destinations_page_handlesave",
+      "source": "src_app_admin_destinations_page_tsx",
+      "target": "destinations_page_handlesave",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\enquiries\\page.tsx",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_src": "src_app_admin_enquiries_page_tsx",
+      "_tgt": "enquiries_page_getstatusbadge",
+      "source": "src_app_admin_enquiries_page_tsx",
+      "target": "enquiries_page_getstatusbadge",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\enquiries\\page.tsx",
+      "source_location": "L123",
+      "weight": 1.0,
+      "_src": "src_app_admin_enquiries_page_tsx",
+      "_tgt": "enquiries_page_handleview",
+      "source": "src_app_admin_enquiries_page_tsx",
+      "target": "enquiries_page_handleview",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\enquiries\\page.tsx",
+      "source_location": "L128",
+      "weight": 1.0,
+      "_src": "src_app_admin_enquiries_page_tsx",
+      "_tgt": "enquiries_page_handledeleteclick",
+      "source": "src_app_admin_enquiries_page_tsx",
+      "target": "enquiries_page_handledeleteclick",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\enquiries\\page.tsx",
+      "source_location": "L133",
+      "weight": 1.0,
+      "_src": "src_app_admin_enquiries_page_tsx",
+      "_tgt": "enquiries_page_handleconfirmdelete",
+      "source": "src_app_admin_enquiries_page_tsx",
+      "target": "enquiries_page_handleconfirmdelete",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\enquiries\\page.tsx",
+      "source_location": "L143",
+      "weight": 1.0,
+      "_src": "src_app_admin_enquiries_page_tsx",
+      "_tgt": "enquiries_page_handlestatuschangefrommodal",
+      "source": "src_app_admin_enquiries_page_tsx",
+      "target": "enquiries_page_handlestatuschangefrommodal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\gallery\\page.tsx",
+      "source_location": "L33",
+      "weight": 1.0,
+      "_src": "src_app_admin_gallery_page_tsx",
+      "_tgt": "gallery_page_handlefileupload",
+      "source": "src_app_admin_gallery_page_tsx",
+      "target": "gallery_page_handlefileupload",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\gallery\\page.tsx",
+      "source_location": "L57",
+      "weight": 1.0,
+      "_src": "src_app_admin_gallery_page_tsx",
+      "_tgt": "gallery_page_handledeleteclick",
+      "source": "src_app_admin_gallery_page_tsx",
+      "target": "gallery_page_handledeleteclick",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\gallery\\page.tsx",
+      "source_location": "L62",
+      "weight": 1.0,
+      "_src": "src_app_admin_gallery_page_tsx",
+      "_tgt": "gallery_page_handleconfirmdelete",
+      "source": "src_app_admin_gallery_page_tsx",
+      "target": "gallery_page_handleconfirmdelete",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\login\\page.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_src": "src_app_admin_login_page_tsx",
+      "_tgt": "login_page_handlesubmit",
+      "source": "src_app_admin_login_page_tsx",
+      "target": "login_page_handlesubmit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\settings\\page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_src": "src_app_admin_settings_page_tsx",
+      "_tgt": "settings_page_adminsettingspage",
+      "source": "src_app_admin_settings_page_tsx",
+      "target": "settings_page_adminsettingspage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\tours\\page.tsx",
+      "source_location": "L115",
+      "weight": 1.0,
+      "_src": "src_app_admin_tours_page_tsx",
+      "_tgt": "tours_page_handleaddnew",
+      "source": "src_app_admin_tours_page_tsx",
+      "target": "tours_page_handleaddnew",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\tours\\page.tsx",
+      "source_location": "L120",
+      "weight": 1.0,
+      "_src": "src_app_admin_tours_page_tsx",
+      "_tgt": "tours_page_handleedit",
+      "source": "src_app_admin_tours_page_tsx",
+      "target": "tours_page_handleedit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\tours\\page.tsx",
+      "source_location": "L125",
+      "weight": 1.0,
+      "_src": "src_app_admin_tours_page_tsx",
+      "_tgt": "tours_page_handledeleteclick",
+      "source": "src_app_admin_tours_page_tsx",
+      "target": "tours_page_handledeleteclick",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\tours\\page.tsx",
+      "source_location": "L130",
+      "weight": 1.0,
+      "_src": "src_app_admin_tours_page_tsx",
+      "_tgt": "tours_page_handleconfirmdelete",
+      "source": "src_app_admin_tours_page_tsx",
+      "target": "tours_page_handleconfirmdelete",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\tours\\page.tsx",
+      "source_location": "L139",
+      "weight": 1.0,
+      "_src": "src_app_admin_tours_page_tsx",
+      "_tgt": "tours_page_handlesavetour",
+      "source": "src_app_admin_tours_page_tsx",
+      "target": "tours_page_handlesavetour",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\vehicles\\page.tsx",
+      "source_location": "L117",
+      "weight": 1.0,
+      "_src": "src_app_admin_vehicles_page_tsx",
+      "_tgt": "vehicles_page_handleaddnew",
+      "source": "src_app_admin_vehicles_page_tsx",
+      "target": "vehicles_page_handleaddnew",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\vehicles\\page.tsx",
+      "source_location": "L122",
+      "weight": 1.0,
+      "_src": "src_app_admin_vehicles_page_tsx",
+      "_tgt": "vehicles_page_handleedit",
+      "source": "src_app_admin_vehicles_page_tsx",
+      "target": "vehicles_page_handleedit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\vehicles\\page.tsx",
+      "source_location": "L127",
+      "weight": 1.0,
+      "_src": "src_app_admin_vehicles_page_tsx",
+      "_tgt": "vehicles_page_handledeleteclick",
+      "source": "src_app_admin_vehicles_page_tsx",
+      "target": "vehicles_page_handledeleteclick",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\vehicles\\page.tsx",
+      "source_location": "L132",
+      "weight": 1.0,
+      "_src": "src_app_admin_vehicles_page_tsx",
+      "_tgt": "vehicles_page_handleconfirmdelete",
+      "source": "src_app_admin_vehicles_page_tsx",
+      "target": "vehicles_page_handleconfirmdelete",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\app\\admin\\vehicles\\page.tsx",
+      "source_location": "L141",
+      "weight": 1.0,
+      "_src": "src_app_admin_vehicles_page_tsx",
+      "_tgt": "vehicles_page_handlesavevehicle",
+      "source": "src_app_admin_vehicles_page_tsx",
+      "target": "vehicles_page_handlesavevehicle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src\\app\\bikes\\page.tsx",
-      "source_location": "L69",
+      "source_location": "L70",
       "weight": 1.0,
       "_src": "src_app_bikes_page_tsx",
       "_tgt": "bikes_page_handlereset",
@@ -1062,7 +1803,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src\\app\\rentals\\page.tsx",
-      "source_location": "L69",
+      "source_location": "L70",
       "weight": 1.0,
       "_src": "src_app_rentals_page_tsx",
       "_tgt": "rentals_page_handlereset",
@@ -1074,7 +1815,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src\\app\\rentals\\[id]\\page.tsx",
-      "source_location": "L91",
+      "source_location": "L93",
       "weight": 1.0,
       "_src": "src_app_rentals_id_page_tsx",
       "_tgt": "id_page_handleinlinesubmit",
@@ -1098,7 +1839,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src\\app\\tours\\page.tsx",
-      "source_location": "L71",
+      "source_location": "L72",
       "weight": 1.0,
       "_src": "src_app_tours_page_tsx",
       "_tgt": "tours_page_handlereset",
@@ -1110,7 +1851,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src\\app\\tours\\[id]\\page.tsx",
-      "source_location": "L53",
+      "source_location": "L55",
       "weight": 1.0,
       "_src": "src_app_tours_id_page_tsx",
       "_tgt": "id_page_parseexpeditiondate",
@@ -1122,7 +1863,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src\\app\\tours\\[id]\\page.tsx",
-      "source_location": "L150",
+      "source_location": "L154",
       "weight": 1.0,
       "_src": "src_app_tours_id_page_tsx",
       "_tgt": "id_page_handlebookingsubmit",
@@ -1146,7 +1887,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src\\components\\EnquiryModal.tsx",
-      "source_location": "L90",
+      "source_location": "L91",
       "weight": 1.0,
       "_src": "src_components_enquirymodal_tsx",
       "_tgt": "components_enquirymodal_handletriptypechange",
@@ -1158,7 +1899,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src\\components\\EnquiryModal.tsx",
-      "source_location": "L102",
+      "source_location": "L103",
       "weight": 1.0,
       "_src": "src_components_enquirymodal_tsx",
       "_tgt": "components_enquirymodal_handletoursubmit",
@@ -1230,7 +1971,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src\\components\\StickyMobileBar.tsx",
-      "source_location": "L11",
+      "source_location": "L13",
       "weight": 1.0,
       "_src": "src_components_stickymobilebar_tsx",
       "_tgt": "components_stickymobilebar_stickymobilebar",
@@ -1337,6 +2078,54 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src\\components\\admin\\DestinationModal.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_src": "src_components_admin_destinationmodal_tsx",
+      "_tgt": "admin_destinationmodal_destinationmodal",
+      "source": "src_components_admin_destinationmodal_tsx",
+      "target": "admin_destinationmodal_destinationmodal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\components\\admin\\Toast.tsx",
+      "source_location": "L39",
+      "weight": 1.0,
+      "_src": "src_components_admin_toast_tsx",
+      "_tgt": "admin_toast_removetoast",
+      "source": "src_components_admin_toast_tsx",
+      "target": "admin_toast_removetoast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\components\\admin\\TourModal.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_src": "src_components_admin_tourmodal_tsx",
+      "_tgt": "admin_tourmodal_tourmodal",
+      "source": "src_components_admin_tourmodal_tsx",
+      "target": "admin_tourmodal_tourmodal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\components\\admin\\VehicleModal.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_src": "src_components_admin_vehiclemodal_tsx",
+      "_tgt": "admin_vehiclemodal_vehiclemodal",
+      "source": "src_components_admin_vehiclemodal_tsx",
+      "target": "admin_vehiclemodal_vehiclemodal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src\\components\\home\\FaqSection.tsx",
       "source_location": "L11",
       "weight": 1.0,
@@ -1350,25 +2139,25 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src\\components\\home\\HeroSection.tsx",
-      "source_location": "L14",
+      "source_location": "L31",
       "weight": 1.0,
       "_src": "src_components_home_herosection_tsx",
-      "_tgt": "home_herosection_herosection",
+      "_tgt": "home_herosection_handlemobilesearch",
       "source": "src_components_home_herosection_tsx",
-      "target": "home_herosection_herosection",
+      "target": "home_herosection_handlemobilesearch",
       "confidence_score": 1.0
     },
     {
-      "relation": "calls",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src\\components\\home\\HeroSection.tsx",
-      "source_location": "L16",
+      "source_location": "L40",
       "weight": 1.0,
-      "_src": "home_herosection_herosection",
-      "_tgt": "lib_utils_buildwhatsappurl",
-      "source": "home_herosection_herosection",
-      "target": "lib_utils_buildwhatsappurl"
+      "_src": "src_components_home_herosection_tsx",
+      "_tgt": "home_herosection_scrolltomiddle",
+      "source": "src_components_home_herosection_tsx",
+      "target": "home_herosection_scrolltomiddle",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -1469,18 +2258,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src\\components\\ui\\MiniOffroadCar.tsx",
-      "source_location": "L10",
-      "weight": 1.0,
-      "_src": "src_components_ui_minioffroadcar_tsx",
-      "_tgt": "ui_minioffroadcar_minioffroadcar",
-      "source": "src_components_ui_minioffroadcar_tsx",
-      "target": "ui_minioffroadcar_minioffroadcar",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "src\\components\\ui\\PaintBrushDivider.tsx",
       "source_location": "L21",
       "weight": 1.0,
@@ -1500,6 +2277,42 @@
       "_tgt": "ui_rippededgedivider_rippededgedivider",
       "source": "src_components_ui_rippededgedivider_tsx",
       "target": "ui_rippededgedivider_rippededgedivider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\context\\DataContext.tsx",
+      "source_location": "L54",
+      "weight": 1.0,
+      "_src": "src_context_datacontext_tsx",
+      "_tgt": "context_datacontext_getinitialgallery",
+      "source": "src_context_datacontext_tsx",
+      "target": "context_datacontext_getinitialgallery",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\context\\DataContext.tsx",
+      "source_location": "L104",
+      "weight": 1.0,
+      "_src": "src_context_datacontext_tsx",
+      "_tgt": "context_datacontext_dataprovider",
+      "source": "src_context_datacontext_tsx",
+      "target": "context_datacontext_dataprovider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\context\\DataContext.tsx",
+      "source_location": "L109",
+      "weight": 1.0,
+      "_src": "context_datacontext_dataprovider",
+      "_tgt": "context_datacontext_getinitialgallery",
+      "source": "context_datacontext_getinitialgallery",
+      "target": "context_datacontext_dataprovider",
       "confidence_score": 1.0
     },
     {
