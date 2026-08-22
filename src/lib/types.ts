@@ -179,3 +179,75 @@ export interface Enquiry {
   preferredBatch?: string;
   numberOfTravellers?: number;
 }
+
+// =============================================================================
+// GROUP EXPEDITION BATCHES & PASSENGER MANIFEST (ROSTER MANAGEMENT)
+// =============================================================================
+export type BatchStatus =
+  | "Upcoming"
+  | "Filling Fast"
+  | "Sold Out"
+  | "Departed / In Progress"
+  | "Completed"
+  | "Cancelled";
+
+export type PassengerTripStatus =
+  | "Applied / Pending"
+  | "Advance Paid (30%)"
+  | "Fully Paid"
+  | "Boarded / Departed"
+  | "On Tour"
+  | "Completed"
+  | "No Show"
+  | "Cancelled";
+
+export type PaymentStatus = "Pending Advance" | "Advance Paid" | "Fully Paid" | "Refunded";
+
+export type PermitStatus =
+  | "Verified & Issued"
+  | "Documents Under Review"
+  | "Documents Pending"
+  | "Not Required";
+
+export interface Passenger {
+  id: string;
+  batchId: string;
+  tourId: string;
+  tourTitle: string;
+  name: string;
+  age?: number;
+  gender?: "Male" | "Female" | "Other";
+  phone: string;
+  email: string;
+  city: string;
+  emergencyContact: string;
+  idProofType: string; // "Aadhaar" | "Passport" | "Driving License"
+  permitStatus: PermitStatus;
+  paymentStatus: PaymentStatus;
+  tripStatus: PassengerTripStatus;
+  assignedVehicle: string; // e.g. "Thar 4x4 #01 (Lead)", "Thar 4x4 #02", "RE Himalayan #03"
+  seatNumber: string; // e.g. "Seat 1A", "Seat 2B", "Bike #03 Pilot"
+  isSoloTraveller: boolean;
+  dietaryPreference?: string; // "Veg" | "Non-Veg" | "Jain"
+  notes?: string;
+  joinedAt: string;
+}
+
+export interface TourBatch {
+  id: string;
+  tourId: string;
+  tourTitle: string;
+  tripFormat: "car" | "bike";
+  startDate: string; // e.g. "2026-09-15"
+  endDate: string; // e.g. "2026-09-20"
+  totalSeats: number;
+  bookedSeats: number;
+  status: BatchStatus;
+  leadCaptainName: string;
+  leadCaptainPhone: string;
+  leadVehicle: string;
+  assignedVehicles: string[];
+  startLocation: string;
+  endLocation: string;
+}
+

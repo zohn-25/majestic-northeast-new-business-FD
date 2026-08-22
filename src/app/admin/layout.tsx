@@ -30,6 +30,7 @@ import {
   Sparkles,
   ChevronRight,
   User,
+  Users,
 } from "lucide-react";
 import { useData } from "@/context/DataContext";
 
@@ -46,7 +47,16 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
   // In-memory data counts & auth from DataContext
-  const { vehicles, tours, destinations, enquiries, galleryImages, isAdminLoggedIn, logoutAdmin } = useData();
+  const {
+    vehicles,
+    tours,
+    destinations,
+    enquiries,
+    galleryImages,
+    batches,
+    isAdminLoggedIn,
+    logoutAdmin,
+  } = useData();
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
@@ -78,6 +88,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   }
 
   const pendingEnquiriesCount = enquiries.filter((e) => e.status === "New").length;
+  const inProgressBatchesCount = batches.filter((b) => b.status === "Departed / In Progress").length;
 
   const navItems = [
     {
@@ -99,6 +110,14 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       href: "/admin/tours",
       icon: Compass,
       badge: `${tours.length}`,
+      exact: false,
+    },
+    {
+      name: "Batch Rosters & Manifest",
+      href: "/admin/batches",
+      icon: Users,
+      badge: inProgressBatchesCount > 0 ? `${inProgressBatchesCount} Active` : `${batches.length}`,
+      badgeHighlight: inProgressBatchesCount > 0,
       exact: false,
     },
     {
@@ -459,7 +478,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
         <Link
           href="/admin/tours"
-          className={`flex flex-col items-center gap-0.5 py-1 px-2.5 rounded-lg text-[10px] font-bold font-display uppercase tracking-wider transition-colors ${
+          className={`flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg text-[9px] font-bold font-display uppercase tracking-wider transition-colors ${
             pathname.startsWith("/admin/tours") ? "text-brand-red" : "text-white/60 hover:text-white"
           }`}
         >
@@ -468,8 +487,23 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         </Link>
 
         <Link
+          href="/admin/batches"
+          className={`flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg text-[9px] font-bold font-display uppercase tracking-wider transition-colors relative ${
+            pathname.startsWith("/admin/batches") ? "text-brand-red" : "text-white/60 hover:text-white"
+          }`}
+        >
+          <div className="relative">
+            <Users className="w-4 h-4" />
+            {inProgressBatchesCount > 0 && (
+              <span className="absolute -top-1 -right-1.5 w-2 h-2 rounded-full bg-emerald-400" />
+            )}
+          </div>
+          <span>Manifest</span>
+        </Link>
+
+        <Link
           href="/admin/enquiries"
-          className={`flex flex-col items-center gap-0.5 py-1 px-2.5 rounded-lg text-[10px] font-bold font-display uppercase tracking-wider transition-colors relative ${
+          className={`flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg text-[9px] font-bold font-display uppercase tracking-wider transition-colors relative ${
             pathname.startsWith("/admin/enquiries") ? "text-brand-red" : "text-white/60 hover:text-white"
           }`}
         >

@@ -1,11 +1,11 @@
 # Graph Report - majestic new business demo  (2026-08-22)
 
 ## Corpus Check
-- 73 files · ~47,794 words
+- 73 files · ~47,944 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 150 nodes · 86 edges · 3 communities detected
+- 152 nodes · 88 edges · 3 communities detected
 - Extraction: 91% EXTRACTED · 9% INFERRED · 0% AMBIGUOUS · INFERRED: 8 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 

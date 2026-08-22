@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Compass, Car, Bike, Plus, Edit, Trash2, Calendar, Users, MapPin, Sparkles } from "lucide-react";
 import { useData } from "@/context/DataContext";
 import { SharedTour } from "@/lib/types";
@@ -109,6 +110,18 @@ export default function AdminToursPage() {
           </div>
         );
       },
+    },
+    {
+      header: "Manifest & Batches",
+      cell: (t) => (
+        <Link
+          href="/admin/batches"
+          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold font-display uppercase tracking-wider transition-colors"
+        >
+          <Users className="w-3 h-3" />
+          <span>Roster</span>
+        </Link>
+      ),
     },
   ];
 
