@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { DESTINATIONS_DATA } from "@/lib/data";
+import { useData } from "@/context/DataContext";
 import { Destination } from "@/lib/types";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -14,20 +14,21 @@ import { EnquiryModal } from "@/components/EnquiryModal";
 import { MapPin, Compass, Car, Bike, ShieldCheck, Search } from "lucide-react";
 
 export default function DestinationsIndexPage() {
+  const { destinations } = useData();
   const [modalOpen, setModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredDestinations = useMemo(() => {
-    if (!searchQuery.trim()) return DESTINATIONS_DATA;
+    if (!searchQuery.trim()) return destinations;
     const q = searchQuery.toLowerCase();
-    return DESTINATIONS_DATA.filter(
+    return destinations.filter(
       (d) =>
         d.name.toLowerCase().includes(q) ||
         d.stateName.toLowerCase().includes(q) ||
         d.tagline.toLowerCase().includes(q) ||
         d.overview.toLowerCase().includes(q)
     );
-  }, [searchQuery]);
+  }, [destinations, searchQuery]);
 
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-[#0B0C0E] text-gray-900 dark:text-white flex flex-col justify-between transition-colors duration-300">

@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { SHARED_TOURS_DATA } from "@/lib/data";
+import { useData } from "@/context/DataContext";
+import { SharedTour } from "@/lib/types";
 import { formatINR, getAvailabilityStatus, buildWhatsAppUrl } from "@/lib/utils";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -95,8 +96,9 @@ function parseExpeditionDate(dateStr: string) {
 export default function SharedTourDetailPage() {
   const params = useParams();
   const tourId = params.id as string;
+  const { tours } = useData();
 
-  const tour = SHARED_TOURS_DATA.find((t) => t.id === tourId || t.slug === tourId);
+  const tour = tours.find((t) => t.id === tourId || t.slug === tourId);
 
   const [activeImageIdx, setActiveImageIdx] = useState(0);
   const [activeDay, setActiveDay] = useState<number | null>(1);
@@ -155,7 +157,7 @@ export default function SharedTourDetailPage() {
   };
 
   // Related tours
-  const relatedTours = SHARED_TOURS_DATA.filter((t) => t.id !== tour.id).slice(0, 3);
+  const relatedTours = tours.filter((t: SharedTour) => t.id !== tour.id).slice(0, 3);
 
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-[#0B0C0E] text-gray-900 dark:text-white flex flex-col justify-between pt-36 sm:pt-40 transition-colors duration-300">

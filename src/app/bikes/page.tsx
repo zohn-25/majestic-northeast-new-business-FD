@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import Image from "next/image";
-import { SHARED_TOURS_DATA, DESTINATIONS_DATA } from "@/lib/data";
+import { useData } from "@/context/DataContext";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { TourCard } from "@/components/TourCard";
@@ -14,6 +14,7 @@ import { Search, RefreshCw, Bike, ShieldCheck, Truck, Wrench } from "lucide-reac
 import { CustomSelect, OptionItem } from "@/components/ui/CustomSelect";
 
 export default function BikeExpeditionsPage() {
+  const { tours, destinations } = useData();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDestination, setSelectedDestination] = useState("all");
   const [sortBy, setSortBy] = useState<"featured" | "price-asc" | "price-desc">("featured");
@@ -21,7 +22,7 @@ export default function BikeExpeditionsPage() {
 
   const destinationOptions: OptionItem[] = [
     { value: "all", label: "All Motorcycle Circuits", subLabel: "Full Northeast Bike Coverage" },
-    ...DESTINATIONS_DATA.map((d) => ({
+    ...destinations.map((d) => ({
       value: d.id,
       label: d.name,
       subLabel: `${d.stateName} Motorcycle Ride`,
@@ -36,8 +37,8 @@ export default function BikeExpeditionsPage() {
 
   // Only motorcycle bike trips
   const bikeTours = useMemo(() => {
-    return SHARED_TOURS_DATA.filter((tour) => tour.tripFormat === "bike");
-  }, []);
+    return tours.filter((tour) => tour.tripFormat === "bike");
+  }, [tours]);
 
   const filteredTours = useMemo(() => {
     return bikeTours.filter((tour) => {

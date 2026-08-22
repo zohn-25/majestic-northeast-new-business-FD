@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Vehicle, SharedTour, SharedTourEnquiryPayload } from "@/lib/types";
-import { SHARED_TOURS_DATA } from "@/lib/data";
+import { useData } from "@/context/DataContext";
 import { X, CheckCircle2, Send, Car, Bike, Calendar, MapPin, User, Phone, Mail, ShieldCheck } from "lucide-react";
 import { formatINR } from "@/lib/utils";
 import { CustomSelect, OptionItem } from "@/components/ui/CustomSelect";
@@ -24,13 +24,14 @@ export function EnquiryModal({
   preselectedTour = null,
   preselectedVehicle = null,
 }: EnquiryModalProps) {
+  const { tours, addEnquiry } = useData();
   const [tripType, setTripType] = useState<TripMode>(
     preselectedTour ? preselectedTour.tripFormat : initialMode === "bike" ? "bike" : "car"
   );
   const [submitted, setSubmitted] = useState(false);
 
-  const carTours = SHARED_TOURS_DATA.filter((t) => t.tripFormat === "car");
-  const bikeTours = SHARED_TOURS_DATA.filter((t) => t.tripFormat === "bike");
+  const carTours = tours.filter((t) => t.tripFormat === "car");
+  const bikeTours = tours.filter((t) => t.tripFormat === "bike");
 
   const activeTours = tripType === "car" ? carTours : bikeTours;
 
@@ -38,7 +39,7 @@ export function EnquiryModal({
     fullName: "",
     phoneNumber: "",
     email: "",
-    tourId: preselectedTour ? preselectedTour.id : activeTours[0]?.id || SHARED_TOURS_DATA[0].id,
+    tourId: preselectedTour ? preselectedTour.id : activeTours[0]?.id || tours[0]?.id || "t-1",
     preferredDate: preselectedTour ? preselectedTour.startDates[0] : activeTours[0]?.startDates[0] || "",
     numberOfTravellers: 2,
     pickupLocation: "Guwahati Airport (GAU)",
@@ -66,7 +67,7 @@ export function EnquiryModal({
     setSubmitted(false);
   }, [isOpen, preselectedTour, tripType]);
 
-  const selectedTourObj = SHARED_TOURS_DATA.find((t) => t.id === tourForm.tourId) || activeTours[0];
+  const selectedTourObj = tours.find((t) => t.id === tourForm.tourId) || activeTours[0];
 
   const tourOptions: OptionItem[] = activeTours.map((t) => ({
     value: t.id,
@@ -101,6 +102,20 @@ export function EnquiryModal({
 
   const handleTourSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const selectedTourObj = tours.find((t) => t.id === tourForm.tourId);
+    addEnquiry({
+      type: "tour",
+      customerName: tourForm.fullName || "Guest Adventurer",
+      phone: tourForm.phoneNumber || "+91 98765 43210",
+      email: tourForm.email || "guest@traveler.com",
+      relatedItemName: selectedTourObj?.title || "Expedition Circuit",
+      relatedItemId: tourForm.tourId,
+      status: "New",
+      message: tourForm.message,
+      preferredBatch: tourForm.preferredDate,
+      numberOfTravellers: tourForm.numberOfTravellers,
+      pickupLocation: tourForm.pickupLocation,
+    });
     setSubmitted(true);
   };
 
@@ -192,7 +207,7 @@ export function EnquiryModal({
                   options={tourOptions}
                   value={tourForm.tourId}
                   onChange={(id) => {
-                    const found = SHARED_TOURS_DATA.find((t) => t.id === id);
+                    const found = tours.find((t) => t.id === id);
                     setTourForm((prev) => ({
                       ...prev,
                       tourId: id,

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { VEHICLES_DATA } from "@/lib/data";
+import { useData } from "@/context/DataContext";
 import { Vehicle } from "@/lib/types";
 import { formatINR, getAvailabilityStatus, buildWhatsAppUrl } from "@/lib/utils";
 import { Header } from "@/components/Header";
@@ -41,8 +41,9 @@ export default function VehicleDetailPage() {
   const params = useParams();
   const router = useRouter();
   const vehicleId = params.id as string;
+  const { vehicles } = useData();
 
-  const vehicle = VEHICLES_DATA.find((v) => v.id === vehicleId);
+  const vehicle = vehicles.find((v) => v.id === vehicleId);
 
   // States
   const [activeImageIdx, setActiveImageIdx] = useState(0);
@@ -94,8 +95,8 @@ export default function VehicleDetailPage() {
     setSubmittedInline(true);
   };
 
-  const similarVehicles = VEHICLES_DATA.filter(
-    (v) => v.id !== vehicle.id && v.category === vehicle.category
+  const similarVehicles = vehicles.filter(
+    (v: Vehicle) => v.id !== vehicle.id && v.category === vehicle.category
   ).slice(0, 3);
 
   return (

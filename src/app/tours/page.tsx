@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import Image from "next/image";
-import { SHARED_TOURS_DATA, DESTINATIONS_DATA } from "@/lib/data";
+import { useData } from "@/context/DataContext";
 import { SharedTour } from "@/lib/types";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -15,6 +15,7 @@ import { Search, RefreshCw, Car, Bike, Compass, ShieldCheck, Truck, Wrench } fro
 import { CustomSelect, OptionItem } from "@/components/ui/CustomSelect";
 
 export default function SharedToursPage() {
+  const { tours, destinations } = useData();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDestination, setSelectedDestination] = useState("all");
   const [tripFormatFilter, setTripFormatFilter] = useState<"all" | "car" | "bike">("all");
@@ -23,7 +24,7 @@ export default function SharedToursPage() {
 
   const destinationOptions: OptionItem[] = [
     { value: "all", label: "All Destinations", subLabel: "Full Northeast Coverage" },
-    ...DESTINATIONS_DATA.map((d) => ({
+    ...destinations.map((d) => ({
       value: d.id,
       label: d.name,
       subLabel: `${d.stateName} Circuit`,
@@ -37,7 +38,7 @@ export default function SharedToursPage() {
   ];
 
   const filteredTours = useMemo(() => {
-    return SHARED_TOURS_DATA.filter((tour) => {
+    return tours.filter((tour) => {
       // 1. Format Filter
       if (tripFormatFilter !== "all" && tour.tripFormat !== tripFormatFilter) {
         return false;
@@ -143,7 +144,7 @@ export default function SharedToursPage() {
                 }`}
               >
                 <Compass className="w-3.5 h-3.5" />
-                All Expeditions ({SHARED_TOURS_DATA.length})
+                All Expeditions ({tours.length})
               </button>
               <button
                 onClick={() => setTripFormatFilter("car")}
@@ -154,7 +155,7 @@ export default function SharedToursPage() {
                 }`}
               >
                 <Car className="w-3.5 h-3.5" />
-                4x4 Car Trips ({SHARED_TOURS_DATA.filter((t) => t.tripFormat === "car").length})
+                4x4 Car Trips ({tours.filter((t) => t.tripFormat === "car").length})
               </button>
               <button
                 onClick={() => setTripFormatFilter("bike")}
@@ -165,7 +166,7 @@ export default function SharedToursPage() {
                 }`}
               >
                 <Bike className="w-3.5 h-3.5" />
-                Bike Expeditions ({SHARED_TOURS_DATA.filter((t) => t.tripFormat === "bike").length})
+                Bike Expeditions ({tours.filter((t) => t.tripFormat === "bike").length})
               </button>
             </div>
           </div>

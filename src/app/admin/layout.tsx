@@ -33,6 +33,8 @@ import {
 } from "lucide-react";
 import { useData } from "@/context/DataContext";
 
+import { ToastProvider } from "@/components/admin/Toast";
+
 interface AdminLayoutProps {
   children: React.ReactNode;
 }
@@ -61,7 +63,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   // If user is on login page, don't show the dashboard shell
   if (pathname === "/admin/login") {
-    return <>{children}</>;
+    return <ToastProvider>{children}</ToastProvider>;
   }
 
   if (isCheckingAuth || !isAdminLoggedIn) {
@@ -143,7 +145,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#090A0C] text-white flex font-body antialiased selection:bg-brand-red selection:text-white">
+    <ToastProvider>
+      <div className="min-h-screen bg-[#090A0C] text-white flex font-body antialiased selection:bg-brand-red selection:text-white">
       
       {/* ========================================================================= */}
       {/* 1. DESKTOP SIDEBAR (Visible on Viewport >= 1024px)                        */}
@@ -490,5 +493,6 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       </nav>
 
     </div>
+    </ToastProvider>
   );
 }

@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useData } from "@/context/DataContext";
 import { SharedTour } from "@/lib/types";
-import { SHARED_TOURS_DATA } from "@/lib/data";
 import { TourCard } from "../TourCard";
 import { SectionHeading } from "../ui/SectionHeading";
 import { EmptyState } from "../ui/EmptyState";
@@ -15,8 +15,9 @@ interface FeaturedToursProps {
 }
 
 export function FeaturedTours({ onOpenEnquire }: FeaturedToursProps) {
+  const { tours } = useData();
   const [loading, setLoading] = useState(false);
-  const bikeTours = SHARED_TOURS_DATA.filter((t) => t.tripFormat === "bike");
+  const bikeTours = tours.filter((t) => t.tripFormat === "bike");
 
   return (
     <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 bg-white dark:bg-[#101216] border-t border-gray-200 dark:border-white/10 relative transition-colors duration-300">

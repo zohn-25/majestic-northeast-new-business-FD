@@ -3,12 +3,13 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { DESTINATIONS_DATA } from "@/lib/data";
+import { useData } from "@/context/DataContext";
 import { DestinationCard } from "../DestinationCard";
 import { SectionHeading } from "../ui/SectionHeading";
 import { MapPin, ArrowRight, Star, Compass, Clock } from "lucide-react";
 
 export function PopularDestinations() {
+  const { destinations } = useData();
   return (
     <section className="py-14 lg:py-28 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-[#0B0C0E] border-t border-gray-200 dark:border-white/10 relative transition-colors duration-300">
       <div className="max-w-7xl mx-auto relative z-10">
@@ -38,7 +39,7 @@ export function PopularDestinations() {
         {/* MOBILE HORIZONTAL SNAP CAROUSEL (Reference-Inspired Mobile Cards)         */}
         {/* ========================================================================= */}
         <div className="flex lg:hidden overflow-x-auto snap-x snap-mandatory gap-3.5 pb-2 -mx-4 px-4 scrollbar-none">
-          {DESTINATIONS_DATA.map((dest) => (
+          {destinations.map((dest) => (
             <Link
               key={dest.id}
               href={`/destinations/${dest.slug}`}
@@ -120,7 +121,7 @@ export function PopularDestinations() {
           />
 
           <div className="grid grid-cols-4 gap-6">
-            {DESTINATIONS_DATA.map((destination) => (
+            {destinations.map((destination) => (
               <DestinationCard key={destination.id} destination={destination} />
             ))}
           </div>

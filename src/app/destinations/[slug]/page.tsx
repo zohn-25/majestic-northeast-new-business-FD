@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { DESTINATIONS_DATA, SHARED_TOURS_DATA, VEHICLES_DATA } from "@/lib/data";
+import { useData } from "@/context/DataContext";
 import { Destination, SharedTour, Vehicle } from "@/lib/types";
 import { buildWhatsAppUrl } from "@/lib/utils";
 import { Header } from "@/components/Header";
@@ -35,8 +35,9 @@ import {
 export default function StateDestinationPage() {
   const params = useParams();
   const slug = params.slug as string;
+  const { destinations, tours, vehicles } = useData();
 
-  const destination = DESTINATIONS_DATA.find(
+  const destination = destinations.find(
     (d) => d.slug === slug || d.id === slug || d.name.toLowerCase() === slug.toLowerCase()
   );
 
@@ -67,8 +68,8 @@ export default function StateDestinationPage() {
   }
 
   // Get matching tours and vehicles
-  const stateTours = SHARED_TOURS_DATA.filter((t) => t.destinationId === destination.id);
-  const stateVehicles = VEHICLES_DATA.filter((v) =>
+  const stateTours = tours.filter((t: SharedTour) => t.destinationId === destination.id);
+  const stateVehicles = vehicles.filter((v: Vehicle) =>
     destination.availableVehicleIds.includes(v.id)
   );
 

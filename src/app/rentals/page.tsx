@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import Image from "next/image";
-import { SHARED_TOURS_DATA, DESTINATIONS_DATA } from "@/lib/data";
+import { useData } from "@/context/DataContext";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { TourCard } from "@/components/TourCard";
@@ -14,6 +14,7 @@ import { Search, RefreshCw, Car, ShieldCheck, Truck, Wrench } from "lucide-react
 import { CustomSelect, OptionItem } from "@/components/ui/CustomSelect";
 
 export default function RentalsPage() {
+  const { tours, destinations } = useData();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDestination, setSelectedDestination] = useState("all");
   const [sortBy, setSortBy] = useState<"featured" | "price-asc" | "price-desc">("featured");
@@ -21,7 +22,7 @@ export default function RentalsPage() {
 
   const destinationOptions: OptionItem[] = [
     { value: "all", label: "All 4x4 Destinations", subLabel: "Full Northeast Coverage" },
-    ...DESTINATIONS_DATA.map((d) => ({
+    ...destinations.map((d) => ({
       value: d.id,
       label: d.name,
       subLabel: `${d.stateName} 4x4 Circuit`,
@@ -36,8 +37,8 @@ export default function RentalsPage() {
 
   // Only 4x4 car trips
   const carTours = useMemo(() => {
-    return SHARED_TOURS_DATA.filter((tour) => tour.tripFormat === "car");
-  }, []);
+    return tours.filter((tour) => tour.tripFormat === "car");
+  }, [tours]);
 
   const filteredTours = useMemo(() => {
     return carTours.filter((tour) => {
