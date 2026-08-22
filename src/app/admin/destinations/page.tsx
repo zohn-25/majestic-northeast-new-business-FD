@@ -53,7 +53,7 @@ export default function AdminDestinationsPage() {
       header: "Key Places & Circuits",
       cell: (d) => (
         <span className="text-xs text-slate-500 dark:text-zinc-400">
-          {d.highlights?.length || 4} Highlights
+          {d.popularPlaces?.length || 4} Key Spots
         </span>
       ),
     },
