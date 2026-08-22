@@ -57,13 +57,12 @@ export function FeaturedTours({ onOpenEnquire }: FeaturedToursProps) {
             message="Please check back soon or submit a custom group enquiry."
           />
         ) : (
-          <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 overflow-x-auto sm:overflow-visible snap-x snap-mandatory pb-4 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0">
-            {bikeTours.map((tour, index) => (
+          <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 overflow-x-auto sm:overflow-visible snap-x snap-mandatory pb-4 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0">
+            {bikeTours.map((tour) => (
               <div key={tour.id} className="w-[85vw] sm:w-auto shrink-0 snap-center flex flex-col">
                 <TourCard
                   tour={tour}
                   onEnquire={onOpenEnquire}
-                  featuredLayout={index === 0}
                 />
               </div>
             ))}
